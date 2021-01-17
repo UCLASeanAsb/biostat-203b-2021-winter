@@ -55,7 +55,7 @@ Please, do **not** put these data files into Git; they are big. Do **not** copy 
 
 3. Display the contents in the folders `core`, `hosp`, `icu`. What are the functionalities of the bash commands `zcat`, `zless`, `zmore`, and `zgrep`? 
 
-zact: line utility 
+
 
 **Solution**: core
     ```{bash}
@@ -72,9 +72,16 @@ zact: line utility
     ls -l /usr/203b-data/mimic-iv/icu
 ```
 
+**Solution**: zcat,zless,zmore,zgrep
 
+zcat is used to view compressed files without decompressing that file.
 
+zmore is used to filter and allow you to examine compressed or text files one 
+screen at a time. Lets you view gzipped files.
 
+zless works in the same way but is used for more flexiable viewing useage.
+
+zgrep is for searching phrases and/or words from a file and works on compressed or gzipped files.
 
 4. What's the output of following bash script?
     ```{bash, eval=F}
@@ -83,9 +90,33 @@ zact: line utility
         ls -l $datafile
       done
     ```
+
+
+
 Display the number of lines in each data file using a similar loop.
 
+
+```{bash, eval=F}
+    for datafile in /usr/203b-data/mimic-iv/core/*.gz
+      do
+        wc -l $datafile
+      done
+```
+
+
+
 4. Display the first few lines of `admissions.csv.gz`. How many rows are in this data file? How many unique patients (identified by `subject_id`) are in this data file? What are the possible values taken by each of the variable `admission_type`, `admission_location`, `insurance`, `language`, `marital_status`, and `ethnicity`? Also report the count for each unique value of these variables. (Hint: combine Linux commands `zcat`, `head`/`tail`, `awk`, `uniq`, `wc`, and so on.)
+
+```{bash}
+
+cat /usr/203b-data/mimic-iv/core/
+
+
+```
+
+
+
+
 
 ## Q3. Who's popular in Price and Prejudice
 
