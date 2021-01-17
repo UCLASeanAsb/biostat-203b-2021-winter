@@ -96,7 +96,7 @@ zgrep is for searching phrases and/or words from a file and works on compressed 
 Display the number of lines in each data file using a similar loop.
 
 
-```{bash, eval=F}
+```{bash}
     for datafile in /usr/203b-data/mimic-iv/core/*.gz
       do
         wc -l $datafile
@@ -107,9 +107,18 @@ Display the number of lines in each data file using a similar loop.
 
 4. Display the first few lines of `admissions.csv.gz`. How many rows are in this data file? How many unique patients (identified by `subject_id`) are in this data file? What are the possible values taken by each of the variable `admission_type`, `admission_location`, `insurance`, `language`, `marital_status`, and `ethnicity`? Also report the count for each unique value of these variables. (Hint: combine Linux commands `zcat`, `head`/`tail`, `awk`, `uniq`, `wc`, and so on.)
 
-```{bash}
+```{bash, eval=F}
 
-cat /usr/203b-data/mimic-iv/core/
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | head -n 3
+
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | wc -l
+
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |sort| awk -F, '{ print $1 }' | wc -l
+
+
+
+
+
 
 
 ```
@@ -126,6 +135,9 @@ cat /usr/203b-data/mimic-iv/core/
     ```
 Do **not** put this text file `pride_and_prejudice.txt` in Git. Using a `for` loop, how would you tabulate the number of times each of the four characters is mentioned?
 
+
+
+
 2. What's the difference between the following two commands?
     ```{bash eval=FALSE}
     echo 'hello, world' > test1.txt
@@ -134,6 +146,10 @@ Do **not** put this text file `pride_and_prejudice.txt` in Git. Using a `for` lo
     ```{bash eval=FALSE}
     echo 'hello, world' >> test2.txt
     ```
+
+
+
+
 
 3. Using your favorite text editor (e.g., `vi`), type the following and save the file as `middle.sh`:
     ```{bash eval=FALSE}
@@ -148,6 +164,7 @@ Using `chmod` make the file executable by the owner, and run
     ```
 Explain the output. Explain the meaning of `"$1"`, `"$2"`, and `"$3"` in this shell script. Why do we need the first line of the shell script?
 
+
 ### Q4. More fun with Linux
 
 Try these commands in Bash and interpret the results: `cal`, `cal 2021`, `cal 9 1752` (anything unusual?), `date`, `hostname`, `arch`, `uname -a`, `uptime`, `who am i`, `who`, `w`, `id`, `last | head`, `echo {con,pre}{sent,fer}{s,ed}`, `time sleep 5`, `history | tail`.
@@ -155,5 +172,79 @@ Try these commands in Bash and interpret the results: `cal`, `cal 2021`, `cal 9 
 **Solution** `cal` displays the calender of current month 
 ```{bash}
 cal
+```
+
+**Solution** `cal 2021` displays the calender of year 2021
+```{bash}
+cal 2021
+```
+
+**Solution** `cal 9 1752` displays the calender of year 1752 of September, skips that dates 3-13
+```{bash}
+cal 9 1752
+```
+
+**Solution** `date` displays current date and time
+```{bash}
+date
+```
+
+**Solution** `hostname` displays the name of the host
+```{bash}
+hostname
+```
+
+**Solution** `arch` displays type of computer?
+```{bash}
+arch
+```
+
+**Solution** `uname -a` displays operating system name and the system hardware
+```{bash}
+uname -a
+```
+
+**Solution** `uptime` displays current time, system running, total time system has been running, user count, system load averages
+```{bash}
+uptime
+```
+
+**Solution**`who am i` displays username for some reason mine doesnt display
+```{bash}
+who am i
+```
+
+**Solution**`who` displays information in user on system
+```{bash}
+who
+```
+
+**Solution**`w` displays information in user on system and current processes
+```{bash}
+w
+```
+
+**Solution**`id` displays numeric ids and the effective/real of a given user
+```{bash}
+id
+```
+
+**Solution**`last | head` displays 
+```{bash}
+last | head
+```
+**Solution** `echo {con,pre}{sent,fer}{s,ed}` dipslays combinations of the prefix from the first {} with combos of the other two {}
+```{bash}
+echo {con,pre}{sent,fer}{s,ed}
+```
+
+**Solution** `time sleep 5` pauses the script for a time of 5 seconds
+```{bash}
+time sleep 5
+```
+
+**Solution** `history | tail` displays
+```{bash}
+history | tail
 ```
 
