@@ -570,7 +570,7 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## 24 25 26 27 28 29 30</code></pre>
 <p><strong>Solution</strong> <code>date</code> displays current date and time</p>
 <pre class="bash"><code>date</code></pre>
-<pre><code>## Sun Jan 17 00:43:24 UTC 2021</code></pre>
+<pre><code>## Mon Jan 18 01:05:00 UTC 2021</code></pre>
 <p><strong>Solution</strong> <code>hostname</code> displays the name of the host</p>
 <pre class="bash"><code>hostname</code></pre>
 <pre><code>## ucla-biostat-203b</code></pre>
@@ -582,39 +582,53 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre><code>## Linux ucla-biostat-203b 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</code></pre>
 <p><strong>Solution</strong> <code>uptime</code> displays current time, system running, total time system has been running, user count, system load averages</p>
 <pre class="bash"><code>uptime</code></pre>
-<pre><code>##  00:43:24 up 13 days,  2:54,  0 users,  load average: 0.23, 0.11, 0.10</code></pre>
+<pre><code>##  01:05:00 up 14 days,  3:15,  7 users,  load average: 0.11, 0.18, 0.20</code></pre>
 <p><strong>Solution</strong><code>who am i</code> displays username for some reason mine doesnt display</p>
 <pre class="bash"><code>who am i</code></pre>
 <p><strong>Solution</strong><code>who</code> displays information in user on system</p>
 <pre class="bash"><code>who</code></pre>
+<pre><code>## jihcai   pts/0        2021-01-18 00:12 (ip68-6-101-100.sb.sd.cox.net)
+## germc3   pts/4        2021-01-17 23:05 (149.142.80.37)
+## lhashemi pts/6        2021-01-18 00:14 (cpe-23-242-240-40.socal.res.rr.com)
+## ajedward pts/7        2021-01-17 23:25 (cpe-98-149-10-219.natmtn.res.rr.com)
+## hunanzhou pts/8        2021-01-18 00:54 (47.145.197.173)
+## ionahu08 pts/9        2021-01-18 00:56 (075-084-112-205.res.spectrum.com)
+## alvinw   pts/11       2021-01-18 01:04 (cpe-172-112-186-58.socal.res.rr.com)</code></pre>
 <p><strong>Solution</strong><code>w</code> displays information in user on system and current processes</p>
 <pre class="bash"><code>w</code></pre>
-<pre><code>##  00:43:24 up 13 days,  2:54,  0 users,  load average: 0.23, 0.11, 0.10
-## USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT</code></pre>
+<pre><code>##  01:05:01 up 14 days,  3:15,  7 users,  load average: 0.11, 0.18, 0.20
+## USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+## jihcai   pts/0    ip68-6-101-100.s 00:12   27:33   0.27s  0.27s -bash
+## germc3   pts/4    149.142.80.37    23:05    1:47m  0.12s  0.12s -bash
+## lhashemi pts/6    cpe-23-242-240-4 00:14   50:47   0.01s  0.01s -bash
+## ajedward pts/7    cpe-98-149-10-21 23:25    1:35m  0.02s  0.02s -bash
+## hunanzho pts/8    47.145.197.173   00:54   10:25   0.01s  0.01s -bash
+## ionahu08 pts/9    075-084-112-205. 00:56    5.00s  0.05s  0.05s -bash
+## alvinw   pts/11   cpe-172-112-186- 01:04    6.00s  0.01s  0.01s -bash</code></pre>
 <p><strong>Solution</strong><code>id</code> displays numeric ids and the effective/real of a given user</p>
 <pre class="bash"><code>id</code></pre>
 <pre><code>## uid=1002(asburysean) gid=1004(asburysean) groups=1004(asburysean) context=system_u:system_r:initrc_t:s0</code></pre>
 <p><strong>Solution</strong><code>last | head</code> displays</p>
 <pre class="bash"><code>last | head</code></pre>
-<pre><code>## kmishimo pts/3        ip174-67-246-239 Sun Jan 17 00:08 - 00:16  (00:08)    
-## dshehtan pts/2        cpe-45-51-98-96. Sat Jan 16 22:32 - 00:30  (01:58)    
-## asburyse pts/3        c-73-157-156-163 Sat Jan 16 21:54 - 22:18  (00:23)    
-## asburyse pts/3        c-73-157-156-163 Sat Jan 16 21:41 - 21:54  (00:13)    
-## asburyse pts/3        c-73-157-156-163 Sat Jan 16 21:39 - 21:40  (00:01)    
-## asburyse pts/3        c-73-157-156-163 Sat Jan 16 21:35 - 21:39  (00:03)    
-## asburyse pts/0        c-73-157-156-163 Sat Jan 16 20:06 - 20:34  (00:27)    
-## asburyse pts/0        c-73-157-156-163 Sat Jan 16 19:32 - 20:06  (00:34)    
-## zianzhua pts/2        120.36.96.69     Sat Jan 16 17:57 - 17:57  (00:00)    
-## zianzhua pts/2        120.36.96.69     Sat Jan 16 17:50 - 17:50  (00:00)</code></pre>
+<pre><code>## alvinw   pts/11       cpe-172-112-186- Mon Jan 18 01:04   still logged in   
+## ionahu08 pts/9        075-084-112-205. Mon Jan 18 00:56   still logged in   
+## hunanzho pts/8        47.145.197.173   Mon Jan 18 00:54   still logged in   
+## alvinw   pts/8        cpe-172-112-186- Mon Jan 18 00:27 - 00:37  (00:09)    
+## lhashemi pts/6        cpe-23-242-240-4 Mon Jan 18 00:14   still logged in   
+## jihcai   pts/0        ip68-6-101-100.s Mon Jan 18 00:12   still logged in   
+## ajedward pts/7        cpe-98-149-10-21 Sun Jan 17 23:25   still logged in   
+## germc3   pts/4        149.142.80.37    Sun Jan 17 23:05   still logged in   
+## jihcai   pts/0        ip68-6-101-100.s Sun Jan 17 21:17 - 00:12  (02:54)    
+## dshehtan pts/4        cpe-45-51-98-96. Sun Jan 17 17:58 - 21:46  (03:48)</code></pre>
 <p><strong>Solution</strong> <code>echo {con,pre}{sent,fer}{s,ed}</code> dipslays combinations of the prefix from the first {} with combos of the other two {}</p>
 <pre class="bash"><code>echo {con,pre}{sent,fer}{s,ed}</code></pre>
 <pre><code>## consents consented confers confered presents presented prefers prefered</code></pre>
 <p><strong>Solution</strong> <code>time sleep 5</code> pauses the script for a time of 5 seconds</p>
 <pre class="bash"><code>time sleep 5</code></pre>
 <pre><code>## 
-## real 0m5.002s
-## user 0m0.000s
-## sys  0m0.002s</code></pre>
+## real 0m5.005s
+## user 0m0.002s
+## sys  0m0.000s</code></pre>
 <p><strong>Solution</strong> <code>history | tail</code> displays</p>
 <pre class="bash"><code>history | tail</code></pre>
 </div>
