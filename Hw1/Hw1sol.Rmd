@@ -115,6 +115,7 @@ zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | wc -l
 
 zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |sort| awk -F, '{ print $1 }' | wc -l
 
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $6 }'| sort| uniq
 
 
 
@@ -135,6 +136,15 @@ zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |sort| awk -F, '{ print $1 }
     ```
 Do **not** put this text file `pride_and_prejudice.txt` in Git. Using a `for` loop, how would you tabulate the number of times each of the four characters is mentioned?
 
+```{bash}
+char=('Jane' 'Darcy' 'Elizabeth' 'Lydia')
+for name in "${char[@]}"
+  do
+grep -o $name pride_and_prejudice.txt | wc -l
+done
+
+
+```
 
 
 
@@ -147,7 +157,7 @@ Do **not** put this text file `pride_and_prejudice.txt` in Git. Using a `for` lo
     echo 'hello, world' >> test2.txt
     ```
 
-
+**Solution**: The first one will overwrite the file and the 2nd one will put it at the output of the last line of the file
 
 
 
@@ -243,7 +253,7 @@ echo {con,pre}{sent,fer}{s,ed}
 time sleep 5
 ```
 
-**Solution** `history | tail` displays
+**Solution** `history | tail` displays nothing i guess
 ```{bash}
 history | tail
 ```
