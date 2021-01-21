@@ -469,13 +469,17 @@ ls -l /usr/203b-data/mimic-iv/core
 <p>zless works in the same way but is used for more flexiable viewing useage.</p>
 <p>zgrep is for searching phrases and/or words from a file and works on compressed or gzipped files.</p>
 <ol start="4" style="list-style-type: decimal">
-<li><p>What’s the output of following bash script? <strong>Solution</strong>:Ouput is showing ever yfile in mimic-iv/core of only .gz file types.</p>
-<pre class="bash"><code>for datafile in /usr/203b-data/mimic-iv/core/*.gz
+<li>What’s the output of following bash script?</li>
+</ol>
+<p><strong>Solution</strong>:Ouput is showing ever yfile in mimic-iv/core of only .gz file types.</p>
+<pre><code>```bash
+for datafile in /usr/203b-data/mimic-iv/core/*.gz
   do
     ls -l $datafile
-  done</code></pre></li>
-</ol>
-<p>Display the number of lines in each data file using a similar loop. <strong>Solution</strong>:Number of lines in admissions: 65080, patients:6343, transfers:184657</p>
+  done
+```</code></pre>
+<p>Display the number of lines in each data file using a similar loop.</p>
+<p><strong>Solution</strong>:Number of lines in admissions: 65080, patients:6343, transfers:184657</p>
 <pre class="bash"><code>    for datafile in /usr/203b-data/mimic-iv/core/*.gz
       do
         wc -l $datafile
@@ -576,10 +580,18 @@ done
 ## 634
 ## 170</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li><p>What’s the difference between the following two commands? <strong>Solution</strong>: The first one will overwrite the file and the 2nd one will put it at the output of the last line of the file</p>
-<pre class="bash"><code>echo &#39;hello, world&#39; &gt; test1.txt</code></pre>
-<p>and</p>
-<pre class="bash"><code>echo &#39;hello, world&#39; &gt;&gt; test2.txt</code></pre></li>
+<li>What’s the difference between the following two commands?</li>
+</ol>
+<p><strong>Solution</strong>: The first one will overwrite the file and the 2nd one will put it at the output of the last line of the file</p>
+<pre><code>```bash
+echo &#39;hello, world&#39; &gt; test1.txt
+```
+and
+
+```bash
+echo &#39;hello, world&#39; &gt;&gt; test2.txt
+```</code></pre>
+<ol start="3" style="list-style-type: decimal">
 <li><p>Using your favorite text editor (e.g., <code>vi</code>), type the following and save the file as <code>middle.sh</code>:</p>
 <pre class="bash"><code>#!/bin/sh
 # Select lines from the middle of a file.
@@ -592,8 +604,9 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## 
 ## Editor: R. W. (Robert William) Chapman
 ## </code></pre>
-<p>Explain the output. Explain the meaning of <code>&quot;$1&quot;</code>, <code>&quot;$2&quot;</code>, and <code>&quot;$3&quot;</code> in this shell script. Why do we need the first line of the shell script? <strong>Solution</strong>: $1,$2,$3 are positional parameters and the $ sign is an input field separator. It gives us the author and editor name. First line tells us that the scrpit should be run in bash.</p></li>
+<p>Explain the output. Explain the meaning of <code>&quot;$1&quot;</code>, <code>&quot;$2&quot;</code>, and <code>&quot;$3&quot;</code> in this shell script. Why do we need the first line of the shell script?</p></li>
 </ol>
+<p><strong>Solution</strong>: $1,$2,$3 are positional parameters and the $ sign is an input field separator. It gives us the author and editor name. First line tells us that the scrpit should be run in bash.</p>
 <div id="q4.-more-fun-with-linux" class="section level3">
 <h3>Q4. More fun with Linux</h3>
 <p>Try these commands in Bash and interpret the results: <code>cal</code>, <code>cal 2021</code>, <code>cal 9 1752</code> (anything unusual?), <code>date</code>, <code>hostname</code>, <code>arch</code>, <code>uname -a</code>, <code>uptime</code>, <code>who am i</code>, <code>who</code>, <code>w</code>, <code>id</code>, <code>last | head</code>, <code>echo {con,pre}{sent,fer}{s,ed}</code>, <code>time sleep 5</code>, <code>history | tail</code>.</p>
@@ -652,7 +665,7 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## 24 25 26 27 28 29 30</code></pre>
 <p><strong>Solution</strong> <code>date</code> displays current date and time</p>
 <pre class="bash"><code>date</code></pre>
-<pre><code>## Thu Jan 21 16:46:37 UTC 2021</code></pre>
+<pre><code>## Thu Jan 21 16:49:33 UTC 2021</code></pre>
 <p><strong>Solution</strong> <code>hostname</code> displays the name of the host</p>
 <pre class="bash"><code>hostname</code></pre>
 <pre><code>## ucla-biostat-203b</code></pre>
@@ -664,7 +677,7 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre><code>## Linux ucla-biostat-203b 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</code></pre>
 <p><strong>Solution</strong> <code>uptime</code> displays current time, system running, total time system has been running, user count, system load averages</p>
 <pre class="bash"><code>uptime</code></pre>
-<pre><code>##  16:46:37 up 17 days, 18:57,  1 user,  load average: 0.41, 0.13, 0.08</code></pre>
+<pre><code>##  16:49:33 up 17 days, 19:00,  1 user,  load average: 0.35, 0.15, 0.09</code></pre>
 <p><strong>Solution</strong><code>who am i</code> displays username for some reason mine doesnt display</p>
 <pre class="bash"><code>who am i</code></pre>
 <p><strong>Solution</strong><code>who</code> displays information in user on system</p>
@@ -672,9 +685,9 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre><code>## filipovicmilan271 pts/7        2021-01-21 06:03 (110.3.236.35.bc.googleusercontent.com)</code></pre>
 <p><strong>Solution</strong><code>w</code> displays information in user on system and current processes</p>
 <pre class="bash"><code>w</code></pre>
-<pre><code>##  16:46:37 up 17 days, 18:57,  1 user,  load average: 0.41, 0.13, 0.08
+<pre><code>##  16:49:33 up 17 days, 19:00,  1 user,  load average: 0.35, 0.15, 0.09
 ## USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
-## filipovi pts/7    110.3.236.35.bc. 06:03   10:37m  0.06s  0.06s -bash</code></pre>
+## filipovi pts/7    110.3.236.35.bc. 06:03   10:40m  0.06s  0.06s -bash</code></pre>
 <p><strong>Solution</strong><code>id</code> displays numeric ids and the effective/real of a given user</p>
 <pre class="bash"><code>id</code></pre>
 <pre><code>## uid=1002(asburysean) gid=1004(asburysean) groups=1004(asburysean) context=system_u:system_r:initrc_t:s0</code></pre>
@@ -697,8 +710,8 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre class="bash"><code>time sleep 5</code></pre>
 <pre><code>## 
 ## real 0m5.002s
-## user 0m0.000s
-## sys  0m0.002s</code></pre>
+## user 0m0.002s
+## sys  0m0.000s</code></pre>
 <p><strong>Solution</strong> <code>history | tail</code> displays the latest history</p>
 <pre class="bash"><code>set -o history
 history | tail</code></pre>

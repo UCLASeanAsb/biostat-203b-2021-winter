@@ -86,6 +86,7 @@ zless works in the same way but is used for more flexiable viewing useage.
 zgrep is for searching phrases and/or words from a file and works on compressed or gzipped files.
 
 4. What's the output of following bash script? 
+
 **Solution**:Ouput is showing ever yfile in mimic-iv/core of only .gz file types.
     ```{bash, eval=F}
     for datafile in /usr/203b-data/mimic-iv/core/*.gz
@@ -95,6 +96,7 @@ zgrep is for searching phrases and/or words from a file and works on compressed 
     ```
 
 Display the number of lines in each data file using a similar loop.
+
 **Solution**:Number of lines in admissions: 65080, patients:6343, transfers:184657
 ```{bash}
     for datafile in /usr/203b-data/mimic-iv/core/*.gz
@@ -157,6 +159,7 @@ done
 
 
 2. What's the difference between the following two commands?
+
 **Solution**: The first one will overwrite the file and the 2nd one will put it at the output of the last line of the file
     ```{bash eval=FALSE}
     echo 'hello, world' > test1.txt
@@ -180,6 +183,7 @@ Using `chmod` make the file executable by the owner, and run
     ./middle.sh pride_and_prejudice.txt 20 5
     ```
 Explain the output. Explain the meaning of `"$1"`, `"$2"`, and `"$3"` in this shell script. Why do we need the first line of the shell script?
+
 **Solution**: $1,$2,$3 are positional parameters and the $ sign is an input field separator. It gives us the author and editor name. First line tells us that the scrpit should be run in bash.
 
 ### Q4. More fun with Linux
