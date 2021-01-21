@@ -115,17 +115,17 @@ zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | wc -l
 
 zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |sort| awk -F, '{ print $1 }' |uniq| wc -l
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $6}'| sort| uniq 
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $6}'| sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $7 }'| sort| uniq
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $7 }'| sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $9 }'| sort| uniq
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $9 }'| sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $10 }'| sort| uniq
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $10 }'| sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $11 }'| sort| uniq
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $11 }'| sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $12 }'| sort| uniq
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $12 }'| sort| uniq -c
 
 ```
 
@@ -174,7 +174,7 @@ done
     head -n "$2" "$1" | tail -n "$3"
     ```
 Using `chmod` make the file executable by the owner, and run 
-    ```{bash eval=FALSE}
+    ```{bash eval=T}
     ./middle.sh pride_and_prejudice.txt 20 5
     ```
 Explain the output. Explain the meaning of `"$1"`, `"$2"`, and `"$3"` in this shell script. Why do we need the first line of the shell script?

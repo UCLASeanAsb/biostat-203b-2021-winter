@@ -492,68 +492,68 @@ zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | wc -l
 
 zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |sort| awk -F, &#39;{ print $1 }&#39; |uniq| wc -l
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $6}&#39;| sort| uniq 
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $6}&#39;| sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $7 }&#39;| sort| uniq
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $7 }&#39;| sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $9 }&#39;| sort| uniq
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $9 }&#39;| sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $10 }&#39;| sort| uniq
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $10 }&#39;| sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $11 }&#39;| sort| uniq
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $11 }&#39;| sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $12 }&#39;| sort| uniq
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $12 }&#39;| sort| uniq -c
 </code></pre>
 <pre><code>## subject_id,hadm_id,admittime,dischtime,deathtime,admission_type,admission_location,discharge_location,insurance,language,marital_status,ethnicity,edregtime,edouttime,hospital_expire_flag
 ## 12427812,21593330,2184-01-06 11:51:00,2184-01-10 11:45:00,,URGENT,PHYSICIAN REFERRAL,HOME,Other,ENGLISH,,UNKNOWN,,,0
 ## 14029832,22059088,2120-01-18 01:28:00,2120-01-20 16:13:00,,URGENT,TRANSFER FROM HOSPITAL,HOME,Other,ENGLISH,,OTHER,,,0
 ## 524521
 ## 257367
-## admission_type
-## AMBULATORY OBSERVATION
-## DIRECT EMER.
-## DIRECT OBSERVATION
-## ELECTIVE
-## EU OBSERVATION
-## EW EMER.
-## OBSERVATION ADMIT
-## SURGICAL SAME DAY ADMISSION
-## URGENT
-## 
-## admission_location
-## AMBULATORY SURGERY TRANSFER
-## CLINIC REFERRAL
-## EMERGENCY ROOM
-## INFORMATION NOT AVAILABLE
-## INTERNAL TRANSFER TO OR FROM PSYCH
-## PACU
-## PHYSICIAN REFERRAL
-## PROCEDURE SITE
-## TRANSFER FROM HOSPITAL
-## TRANSFER FROM SKILLED NURSING FACILITY
-## WALK-IN/SELF REFERRAL
-## insurance
-## Medicaid
-## Medicare
-## Other
-## ?
-## ENGLISH
-## language
-## 
-## DIVORCED
-## marital_status
-## MARRIED
-## SINGLE
-## WIDOWED
-## AMERICAN INDIAN/ALASKA NATIVE
-## ASIAN
-## BLACK/AFRICAN AMERICAN
-## ethnicity
-## HISPANIC/LATINO
-## OTHER
-## UNABLE TO OBTAIN
-## UNKNOWN
-## WHITE</code></pre>
+##       1 admission_type
+##    7259 AMBULATORY OBSERVATION
+##   21595 DIRECT EMER.
+##   20014 DIRECT OBSERVATION
+##   72077 ELECTIVE
+##  100938 EU OBSERVATION
+##  158032 EW EMER.
+##   55532 OBSERVATION ADMIT
+##   41103 SURGICAL SAME DAY ADMISSION
+##   47970 URGENT
+##   60437 
+##       1 admission_location
+##     191 AMBULATORY SURGERY TRANSFER
+##   10678 CLINIC REFERRAL
+##  246241 EMERGENCY ROOM
+##     379 INFORMATION NOT AVAILABLE
+##    4484 INTERNAL TRANSFER TO OR FROM PSYCH
+##    6075 PACU
+##  127648 PHYSICIAN REFERRAL
+##    8453 PROCEDURE SITE
+##   39150 TRANSFER FROM HOSPITAL
+##    4069 TRANSFER FROM SKILLED NURSING FACILITY
+##   16715 WALK-IN/SELF REFERRAL
+##       1 insurance
+##   50962 Medicaid
+##  171492 Medicare
+##  302066 Other
+##   46231 ?
+##  478289 ENGLISH
+##       1 language
+##   66133 
+##   33762 DIVORCED
+##       1 marital_status
+##  195326 MARRIED
+##  180453 SINGLE
+##   48846 WIDOWED
+##    1536 AMERICAN INDIAN/ALASKA NATIVE
+##   24522 ASIAN
+##   80526 BLACK/AFRICAN AMERICAN
+##       1 ethnicity
+##   29887 HISPANIC/LATINO
+##   26844 OTHER
+##    3742 UNABLE TO OBTAIN
+##   19419 UNKNOWN
+##  338044 WHITE</code></pre>
 </div>
 <div id="q3.-whos-popular-in-price-and-prejudice" class="section level2">
 <h2>Q3. Who’s popular in Price and Prejudice</h2>
@@ -587,6 +587,11 @@ done
 head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <p>Using <code>chmod</code> make the file executable by the owner, and run</p>
 <pre class="bash"><code>./middle.sh pride_and_prejudice.txt 20 5</code></pre>
+<pre><code>## 
+## Author: Jane Austen
+## 
+## Editor: R. W. (Robert William) Chapman
+## </code></pre>
 <p>Explain the output. Explain the meaning of <code>&quot;$1&quot;</code>, <code>&quot;$2&quot;</code>, and <code>&quot;$3&quot;</code> in this shell script. Why do we need the first line of the shell script?</p></li>
 </ol>
 <div id="q4.-more-fun-with-linux" class="section level3">
@@ -647,7 +652,7 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## 24 25 26 27 28 29 30</code></pre>
 <p><strong>Solution</strong> <code>date</code> displays current date and time</p>
 <pre class="bash"><code>date</code></pre>
-<pre><code>## Thu Jan 21 01:34:44 UTC 2021</code></pre>
+<pre><code>## Thu Jan 21 02:52:16 UTC 2021</code></pre>
 <p><strong>Solution</strong> <code>hostname</code> displays the name of the host</p>
 <pre class="bash"><code>hostname</code></pre>
 <pre><code>## ucla-biostat-203b</code></pre>
@@ -659,21 +664,24 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre><code>## Linux ucla-biostat-203b 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</code></pre>
 <p><strong>Solution</strong> <code>uptime</code> displays current time, system running, total time system has been running, user count, system load averages</p>
 <pre class="bash"><code>uptime</code></pre>
-<pre><code>##  01:34:44 up 17 days,  3:45,  0 users,  load average: 0.54, 0.32, 0.21</code></pre>
+<pre><code>##  02:52:16 up 17 days,  5:03,  1 user,  load average: 0.42, 0.15, 0.09</code></pre>
 <p><strong>Solution</strong><code>who am i</code> displays username for some reason mine doesnt display</p>
 <pre class="bash"><code>who am i</code></pre>
 <p><strong>Solution</strong><code>who</code> displays information in user on system</p>
 <pre class="bash"><code>who</code></pre>
+<pre><code>## asburysean pts/4        2021-01-21 02:05 (c-67-171-189-1.hsd1.or.comcast.net)</code></pre>
 <p><strong>Solution</strong><code>w</code> displays information in user on system and current processes</p>
 <pre class="bash"><code>w</code></pre>
-<pre><code>##  01:34:44 up 17 days,  3:45,  0 users,  load average: 0.54, 0.32, 0.21
-## USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT</code></pre>
+<pre><code>##  02:52:16 up 17 days,  5:03,  1 user,  load average: 0.42, 0.15, 0.09
+## USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+## asburyse pts/4    c-67-171-189-1.h 02:05   16:16   0.12s  0.12s -bash</code></pre>
 <p><strong>Solution</strong><code>id</code> displays numeric ids and the effective/real of a given user</p>
 <pre class="bash"><code>id</code></pre>
 <pre><code>## uid=1002(asburysean) gid=1004(asburysean) groups=1004(asburysean) context=system_u:system_r:initrc_t:s0</code></pre>
 <p><strong>Solution</strong><code>last | head</code> displays</p>
 <pre class="bash"><code>last | head</code></pre>
-<pre><code>## pdgerald pts/0        131.179.156.33   Thu Jan 21 01:02 - 01:04  (00:01)    
+<pre><code>## asburyse pts/4        c-67-171-189-1.h Thu Jan 21 02:05   still logged in   
+## pdgerald pts/0        131.179.156.33   Thu Jan 21 01:02 - 01:04  (00:01)    
 ## pdgerald pts/0        131.179.156.33   Thu Jan 21 00:58 - 01:01  (00:02)    
 ## pdgerald pts/0        131.179.156.33   Thu Jan 21 00:55 - 00:57  (00:02)    
 ## pdgerald pts/6        131.179.156.33   Thu Jan 21 00:29 - 00:51  (00:22)    
@@ -681,8 +689,7 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## andyliug pts/0        c-65-50-147-213. Wed Jan 20 18:48 - 18:49  (00:00)    
 ## andyliug pts/0        c-65-50-147-213. Wed Jan 20 18:46 - 18:48  (00:02)    
 ## zhaofan1 pts/0        131.179.158.40   Wed Jan 20 17:30 - 17:34  (00:04)    
-## jtan.sme pts/0        cpe-172-115-102- Wed Jan 20 07:10 - 08:08  (00:58)    
-## jihcai   pts/0        ip68-6-101-100.s Wed Jan 20 03:59 - 05:25  (01:25)</code></pre>
+## jtan.sme pts/0        cpe-172-115-102- Wed Jan 20 07:10 - 08:08  (00:58)</code></pre>
 <p><strong>Solution</strong> <code>echo {con,pre}{sent,fer}{s,ed}</code> dipslays combinations of the prefix from the first {} with combos of the other two {}</p>
 <pre class="bash"><code>echo {con,pre}{sent,fer}{s,ed}</code></pre>
 <pre><code>## consents consented confers confered presents presented prefers prefered</code></pre>
