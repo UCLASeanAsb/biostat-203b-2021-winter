@@ -20,7 +20,9 @@ sessionInfo()
 
 1. Apply for the [Student Developer Pack](https://education.github.com/pack) at GitHub using your UCLA email.
 
-**Solution**: Done
+**Solution**: Done [Completion Report](citiprogram.org/verify/?k96d77ce7-a0f6-4eee-be34-19686655340c-40369013)
+[Completion Certificate]\
+(citiprogram.org/verify/?wbbd907df-b472-4885-bfdc-ffeed71f6819-40369013)
 
 2. Create a **private** repository `biostat-203b-2021-winter` and add `Hua-Zhou`, `Chris-German` and `ElvisCuiHan` as your collaborators with write permission.
 
@@ -57,17 +59,17 @@ Please, do **not** put these data files into Git; they are big. Do **not** copy 
 
 
 
-**Solution**: core
+**Solution**: The contents of core is below:
     ```{bash}
     ls -l /usr/203b-data/mimic-iv/core
     ```
 
-**Solution**:hosp
+**Solution**:hosp contents is below:
 ```{bash}
     ls -l /usr/203b-data/mimic-iv/hosp
 ```
 
-**Solution**:icu
+**Solution**:icu contents is below:
 ```{bash}
     ls -l /usr/203b-data/mimic-iv/icu
 ```
@@ -83,7 +85,8 @@ zless works in the same way but is used for more flexiable viewing useage.
 
 zgrep is for searching phrases and/or words from a file and works on compressed or gzipped files.
 
-4. What's the output of following bash script?
+4. What's the output of following bash script? 
+**Solution**:Ouput is showing ever yfile in mimic-iv/core of only .gz file types.
     ```{bash, eval=F}
     for datafile in /usr/203b-data/mimic-iv/core/*.gz
       do
@@ -91,11 +94,8 @@ zgrep is for searching phrases and/or words from a file and works on compressed 
       done
     ```
 
-
-
 Display the number of lines in each data file using a similar loop.
-
-
+**Solution**:Number of lines in admissions: 65080, patients:6343, transfers:184657
 ```{bash}
     for datafile in /usr/203b-data/mimic-iv/core/*.gz
       do
@@ -107,8 +107,10 @@ Display the number of lines in each data file using a similar loop.
 
 4. Display the first few lines of `admissions.csv.gz`. How many rows are in this data file? How many unique patients (identified by `subject_id`) are in this data file? What are the possible values taken by each of the variable `admission_type`, `admission_location`, `insurance`, `language`, `marital_status`, and `ethnicity`? Also report the count for each unique value of these variables. (Hint: combine Linux commands `zcat`, `head`/`tail`, `awk`, `uniq`, `wc`, and so on.)
 
+**Solution**: First few lines see below, rows in data file:524521, unique patients:257367,
+values and variables outputs are below.
 ```{bash}
-
+#the first few lines of admissions.csv.gz:
 zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | head -n 3
 
 zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | wc -l
@@ -141,6 +143,7 @@ zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $12 }'| so
     ```
 Do **not** put this text file `pride_and_prejudice.txt` in Git. Using a `for` loop, how would you tabulate the number of times each of the four characters is mentioned?
 
+**Solution**: Jane 294, Darcy 417, Elizabeth 634, Lydia 170
 ```{bash}
 char=('Jane' 'Darcy' 'Elizabeth' 'Lydia')
 for name in "${char[@]}"
@@ -154,6 +157,7 @@ done
 
 
 2. What's the difference between the following two commands?
+**Solution**: The first one will overwrite the file and the 2nd one will put it at the output of the last line of the file
     ```{bash eval=FALSE}
     echo 'hello, world' > test1.txt
     ```
@@ -161,8 +165,6 @@ done
     ```{bash eval=FALSE}
     echo 'hello, world' >> test2.txt
     ```
-
-**Solution**: The first one will overwrite the file and the 2nd one will put it at the output of the last line of the file
 
 
 
@@ -178,7 +180,7 @@ Using `chmod` make the file executable by the owner, and run
     ./middle.sh pride_and_prejudice.txt 20 5
     ```
 Explain the output. Explain the meaning of `"$1"`, `"$2"`, and `"$3"` in this shell script. Why do we need the first line of the shell script?
-
+**Solution**: $1,$2,$3 are positional parameters and the $ sign is an input field separator. It gives us the author and editor name. First line tells us that the scrpit should be run in bash.
 
 ### Q4. More fun with Linux
 
@@ -244,7 +246,7 @@ w
 id
 ```
 
-**Solution**`last | head` displays 
+**Solution**`last | head` displays  who was on the server last
 ```{bash}
 last | head
 ```
@@ -258,7 +260,7 @@ echo {con,pre}{sent,fer}{s,ed}
 time sleep 5
 ```
 
-**Solution** `history | tail` displays nothing i guess
+**Solution** `history | tail` displays the latest history
 ```{bash}
 set -o history
 history | tail

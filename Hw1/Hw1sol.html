@@ -387,7 +387,8 @@ summary {
 <ol style="list-style-type: decimal">
 <li>Apply for the <a href="https://education.github.com/pack">Student Developer Pack</a> at GitHub using your UCLA email.</li>
 </ol>
-<p><strong>Solution</strong>: Done</p>
+<p><strong>Solution</strong>: Done <a href="citiprogram.org/verify/?k96d77ce7-a0f6-4eee-be34-19686655340c-40369013">Completion Report</a> [Completion Certificate]<br />
+(citiprogram.org/verify/?wbbd907df-b472-4885-bfdc-ffeed71f6819-40369013)</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Create a <strong>private</strong> repository <code>biostat-203b-2021-winter</code> and add <code>Hua-Zhou</code>, <code>Chris-German</code> and <code>ElvisCuiHan</code> as your collaborators with write permission.</li>
 </ol>
@@ -421,7 +422,7 @@ summary {
 <p>Use Bash commands to answer following questions.</p></li>
 <li><p>Display the contents in the folders <code>core</code>, <code>hosp</code>, <code>icu</code>. What are the functionalities of the bash commands <code>zcat</code>, <code>zless</code>, <code>zmore</code>, and <code>zgrep</code>?</p></li>
 </ol>
-<p><strong>Solution</strong>: core</p>
+<p><strong>Solution</strong>: The contents of core is below:</p>
 <pre><code>```bash
 ls -l /usr/203b-data/mimic-iv/core
 ```
@@ -432,7 +433,7 @@ ls -l /usr/203b-data/mimic-iv/core
 ## -rw-r--r--. 1 huazhou huazhou  2884996 Jan 11 01:54 patients.csv.gz
 ## -rw-r--r--. 1 huazhou huazhou 51188147 Jan 11 01:55 transfers.csv.gz
 ```</code></pre>
-<p><strong>Solution</strong>:hosp</p>
+<p><strong>Solution</strong>:hosp contents is below:</p>
 <pre class="bash"><code>    ls -l /usr/203b-data/mimic-iv/hosp</code></pre>
 <pre><code>## total 4375600
 ## -rw-r--r--. 1 huazhou huazhou     430049 Jan 11 01:57 d_hcpcs.csv.gz
@@ -452,7 +453,7 @@ ls -l /usr/203b-data/mimic-iv/core
 ## -rw-r--r--. 1 huazhou huazhou  367321152 Jan 11 02:00 prescriptions.csv.gz
 ## -rw-r--r--. 1 huazhou huazhou    4965027 Jan 11 02:11 procedures_icd.csv.gz
 ## -rw-r--r--. 1 huazhou huazhou    9579255 Jan 11 02:11 services.csv.gz</code></pre>
-<p><strong>Solution</strong>:icu</p>
+<p><strong>Solution</strong>:icu contents is below:</p>
 <pre class="bash"><code>    ls -l /usr/203b-data/mimic-iv/icu</code></pre>
 <pre><code>## total 2627900
 ## -rw-r--r--. 1 huazhou huazhou 2264326210 Jan 11 02:25 chartevents.csv.gz
@@ -468,13 +469,13 @@ ls -l /usr/203b-data/mimic-iv/core
 <p>zless works in the same way but is used for more flexiable viewing useage.</p>
 <p>zgrep is for searching phrases and/or words from a file and works on compressed or gzipped files.</p>
 <ol start="4" style="list-style-type: decimal">
-<li><p>What’s the output of following bash script?</p>
+<li><p>What’s the output of following bash script? <strong>Solution</strong>:Ouput is showing ever yfile in mimic-iv/core of only .gz file types.</p>
 <pre class="bash"><code>for datafile in /usr/203b-data/mimic-iv/core/*.gz
   do
     ls -l $datafile
   done</code></pre></li>
 </ol>
-<p>Display the number of lines in each data file using a similar loop.</p>
+<p>Display the number of lines in each data file using a similar loop. <strong>Solution</strong>:Number of lines in admissions: 65080, patients:6343, transfers:184657</p>
 <pre class="bash"><code>    for datafile in /usr/203b-data/mimic-iv/core/*.gz
       do
         wc -l $datafile
@@ -485,7 +486,8 @@ ls -l /usr/203b-data/mimic-iv/core
 <ol start="4" style="list-style-type: decimal">
 <li>Display the first few lines of <code>admissions.csv.gz</code>. How many rows are in this data file? How many unique patients (identified by <code>subject_id</code>) are in this data file? What are the possible values taken by each of the variable <code>admission_type</code>, <code>admission_location</code>, <code>insurance</code>, <code>language</code>, <code>marital_status</code>, and <code>ethnicity</code>? Also report the count for each unique value of these variables. (Hint: combine Linux commands <code>zcat</code>, <code>head</code>/<code>tail</code>, <code>awk</code>, <code>uniq</code>, <code>wc</code>, and so on.)</li>
 </ol>
-<pre class="bash"><code>
+<p><strong>Solution</strong>: First few lines see below, rows in data <a href="file:524521" class="uri">file:524521</a>, unique patients:257367, values and variables outputs are below.</p>
+<pre class="bash"><code>#the first few lines of admissions.csv.gz:
 zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | head -n 3
 
 zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | wc -l
@@ -562,6 +564,7 @@ zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $12 }&
 <pre class="bash"><code>curl http://www.gutenberg.org/cache/epub/42671/pg42671.txt &gt; pride_and_prejudice.txt</code></pre>
 <p>Do <strong>not</strong> put this text file <code>pride_and_prejudice.txt</code> in Git. Using a <code>for</code> loop, how would you tabulate the number of times each of the four characters is mentioned?</p></li>
 </ol>
+<p><strong>Solution</strong>: Jane 294, Darcy 417, Elizabeth 634, Lydia 170</p>
 <pre class="bash"><code>char=(&#39;Jane&#39; &#39;Darcy&#39; &#39;Elizabeth&#39; &#39;Lydia&#39;)
 for name in &quot;${char[@]}&quot;
   do
@@ -573,13 +576,10 @@ done
 ## 634
 ## 170</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li><p>What’s the difference between the following two commands?</p>
+<li><p>What’s the difference between the following two commands? <strong>Solution</strong>: The first one will overwrite the file and the 2nd one will put it at the output of the last line of the file</p>
 <pre class="bash"><code>echo &#39;hello, world&#39; &gt; test1.txt</code></pre>
 <p>and</p>
 <pre class="bash"><code>echo &#39;hello, world&#39; &gt;&gt; test2.txt</code></pre></li>
-</ol>
-<p><strong>Solution</strong>: The first one will overwrite the file and the 2nd one will put it at the output of the last line of the file</p>
-<ol start="3" style="list-style-type: decimal">
 <li><p>Using your favorite text editor (e.g., <code>vi</code>), type the following and save the file as <code>middle.sh</code>:</p>
 <pre class="bash"><code>#!/bin/sh
 # Select lines from the middle of a file.
@@ -592,7 +592,7 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## 
 ## Editor: R. W. (Robert William) Chapman
 ## </code></pre>
-<p>Explain the output. Explain the meaning of <code>&quot;$1&quot;</code>, <code>&quot;$2&quot;</code>, and <code>&quot;$3&quot;</code> in this shell script. Why do we need the first line of the shell script?</p></li>
+<p>Explain the output. Explain the meaning of <code>&quot;$1&quot;</code>, <code>&quot;$2&quot;</code>, and <code>&quot;$3&quot;</code> in this shell script. Why do we need the first line of the shell script? <strong>Solution</strong>: $1,$2,$3 are positional parameters and the $ sign is an input field separator. It gives us the author and editor name. First line tells us that the scrpit should be run in bash.</p></li>
 </ol>
 <div id="q4.-more-fun-with-linux" class="section level3">
 <h3>Q4. More fun with Linux</h3>
@@ -652,7 +652,7 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## 24 25 26 27 28 29 30</code></pre>
 <p><strong>Solution</strong> <code>date</code> displays current date and time</p>
 <pre class="bash"><code>date</code></pre>
-<pre><code>## Thu Jan 21 02:59:38 UTC 2021</code></pre>
+<pre><code>## Thu Jan 21 16:46:37 UTC 2021</code></pre>
 <p><strong>Solution</strong> <code>hostname</code> displays the name of the host</p>
 <pre class="bash"><code>hostname</code></pre>
 <pre><code>## ucla-biostat-203b</code></pre>
@@ -664,32 +664,32 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre><code>## Linux ucla-biostat-203b 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</code></pre>
 <p><strong>Solution</strong> <code>uptime</code> displays current time, system running, total time system has been running, user count, system load averages</p>
 <pre class="bash"><code>uptime</code></pre>
-<pre><code>##  02:59:38 up 17 days,  5:10,  1 user,  load average: 0.23, 0.17, 0.13</code></pre>
+<pre><code>##  16:46:37 up 17 days, 18:57,  1 user,  load average: 0.41, 0.13, 0.08</code></pre>
 <p><strong>Solution</strong><code>who am i</code> displays username for some reason mine doesnt display</p>
 <pre class="bash"><code>who am i</code></pre>
 <p><strong>Solution</strong><code>who</code> displays information in user on system</p>
 <pre class="bash"><code>who</code></pre>
-<pre><code>## asburysean pts/4        2021-01-21 02:05 (c-67-171-189-1.hsd1.or.comcast.net)</code></pre>
+<pre><code>## filipovicmilan271 pts/7        2021-01-21 06:03 (110.3.236.35.bc.googleusercontent.com)</code></pre>
 <p><strong>Solution</strong><code>w</code> displays information in user on system and current processes</p>
 <pre class="bash"><code>w</code></pre>
-<pre><code>##  02:59:38 up 17 days,  5:10,  1 user,  load average: 0.23, 0.17, 0.13
+<pre><code>##  16:46:37 up 17 days, 18:57,  1 user,  load average: 0.41, 0.13, 0.08
 ## USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
-## asburyse pts/4    c-67-171-189-1.h 02:05    5:30   0.13s  0.13s -bash</code></pre>
+## filipovi pts/7    110.3.236.35.bc. 06:03   10:37m  0.06s  0.06s -bash</code></pre>
 <p><strong>Solution</strong><code>id</code> displays numeric ids and the effective/real of a given user</p>
 <pre class="bash"><code>id</code></pre>
 <pre><code>## uid=1002(asburysean) gid=1004(asburysean) groups=1004(asburysean) context=system_u:system_r:initrc_t:s0</code></pre>
-<p><strong>Solution</strong><code>last | head</code> displays</p>
+<p><strong>Solution</strong><code>last | head</code> displays who was on the server last</p>
 <pre class="bash"><code>last | head</code></pre>
-<pre><code>## asburyse pts/4        c-67-171-189-1.h Thu Jan 21 02:05   still logged in   
-## pdgerald pts/0        131.179.156.33   Thu Jan 21 01:02 - 01:04  (00:01)    
-## pdgerald pts/0        131.179.156.33   Thu Jan 21 00:58 - 01:01  (00:02)    
-## pdgerald pts/0        131.179.156.33   Thu Jan 21 00:55 - 00:57  (00:02)    
-## pdgerald pts/6        131.179.156.33   Thu Jan 21 00:29 - 00:51  (00:22)    
-## valentin pts/0        47.156.178.126   Wed Jan 20 20:56 - 00:52  (03:55)    
-## andyliug pts/0        c-65-50-147-213. Wed Jan 20 18:48 - 18:49  (00:00)    
-## andyliug pts/0        c-65-50-147-213. Wed Jan 20 18:46 - 18:48  (00:02)    
-## zhaofan1 pts/0        131.179.158.40   Wed Jan 20 17:30 - 17:34  (00:04)    
-## jtan.sme pts/0        cpe-172-115-102- Wed Jan 20 07:10 - 08:08  (00:58)</code></pre>
+<pre><code>## haoyunj  pts/0        101.93.71.50     Thu Jan 21 13:38 - 14:07  (00:29)    
+## haoyunj  pts/1        101.93.71.50     Thu Jan 21 13:08 - 13:30  (00:22)    
+## haoyunj  pts/0        101.93.71.50     Thu Jan 21 12:53 - 13:15  (00:22)    
+## haoyunj  pts/0        101.93.71.50     Thu Jan 21 12:27 - 12:50  (00:22)    
+## valentin pts/4        47.156.178.126   Thu Jan 21 06:17 - 06:29  (00:12)    
+## filipovi pts/7        110.3.236.35.bc. Thu Jan 21 06:03   still logged in   
+## linyuzho pts/5        s-169-232-70-224 Thu Jan 21 05:32 - 06:35  (01:02)    
+## kmishimo pts/6        ip174-67-246-239 Thu Jan 21 05:00 - 05:32  (00:32)    
+## haoyunj  pts/5        101.93.71.50     Thu Jan 21 04:59 - 05:04  (00:04)    
+## valentin pts/4        47.156.178.126   Thu Jan 21 04:57 - 06:15  (01:18)</code></pre>
 <p><strong>Solution</strong> <code>echo {con,pre}{sent,fer}{s,ed}</code> dipslays combinations of the prefix from the first {} with combos of the other two {}</p>
 <pre class="bash"><code>echo {con,pre}{sent,fer}{s,ed}</code></pre>
 <pre><code>## consents consented confers confered presents presented prefers prefered</code></pre>
@@ -697,9 +697,9 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre class="bash"><code>time sleep 5</code></pre>
 <pre><code>## 
 ## real 0m5.002s
-## user 0m0.002s
-## sys  0m0.000s</code></pre>
-<p><strong>Solution</strong> <code>history | tail</code> displays nothing i guess</p>
+## user 0m0.000s
+## sys  0m0.002s</code></pre>
+<p><strong>Solution</strong> <code>history | tail</code> displays the latest history</p>
 <pre class="bash"><code>set -o history
 history | tail</code></pre>
 <pre><code>##     1  history | tail</code></pre>
