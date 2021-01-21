@@ -652,7 +652,7 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## 24 25 26 27 28 29 30</code></pre>
 <p><strong>Solution</strong> <code>date</code> displays current date and time</p>
 <pre class="bash"><code>date</code></pre>
-<pre><code>## Thu Jan 21 02:52:16 UTC 2021</code></pre>
+<pre><code>## Thu Jan 21 02:59:38 UTC 2021</code></pre>
 <p><strong>Solution</strong> <code>hostname</code> displays the name of the host</p>
 <pre class="bash"><code>hostname</code></pre>
 <pre><code>## ucla-biostat-203b</code></pre>
@@ -664,7 +664,7 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre><code>## Linux ucla-biostat-203b 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</code></pre>
 <p><strong>Solution</strong> <code>uptime</code> displays current time, system running, total time system has been running, user count, system load averages</p>
 <pre class="bash"><code>uptime</code></pre>
-<pre><code>##  02:52:16 up 17 days,  5:03,  1 user,  load average: 0.42, 0.15, 0.09</code></pre>
+<pre><code>##  02:59:38 up 17 days,  5:10,  1 user,  load average: 0.23, 0.17, 0.13</code></pre>
 <p><strong>Solution</strong><code>who am i</code> displays username for some reason mine doesnt display</p>
 <pre class="bash"><code>who am i</code></pre>
 <p><strong>Solution</strong><code>who</code> displays information in user on system</p>
@@ -672,9 +672,9 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre><code>## asburysean pts/4        2021-01-21 02:05 (c-67-171-189-1.hsd1.or.comcast.net)</code></pre>
 <p><strong>Solution</strong><code>w</code> displays information in user on system and current processes</p>
 <pre class="bash"><code>w</code></pre>
-<pre><code>##  02:52:16 up 17 days,  5:03,  1 user,  load average: 0.42, 0.15, 0.09
+<pre><code>##  02:59:38 up 17 days,  5:10,  1 user,  load average: 0.23, 0.17, 0.13
 ## USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
-## asburyse pts/4    c-67-171-189-1.h 02:05   16:16   0.12s  0.12s -bash</code></pre>
+## asburyse pts/4    c-67-171-189-1.h 02:05    5:30   0.13s  0.13s -bash</code></pre>
 <p><strong>Solution</strong><code>id</code> displays numeric ids and the effective/real of a given user</p>
 <pre class="bash"><code>id</code></pre>
 <pre><code>## uid=1002(asburysean) gid=1004(asburysean) groups=1004(asburysean) context=system_u:system_r:initrc_t:s0</code></pre>
@@ -697,10 +697,12 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre class="bash"><code>time sleep 5</code></pre>
 <pre><code>## 
 ## real 0m5.002s
-## user 0m0.000s
-## sys  0m0.002s</code></pre>
+## user 0m0.002s
+## sys  0m0.000s</code></pre>
 <p><strong>Solution</strong> <code>history | tail</code> displays nothing i guess</p>
-<pre class="bash"><code>history | tail</code></pre>
+<pre class="bash"><code>set -o history
+history | tail</code></pre>
+<pre><code>##     1  history | tail</code></pre>
 </div>
 </div>
 
