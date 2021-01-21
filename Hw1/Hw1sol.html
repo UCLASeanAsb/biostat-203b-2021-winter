@@ -575,10 +575,14 @@ for name in &quot;${char[@]}&quot;
 grep -o $name pride_and_prejudice.txt | wc -l
 done
 </code></pre>
-<pre><code>## 294
-## 417
-## 634
-## 170</code></pre>
+<pre><code>## grep: pride_and_prejudice.txt: No such file or directory
+## 0
+## grep: pride_and_prejudice.txt: No such file or directory
+## 0
+## grep: pride_and_prejudice.txt: No such file or directory
+## 0
+## grep: pride_and_prejudice.txt: No such file or directory
+## 0</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>What’s the difference between the following two commands?</li>
 </ol>
@@ -599,11 +603,7 @@ echo &#39;hello, world&#39; &gt;&gt; test2.txt
 head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <p>Using <code>chmod</code> make the file executable by the owner, and run</p>
 <pre class="bash"><code>./middle.sh pride_and_prejudice.txt 20 5</code></pre>
-<pre><code>## 
-## Author: Jane Austen
-## 
-## Editor: R. W. (Robert William) Chapman
-## </code></pre>
+<pre><code>## head: cannot open ‘pride_and_prejudice.txt’ for reading: No such file or directory</code></pre>
 <p>Explain the output. Explain the meaning of <code>&quot;$1&quot;</code>, <code>&quot;$2&quot;</code>, and <code>&quot;$3&quot;</code> in this shell script. Why do we need the first line of the shell script?</p></li>
 </ol>
 <p><strong>Solution</strong>: $1,$2,$3 are positional parameters and the $ sign is an input field separator. It gives us the author and editor name. First line tells us that the scrpit should be run in bash.</p>
@@ -665,7 +665,7 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## 24 25 26 27 28 29 30</code></pre>
 <p><strong>Solution</strong> <code>date</code> displays current date and time</p>
 <pre class="bash"><code>date</code></pre>
-<pre><code>## Thu Jan 21 17:38:25 UTC 2021</code></pre>
+<pre><code>## Thu Jan 21 19:19:40 UTC 2021</code></pre>
 <p><strong>Solution</strong> <code>hostname</code> displays the name of the host</p>
 <pre class="bash"><code>hostname</code></pre>
 <pre><code>## ucla-biostat-203b</code></pre>
@@ -677,25 +677,23 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre><code>## Linux ucla-biostat-203b 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</code></pre>
 <p><strong>Solution</strong> <code>uptime</code> displays current time, system running, total time system has been running, user count, system load averages</p>
 <pre class="bash"><code>uptime</code></pre>
-<pre><code>##  17:38:26 up 17 days, 19:49,  2 users,  load average: 0.36, 0.09, 0.07</code></pre>
+<pre><code>##  19:19:41 up 17 days, 21:30,  1 user,  load average: 0.34, 0.09, 0.07</code></pre>
 <p><strong>Solution</strong><code>who am i</code> displays username for some reason mine doesnt display</p>
 <pre class="bash"><code>who am i</code></pre>
 <p><strong>Solution</strong><code>who</code> displays information in user on system</p>
 <pre class="bash"><code>who</code></pre>
-<pre><code>## asburysean pts/0        2021-01-21 17:13 (c-73-25-154-169.hsd1.or.comcast.net)
-## filipovicmilan271 pts/7        2021-01-21 06:03 (110.3.236.35.bc.googleusercontent.com)</code></pre>
+<pre><code>## filipovicmilan271 pts/7        2021-01-21 06:03 (110.3.236.35.bc.googleusercontent.com)</code></pre>
 <p><strong>Solution</strong><code>w</code> displays information in user on system and current processes</p>
 <pre class="bash"><code>w</code></pre>
-<pre><code>##  17:38:26 up 17 days, 19:49,  2 users,  load average: 0.36, 0.09, 0.07
+<pre><code>##  19:19:41 up 17 days, 21:30,  1 user,  load average: 0.34, 0.09, 0.07
 ## USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
-## asburyse pts/0    c-73-25-154-169. 17:13    5:22   0.03s  0.03s -bash
-## filipovi pts/7    110.3.236.35.bc. 06:03   11:29m  0.06s  0.06s -bash</code></pre>
+## filipovi pts/7    110.3.236.35.bc. 06:03   13:10m  0.06s  0.06s -bash</code></pre>
 <p><strong>Solution</strong><code>id</code> displays numeric ids and the effective/real of a given user</p>
 <pre class="bash"><code>id</code></pre>
 <pre><code>## uid=1002(asburysean) gid=1004(asburysean) groups=1004(asburysean) context=system_u:system_r:initrc_t:s0</code></pre>
 <p><strong>Solution</strong><code>last | head</code> displays who was on the server last</p>
 <pre class="bash"><code>last | head</code></pre>
-<pre><code>## asburyse pts/0        c-73-25-154-169. Thu Jan 21 17:13   still logged in   
+<pre><code>## asburyse pts/0        c-73-25-154-169. Thu Jan 21 17:13 - 17:59  (00:46)    
 ## asburyse pts/0        c-73-25-154-169. Thu Jan 21 17:11 - 17:13  (00:01)    
 ## haoyunj  pts/0        101.93.71.50     Thu Jan 21 13:38 - 14:07  (00:29)    
 ## haoyunj  pts/1        101.93.71.50     Thu Jan 21 13:08 - 13:30  (00:22)    
@@ -711,9 +709,9 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <p><strong>Solution</strong> <code>time sleep 5</code> pauses the script for a time of 5 seconds</p>
 <pre class="bash"><code>time sleep 5</code></pre>
 <pre><code>## 
-## real 0m5.003s
-## user 0m0.000s
-## sys  0m0.002s</code></pre>
+## real 0m5.002s
+## user 0m0.001s
+## sys  0m0.001s</code></pre>
 <p><strong>Solution</strong> <code>history | tail</code> displays the latest history</p>
 <pre class="bash"><code>set -o history
 history | tail</code></pre>
