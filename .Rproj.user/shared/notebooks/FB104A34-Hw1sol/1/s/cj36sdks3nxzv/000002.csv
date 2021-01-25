@@ -1,0 +1,12 @@
+"0","char=('Jane' 'Darcy' 'Elizabeth' 'Lydia')
+for name in ""${char[@]}""
+  do
+grep -o $name pride_and_prejudice.txt | wc -l
+done
+
+"
+"1","294
+417
+634
+170
+"

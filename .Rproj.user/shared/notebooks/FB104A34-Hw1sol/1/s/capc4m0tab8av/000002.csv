@@ -1,0 +1,8 @@
+"0","    for datafile in /usr/203b-data/mimic-iv/core/*.gz
+      do
+        wc -l $datafile
+      done"
+"1","65080 /usr/203b-data/mimic-iv/core/admissions.csv.gz
+6343 /usr/203b-data/mimic-iv/core/patients.csv.gz
+184657 /usr/203b-data/mimic-iv/core/transfers.csv.gz
+"

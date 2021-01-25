@@ -1,0 +1,20 @@
+"0","    ls -l /usr/203b-data/mimic-iv/hosp"
+"1","total 4375600
+-rw-r--r--. 1 huazhou huazhou     430049 Jan 11 01:57 d_hcpcs.csv.gz
+-rw-r--r--. 1 huazhou huazhou   26575586 Jan 11 01:57 diagnoses_icd.csv.gz
+-rw-r--r--. 1 huazhou huazhou     723633 Jan 11 02:00 d_icd_diagnoses.csv.gz
+-rw-r--r--. 1 huazhou huazhou     564422 Jan 11 02:11 d_icd_procedures.csv.gz
+-rw-r--r--. 1 huazhou huazhou      14845 Jan 11 02:00 d_labitems.csv.gz
+-rw-r--r--. 1 huazhou huazhou   12913088 Jan 11 02:00 drgcodes.csv.gz
+-rw-r--r--. 1 huazhou huazhou  518077567 Jan 11 02:13 emar.csv.gz
+-rw-r--r--. 1 huazhou huazhou  479709397 Jan 11 01:59 emar_detail.csv.gz
+-rw-r--r--. 1 huazhou huazhou    1415469 Jan 11 02:11 hcpcsevents.csv.gz
+-rw-r--r--. 1 huazhou huazhou 2093725833 Jan 11 02:09 labevents.csv.gz
+-rw-r--r--. 1 huazhou huazhou   15896456 Jan 11 02:13 microbiologyevents.csv.gz
+-rw-r--r--. 1 huazhou huazhou  423170857 Jan 11 02:11 pharmacy.csv.gz
+-rw-r--r--. 1 huazhou huazhou  501822286 Jan 11 01:57 poe.csv.gz
+-rw-r--r--. 1 huazhou huazhou   23675550 Jan 11 01:57 poe_detail.csv.gz
+-rw-r--r--. 1 huazhou huazhou  367321152 Jan 11 02:00 prescriptions.csv.gz
+-rw-r--r--. 1 huazhou huazhou    4965027 Jan 11 02:11 procedures_icd.csv.gz
+-rw-r--r--. 1 huazhou huazhou    9579255 Jan 11 02:11 services.csv.gz
+"

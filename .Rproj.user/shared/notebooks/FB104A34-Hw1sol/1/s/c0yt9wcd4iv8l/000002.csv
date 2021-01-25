@@ -1,0 +1,81 @@
+"0","#the first few lines of admissions.csv.gz:
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | head -n 3
+
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | wc -l
+
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |sort| awk -F, '{ print $1 }' |uniq| wc -l
+
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $6}'| sort| uniq -c
+
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $7 }'| sort| uniq -c
+
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $9 }'| sort| uniq -c
+
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $10 }'| sort| uniq -c
+
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $11 }'| sort| uniq -c
+
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $12 }'| sort| uniq -c
+"
+"1","subject_id,hadm_id,admittime,dischtime,deathtime,admission_type,admission_location,discharge_location,insurance,language,marital_status,ethnicity,edregtime,edouttime,hospital_expire_flag
+12427812,21593330,2184-01-06 11:51:00,2184-01-10 11:45:00,,URGENT,PHYSICIAN REFERRAL,HOME,Other,ENGLISH,,UNKNOWN,,,0
+14029832,22059088,2120-01-18 01:28:00,2120-01-20 16:13:00,,URGENT,TRANSFER FROM HOSPITAL,HOME,Other,ENGLISH,,OTHER,,,0
+"
+"2","
+gzip: stdout: Broken pipe
+"
+"1","524521
+"
+"1","257367
+"
+"1","      1 admission_type
+   7259 AMBULATORY OBSERVATION
+  21595 DIRECT EMER.
+  20014 DIRECT OBSERVATION
+  72077 ELECTIVE
+ 100938 EU OBSERVATION
+ 158032 EW EMER.
+  55532 OBSERVATION ADMIT
+  41103 SURGICAL SAME DAY ADMISSION
+  47970 URGENT
+"
+"1","  60437 
+      1 admission_location
+    191 AMBULATORY SURGERY TRANSFER
+  10678 CLINIC REFERRAL
+ 246241 EMERGENCY ROOM
+    379 INFORMATION NOT AVAILABLE
+   4484 INTERNAL TRANSFER TO OR FROM PSYCH
+   6075 PACU
+ 127648 PHYSICIAN REFERRAL
+   8453 PROCEDURE SITE
+  39150 TRANSFER FROM HOSPITAL
+   4069 TRANSFER FROM SKILLED NURSING FACILITY
+  16715 WALK-IN/SELF REFERRAL
+"
+"1","      1 insurance
+  50962 Medicaid
+ 171492 Medicare
+ 302066 Other
+"
+"1","  46231 ?
+ 478289 ENGLISH
+      1 language
+"
+"1","  66133 
+  33762 DIVORCED
+      1 marital_status
+ 195326 MARRIED
+ 180453 SINGLE
+  48846 WIDOWED
+"
+"1","   1536 AMERICAN INDIAN/ALASKA NATIVE
+  24522 ASIAN
+  80526 BLACK/AFRICAN AMERICAN
+      1 ethnicity
+  29887 HISPANIC/LATINO
+  26844 OTHER
+   3742 UNABLE TO OBTAIN
+  19419 UNKNOWN
+ 338044 WHITE
+"

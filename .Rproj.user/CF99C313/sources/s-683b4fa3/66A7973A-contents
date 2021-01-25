@@ -1,0 +1,7 @@
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE)
+**Solution**: core
+```{bash}
+ls -l /usr/203b-data/mimic-iv/core
+```

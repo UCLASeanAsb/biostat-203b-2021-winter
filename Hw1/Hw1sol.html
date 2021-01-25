@@ -665,7 +665,7 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## 24 25 26 27 28 29 30</code></pre>
 <p><strong>Solution</strong> <code>date</code> displays current date and time</p>
 <pre class="bash"><code>date</code></pre>
-<pre><code>## Fri Jan 22 00:31:37 UTC 2021</code></pre>
+<pre><code>## Fri Jan 22 00:33:12 UTC 2021</code></pre>
 <p><strong>Solution</strong> <code>hostname</code> displays the name of the host</p>
 <pre class="bash"><code>hostname</code></pre>
 <pre><code>## ucla-biostat-203b</code></pre>
@@ -677,7 +677,7 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre><code>## Linux ucla-biostat-203b 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</code></pre>
 <p><strong>Solution</strong> <code>uptime</code> displays current time, system running, total time system has been running, user count, system load averages</p>
 <pre class="bash"><code>uptime</code></pre>
-<pre><code>##  00:31:37 up 18 days,  2:42,  6 users,  load average: 3.64, 2.21, 1.44</code></pre>
+<pre><code>##  00:33:12 up 18 days,  2:44,  6 users,  load average: 2.83, 2.25, 1.53</code></pre>
 <p><strong>Solution</strong><code>who am i</code> displays username for some reason mine doesnt display</p>
 <pre class="bash"><code>who am i</code></pre>
 <p><strong>Solution</strong><code>who</code> displays information in user on system</p>
@@ -690,14 +690,14 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## elviscuihan pts/16       2021-01-22 00:28 (115.206.116.237)</code></pre>
 <p><strong>Solution</strong><code>w</code> displays information in user on system and current processes</p>
 <pre class="bash"><code>w</code></pre>
-<pre><code>##  00:31:37 up 18 days,  2:42,  6 users,  load average: 3.64, 2.21, 1.44
+<pre><code>##  00:33:12 up 18 days,  2:44,  6 users,  load average: 2.83, 2.25, 1.53
 ## USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
-## jyixzhou pts/0    cpe84948c862443- 00:13   16:17   0.04s  0.04s -bash
-## filipovi pts/7    110.3.236.35.bc. Thu06   18:22m  0.06s  0.06s -bash
-## germc3   pts/8    cpe-172-117-252- 22:27    7:53   0.15s  0.15s -bash
-## hunanzho pts/11   47.145.202.194   23:28    9.00s  0.08s  0.08s -bash
-## spendlov pts/13   cpe-172-117-248- 23:35   55:29   0.04s  0.00s gzip -dc -- /usr/203b-data/mimic-iv/core/admissions.csv.gz
-## elviscui pts/16   115.206.116.237  00:28    2:57   0.01s  0.01s -bash</code></pre>
+## jyixzhou pts/0    cpe84948c862443- 00:13   17:52   0.04s  0.04s -bash
+## filipovi pts/7    110.3.236.35.bc. Thu06   18:24m  0.06s  0.06s -bash
+## germc3   pts/8    cpe-172-117-252- 22:27    9:28   0.15s  0.15s -bash
+## hunanzho pts/11   47.145.202.194   23:28    8.00s  0.13s  0.13s -bash
+## spendlov pts/13   cpe-172-117-248- 23:35   57:04   0.04s  0.00s gzip -dc -- /usr/203b-data/mimic-iv/core/admissions.csv.gz
+## elviscui pts/16   115.206.116.237  00:28    4:32   0.01s  0.01s -bash</code></pre>
 <p><strong>Solution</strong><code>id</code> displays numeric ids and the effective/real of a given user</p>
 <pre class="bash"><code>id</code></pre>
 <pre><code>## uid=1002(asburysean) gid=1004(asburysean) groups=1004(asburysean) context=system_u:system_r:initrc_t:s0</code></pre>
@@ -720,8 +720,8 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre class="bash"><code>time sleep 5</code></pre>
 <pre><code>## 
 ## real 0m5.002s
-## user 0m0.000s
-## sys  0m0.002s</code></pre>
+## user 0m0.001s
+## sys  0m0.001s</code></pre>
 <p><strong>Solution</strong> <code>history | tail</code> displays the latest history</p>
 <pre class="bash"><code>set -o history
 history | tail</code></pre>

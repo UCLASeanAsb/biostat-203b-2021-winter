@@ -1,0 +1,8 @@
+"0","    for datafile in /usr/203b-data/mimic-iv/core/*.gz
+      do
+        ls -l $datafile
+      done"
+"1","-rw-r--r--. 1 huazhou huazhou 17224843 Jan 11 01:55 /usr/203b-data/mimic-iv/core/admissions.csv.gz
+-rw-r--r--. 1 huazhou huazhou 2884996 Jan 11 01:54 /usr/203b-data/mimic-iv/core/patients.csv.gz
+-rw-r--r--. 1 huazhou huazhou 51188147 Jan 11 01:55 /usr/203b-data/mimic-iv/core/transfers.csv.gz
+"
