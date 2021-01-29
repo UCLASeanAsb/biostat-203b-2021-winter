@@ -1,6 +1,6 @@
 *Sean Asbury*
 
-### Overall Grade: 71/100
+### Overall Grade: 86/100
 
 ### Quality of report: 10/10
 
@@ -12,13 +12,13 @@
 
 -   Is the report clear (whole sentences, typos, grammar)? Do readers have a clear idea what's going on and how are results produced by just reading the report? 
 
-### Completeness, correctness and efficiency of solution: 33/50
+### Completeness, correctness and efficiency of solution: 48/50
 
 - Q1 (10/10)
 
-- Q2 (1/20)
+- Q2 (16/20)
 
-CITI training links not included. -15pts 
+CITI training links not included. -15pts  **Emailed to me +15**
 You need to use `zcat` to display the correct number of lines in each data file since they are gzipped. -2pts. 
 
 For Q2.5, should skip the header when finiding the unique values of each variable. -2pts
