@@ -37,9 +37,8 @@ system(str_c("tree -s -L 2 ", shQuote(mimic_path)), intern = TRUE)
 ## Q1. PhysioNet credential
 
 At this moment, you should already get credentialed on the PhysioNet. Please include a screenshot of your `Data Use Agreement for the MIMIC-IV (v0.4)`.
-```{r}
 
-```
+![PhysioNet-Credentialed](biostat-203b-2021-winter/Hw2/PhysioNet-Credentialed.PNG)
 ## Q2. `read.csv` (base R) vs `read_csv` (tidyverse) vs `fread` (data.table)
 
 There are quite a few utilities in R for reading data files. Let us test the speed of reading a moderate sized compressed csv file, `admissions.csv.gz`, by three programs: `read.csv` in base R, `read_csv` in tidyverse, and `fread` in the popular data.table package. Is there any speed difference?
@@ -73,9 +72,6 @@ unique(df[c("subject_id")])
 ## Number of unique subect id's
 n_distinct(df[c("subject_id")])
 
-totals <-df %>%
-    group_by(first_careunit) %>%
-    summarize(total = sum(stay_id))
 
 
 ggplot(data = df, mapping = aes(x = los, y = "")) + 
@@ -83,8 +79,16 @@ ggplot(data = df, mapping = aes(x = los, y = "")) +
 
 
 
-ggplot(data = df,mapping = aes(x = factor(first_careunit), y = stat(count), fill = first_careunit))+ geom_bar(stat = "count", las =2) + geom_text(stat = 'count', aes(label=..count..), vjust=0)+ theme(axis.text.x = element_text(angle = 90, hjust = 1)) +  scale_x_discrete(labels = c('CVICU','CCU','MICU', 'MICU/SICU', 'Medicine', 'Neuro Intermediate', 'Neuro Stepdown', 'Neuro SICU', 'PACU','SICU','TSICU')) + 
-  guides(fill=FALSE)
+ggplot(data = df,mapping = aes(x = factor(first_careunit), y = stat(count),
+      fill = first_careunit))+ geom_bar(stat = "count")  + geom_text(stat = 'count', aes(label=..count..), vjust=0) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  scale_x_discrete(labels = c('CVICU','CCU','MICU', 'MICU/SICU', 'Medicine',
+'Neuro Intermediate', 'Neuro Stepdown', 'Neuro SICU', 'PACU','SICU','TSICU')) + 
+  guides(fill=FALSE) + xlab("First Care Unit") + ylab("Count")
+
+ggplot(data = df,mapping = aes(x = factor(last_careunit),
+      fill = last_careunit)) + geom_bar(stat = "count") + geom_text(
+        stat = 'count', aes(label=..count..), vjust=0) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_x_discrete(labels = c('CVICU', 'CCU','MICU','MICU/SICU', 'Neuro Intermediate', 'Neuro Stepdown', 'NEURO SICU', 'SICU', 'TSICU')) +
+  guides(fill=FALSE) + xlab("Last Care Unit") + ylab("Count")
 
 ```
 
@@ -110,6 +114,14 @@ Information of the patients admitted into hospital is available in `admissions.c
 - death 
 
 Note it is possible that one patient (uniquely identified by the `subject_id`) is admitted into hospital multiple times. When summarizing some demographic information, it makes sense to summarize based on unique patients. 
+
+```{r}
+dfadd <- read_csv("/usr/203b-data/mimic-iv/core/admissions.csv.gz")
+head(dfadd)
+year(dfadd$admittime)
+
+```
+
 
 ## Q5. `patient` data
 
