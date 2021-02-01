@@ -83,7 +83,8 @@ ggplot(data = df, mapping = aes(x = los, y = "")) +
 
 
 
-ggplot(data = df,mapping = aes(x = factor(first_careunit), y = stat(count),fill = first_careunit))+ geom_bar(stat = "count") +geom_text(stat = 'count', aes(label=..count..), vjust=-1)
+ggplot(data = df,mapping = aes(x = factor(first_careunit), y = stat(count), fill = first_careunit))+ geom_bar(stat = "count", las =2) + geom_text(stat = 'count', aes(label=..count..), vjust=0)+ theme(axis.text.x = element_text(angle = 90, hjust = 1)) +  scale_x_discrete(labels = c('CVICU','CCU','MICU', 'MICU/SICU', 'Medicine', 'Neuro Intermediate', 'Neuro Stepdown', 'Neuro SICU', 'PACU','SICU','TSICU')) + 
+  guides(fill=FALSE)
 
 ```
 
