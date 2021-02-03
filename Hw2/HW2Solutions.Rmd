@@ -128,6 +128,14 @@ ggplot(data = dfadd,mapping = aes(x = mday(admittime) , y = stat(count),axis(1, 
 
 ggplot(data = dfadd,mapping = aes(x = wday(admittime, label = TRUE) , y = stat(count)))+ geom_bar() + geom_text(stat = 'count', aes(label=..count..), vjust=0) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + xlab("Weekday") + ylab("Count")
 
+ggplot(data = dfadd,mapping = aes(x = hour(admittime) , y = stat(count)))+ geom_freqpoly(stat = "count") + scale_x_continuous(n.breaks = 24) 
+
+ggplot(data = dfadd,mapping = aes(x = year(deathtime) , y = stat(count)))+ geom_freqpoly(stat = "count")
+
+df <- dfadd %>% count(subject_id)
+df
+ggplot(data = df,mapping = aes(x = n , y = stat(count)), xlim=c(0,50))+ geom_bar() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +scale_x_continuous(limits = c(0, 50))
+
 
 
 ```
@@ -145,6 +153,12 @@ Explore `patients.csv.gz` (<https://mimic-iv.mit.edu/docs/datasets/core/patients
 `labevents.csv.gz` (<https://mimic-iv.mit.edu/docs/datasets/hosp/labevents/>) contains all laboratory measurements for patients. 
 
 We are interested in the lab measurements of creatinine (50912), potassium (50971), sodium (50983), chloride (50902), bicarbonate (50882), hematocrit (51221), white blood cell count (51301), glucose (50931), magnesium (50960), calcium (50893), and lactate (50813). Find the `itemid`s of these lab measurements from `d_labitems.csv.gz` and retrieve a subset of `labevents.csv.gz` only containing these items.
+
+```{r}
+
+```
+
+
 
 ## Q7. Vitals from chartered events
 
