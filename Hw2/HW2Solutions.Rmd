@@ -267,26 +267,33 @@ ggplot(dfp %>%
 We are interested in the lab measurements of creatinine (50912), potassium (50971), sodium (50983), chloride (50902), bicarbonate (50882), hematocrit (51221), white blood cell count (51301), glucose (50931), magnesium (50960), calcium (50893), and lactate (50813). Find the `itemid`s of these lab measurements from `d_labitems.csv.gz` and retrieve a subset of `labevents.csv.gz` only containing these items.
 
 ```{r}
+#first few lines
+#system(str_c("zcat < ", shQuote(str_c(mimic_path,
+#"/hosp/labevents.csv.gz")), " I head"), intern = TRUE)
 
-system(str_c("zcat < ", shQuote(str_c(mimic_path,
-"/hosp/labevents.csv.gz")), " I head"), intern = TRUE)
+icustays_tble <- read_csv("/usr/203b-data/mimic-iv/icu/icustays.csv.gz")
+if(!file.exists("labevents_icustays.csv.gz")){
+ system.time(labevents_tble <- 
+        fread(str_c(mimic_path, "/hosp/labevents.csv.gz"),
+           select = c("subject_id", "hadm_id", "itemid", 
+                 "charttime", "valuenum"), 
+           nThread = 4))
+ labevents_tble %>%
+  semi_join(icustays_tble, by = c("subject_id", "hadm_id")) %>%
+  fwrite("labevents_icustays.csv.gz", nThread = 4)
+}
+system.time(labevents_tble <- fread("labevents_icustays.csv.gz", nTheard = 4))
+labevents_tble %>%
+ as.tibble() %>%
+ print(width = Inf)
 
+```
 
-##mimic_p <- "/usr/203b-data/mimic-iv"
-##labevents<- if(!file.exists("labevents_icustays.csv.gz")){
- ##system.time(labevents <- 
- ##       fread(str_c(mimic_p, "/hosp/labevents.csv.gz"),
-   ##        select = c("subject_id", "hadm_id", "itemid", 
-     ##            "charttime", "valuenum"), 
-       ##    nThread = 4))
- ##labevents_tab %>%
-  #3semi_join(icustays, by = c("subject_id", "hadm_id")) %>%
-  #fwrite("labevents_icustays.csv.gz", nThread = 4)
-#}
-#system.time(labevents <- fread("labevents_icustays.csv.gz"))
-#labevents %>%
- #as.tibble() %>%
- #print(width = Inf)
+Read in the lab item dictionary 
+```{r}
+dlabitems <- read_csv(str_c(mimic_path, "/hosp/d_labtimes.csv.gz")) %>%
+  print(width = Inf)
+
 
 ```
 
