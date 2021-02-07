@@ -45,10 +45,14 @@ At this moment, you should already get credentialed on the PhysioNet. Please inc
 
 There are quite a few utilities in R for reading data files. Let us test the speed of reading a moderate sized compressed csv file, `admissions.csv.gz`, by three programs: `read.csv` in base R, `read_csv` in tidyverse, and `fread` in the popular data.table package. Is there any speed difference?
 
+**Solution**: Read.csv took about 40 seconds to run, read_csv took about 4 seconds and Fread took about 3 seconds to run.
 In this homework, we stick to the tidyverse. 
 ```{r}
+## read.csv time
 system.time(read.csv("/usr/203b-data/mimic-iv/core/admissions.csv.gz"))
+# read_csv time
 system.time(read_csv("/usr/203b-data/mimic-iv/core/admissions.csv.gz"))
+#Fread Time
 system.time(fread("/usr/203b-data/mimic-iv/core/admissions.csv.gz"))
 read_csv("/usr/203b-data/mimic-iv/core/admissions.csv.gz")
 
@@ -68,28 +72,35 @@ read_csv("/usr/203b-data/mimic-iv/core/admissions.csv.gz")
 df <- read_csv("/usr/203b-data/mimic-iv/icu/icustays.csv.gz")
 head(df)
 unique(df[c("stay_id")])
+
 ## Number of unique stay id's
 n_distinct(df[c("stay_id")])
 unique(df[c("subject_id")])
+
 ## Number of unique subect id's
 n_distinct(df[c("subject_id")])
 
+## Length of ICU stay
+ggplot(data = df, mapping = aes(x = log(los))) + 
+  geom_histogram(aes(y=..density..), color = 'black', fill = 'red', bins = 30) +
+  xlab("Log Length of total ICU Stay") + ylab("Total ICU Density")
 
-
-ggplot(data = df, mapping = aes(x = los, y = "")) + 
-  geom_boxplot()
-
-
-
+## First ICU unit
 ggplot(data = df,mapping = aes(x = factor(first_careunit), y = stat(count),
-      fill = first_careunit))+ geom_bar(stat = "count")  + geom_text(stat = 'count', aes(label=..count..), vjust=0) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  scale_x_discrete(labels = c('CVICU','CCU','MICU', 'MICU/SICU', 'Medicine',
+  fill = first_careunit))+ geom_bar(stat = "count")  + 
+  geom_text(stat = 'count', aes(label=..count..), vjust=0) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  scale_x_discrete(labels = c('CVICU','CCU','MICU', 'MICU/SICU', 'Medicine',
 'Neuro Intermediate', 'Neuro Stepdown', 'Neuro SICU', 'PACU','SICU','TSICU')) + 
   guides(fill=FALSE) + xlab("First Care Unit") + ylab("Count")
 
+## Last ICU Unit
 ggplot(data = df,mapping = aes(x = factor(last_careunit),
-      fill = last_careunit)) + geom_bar(stat = "count") + geom_text(
-        stat = 'count', aes(label=..count..), vjust=0) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  scale_x_discrete(labels = c('CVICU', 'CCU','MICU','MICU/SICU', 'Neuro Intermediate', 'Neuro Stepdown', 'NEURO SICU', 'SICU', 'TSICU')) +
+  fill = last_careunit)) + geom_bar(stat = "count") + 
+  geom_text(stat = 'count', aes(label=..count..), vjust=0) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_x_discrete(labels = c('CVICU', 'CCU','MICU','MICU/SICU',
+  'Neuro Intermediate', 'Neuro Stepdown', 'NEURO SICU', 'SICU', 'TSICU')) +
   guides(fill=FALSE) + xlab("Last Care Unit") + ylab("Count")
 
 ```
@@ -98,47 +109,128 @@ ggplot(data = df,mapping = aes(x = factor(last_careunit),
 ## Q4. `admission` data
 
 Information of the patients admitted into hospital is available in `admissions.csv.gz`. See <https://mimic-iv.mit.edu/docs/datasets/core/admissions/> for details of each field in this file. Summarize following variables using appropriate graphs. Explain any patterns you observe.   
-
-- admission year  
-- admission month  
-- admission month day  
-- admission week day  
-- admission hour (anything unusual?)  
-- number of deaths in each year  
-- admission type  
-- number of admissions per patient  
-- admission location  
-- discharge location  
-- insurance  
-- language  
-- martial status  
-- ethnicity  
-- death 
+**Solution**: I only did unique patients for Insurance, Language, Martial Status, Ethnicity, Death
+- admission year - Pattern I see is that from 2110 and 2190 all have about the same number of people addmitted each year.
+- admission month - I see that the number hovers around the same for all of them besides Feb. which is probably due to having less days then. 
+- admission month day - I see that its all hovering around 17,000 besides the 31st due to less months having a 31st day
+- admission week day - No pattern all hovers around the same #
+- admission hour (anything unusual?) - At 00:00 it spikes and drops off unitl about 7, I dont know why that happens. Maybe due to next day insurance things?
+- number of deaths in each year - Deaths peak and drop around year 2190, rest is around 100
+- admission type - EW EMR is the most amount of admission types
+- number of admissions per patient - Is that a majority of patinets have one, I did take out a few outliers on the extreme ends.
+- admission location - The emergency room has the highest number of admissions
+- discharge location - The discharge location is at home
+- insurance - Other has the most amount of insruance type with medicare more than medicaid
+- language - It is only english and ? and english controls most of it
+- martial status - Mostly single and married with lots if NA included as well
+- ethnicity - White is the highest with African American being the second highest
+- death - Just binary, most people havent died
 
 Note it is possible that one patient (uniquely identified by the `subject_id`) is admitted into hospital multiple times. When summarizing some demographic information, it makes sense to summarize based on unique patients. 
 
 ```{r}
 dfadd <- read_csv("/usr/203b-data/mimic-iv/core/admissions.csv.gz")
+dfadd
 head(dfadd)
 year(dfadd$admittime)
-ggplot(data = dfadd,mapping = aes(x = year(admittime) , y = stat(count)))+ geom_freqpoly(stat = "count") + scale_x_continuous(n.breaks = 15)
+## Admission year ##
+ggplot(data = dfadd,mapping = aes(x = year(admittime), y = stat(count))) + 
+  geom_freqpoly(stat = "count") + scale_x_continuous(n.breaks = 15) +
+  xlab("Year") + ylab("Count")
 
-ggplot(data = dfadd,mapping = aes(x = month(admittime, label = TRUE) , y = stat(count)))+ geom_bar() + geom_text(stat = 'count', aes(label=..count..), vjust=0) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + xlab("Month") + ylab("Count")
+## Admission Month ##
+ggplot(data = dfadd,mapping = aes(x = month(admittime, label = TRUE), 
+                                  y = stat(count)))+ geom_bar() + 
+  geom_text(stat = 'count', aes(label=..count..), vjust=0) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  xlab("Month") + ylab("Count")
 
-ggplot(data = dfadd,mapping = aes(x = mday(admittime) , y = stat(count),axis(1, seq(1,30,1))))+ geom_freqpoly(stat = "count") + scale_x_continuous(n.breaks = 30) + scale_x_continuous(limits = c(1, 31))
+## Admission Month Day ##
+ggplot(data = dfadd,mapping = aes(x = mday(admittime), y = stat(count), 
+                                  axis(1, seq(1,30,1)))) + 
+  geom_freqpoly(stat = "count") + scale_x_continuous(n.breaks = 30) +
+  scale_x_continuous(limits = c(1, 31)) + xlab("Day") + ylab("Count")
 
+##Admission Week Day ##
+ggplot(data = dfadd,mapping = aes(x = wday(admittime, label = TRUE) , 
+                                  y = stat(count)))+ geom_bar() + 
+  geom_text(stat = 'count', aes(label=..count..), vjust=0) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  xlab("Weekday") + ylab("Count")
 
-ggplot(data = dfadd,mapping = aes(x = wday(admittime, label = TRUE) , y = stat(count)))+ geom_bar() + geom_text(stat = 'count', aes(label=..count..), vjust=0) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + xlab("Weekday") + ylab("Count")
+## Admission Hour ##
+ggplot(data = dfadd,mapping = aes(x = hour(admittime), y = stat(count))) + 
+  geom_freqpoly(stat = "count") + scale_x_continuous(n.breaks = 24) +
+  scale_x_continuous(limits = c(0, 24)) + xlab("Hour") + ylab("Count")
 
-ggplot(data = dfadd,mapping = aes(x = hour(admittime) , y = stat(count)))+ geom_freqpoly(stat = "count") + scale_x_continuous(n.breaks = 24) 
+## Death per Year ##
+ggplot(data = dfadd,mapping = aes(x = year(deathtime), y = stat(count))) + 
+  geom_freqpoly(stat = "count")
 
-ggplot(data = dfadd,mapping = aes(x = year(deathtime) , y = stat(count)))+ geom_freqpoly(stat = "count")
+##admission type##
+ggplot(data = dfadd,mapping = aes(x = factor(admission_type), y = stat(count),
+  fill = admission_type))+ geom_bar(stat = "count")  + 
+  geom_text(stat = 'count', aes(label=..count..), vjust=0) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  guides(fill=FALSE) + xlab("Type") + ylab("Count")
 
+##number of admissions per patient minus outliers##
 df <- dfadd %>% count(subject_id)
-df
-ggplot(data = df,mapping = aes(x = n , y = stat(count)), xlim=c(0,50))+ geom_bar() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +scale_x_continuous(limits = c(0, 50))
+ggplot(data = df,mapping = aes(x = n, y = stat(count)), xlim=c(0,50)) + 
+  geom_bar() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  scale_x_continuous(limits = c(0, 50)) + xlab("Admissions") + ylab("Count")
 
+##admission location##
+ggplot(data = dfadd,mapping = aes(x = factor(admission_location), 
+                                  y = stat(count),fill = admission_location)) + 
+  geom_bar(stat = "count")  + 
+  geom_text(stat = 'count', aes(label=..count..), vjust=0) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +  
+  scale_y_continuous(limits = c(0, 300000)) + guides(fill=FALSE) + 
+  xlab("Location") + ylab("Count")
 
+##discharge location##
+ggplot(data = dfadd,mapping = aes(x = factor(discharge_location), 
+                                  y = stat(count),fill = discharge_location)) + 
+  geom_bar(stat = "count")  + 
+  geom_text(stat = 'count', aes(label=..count..), vjust=0) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  guides(fill=FALSE) +  scale_y_continuous(limits = c(0, 250000)) + 
+  xlab("Location") + ylab("Count")
+
+##insurance##
+ggplot(dfadd %>%
+         distinct(subject_id, .keep_all = TRUE)) + 
+  geom_bar(mapping = aes(x = insurance, y = stat(count), fill = insurance))
+
+##language##
+ggplot(dfadd %>%
+         distinct(subject_id, .keep_all = TRUE)) + 
+  geom_bar(mapping = aes(x = language, y = stat(count), fill = language))
+
+##marital status##
+ggplot(dfadd %>%
+         distinct(subject_id, .keep_all = TRUE)) + 
+  geom_bar(mapping = aes(x = marital_status, y = stat(count), 
+                         fill = marital_status)) + xlab("Marital Status") + 
+  ylab("Count")
+
+##ethnicity##
+ggplot(dfadd %>%
+         distinct(subject_id, .keep_all = TRUE)) + 
+  geom_bar(mapping = aes(x = ethnicity, y = stat(count), 
+                         fill = ethnicity)) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  guides(fill=FALSE) + xlab("ethnicity") + ylab("Count")
+
+##Death##
+ggplot(dfadd %>%
+         distinct(subject_id, .keep_all = TRUE)) + 
+  geom_bar(mapping = aes(x = hospital_expire_flag, y = stat(count), 
+                         fill = hospital_expire_flag)) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  guides(fill=FALSE) + xlab("Death") + ylab("Count") +  
+  scale_x_discrete(labels = c('Death', 'No death'))
 
 ```
 
@@ -147,36 +239,49 @@ ggplot(data = df,mapping = aes(x = n , y = stat(count)), xlim=c(0,50))+ geom_bar
 
 Explore `patients.csv.gz` (<https://mimic-iv.mit.edu/docs/datasets/core/patients/>) and summarize following variables using appropriate numerics and graphs:  
 
-- `gender`  
-- `anchor_age` (explain pattern you see)
+**Solution** :
+- `gender`  More females then males
+- `anchor_age` (explain pattern you see) A large amount of people at zero, I am guessing this is births and most people tend to be between 18 and 90 with a large peak right past 90, porbably deaths. 
+
+```{r}
+dfp <- read_csv("/usr/203b-data/mimic-iv/core/patients.csv.gz")
+head(dfp)
+##Gender##
+ggplot(dfp %>%
+         distinct(subject_id, .keep_all = TRUE)) + 
+  geom_bar(mapping = aes(x = gender, y = stat(count), 
+                         fill = gender)) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(dfp %>%
+         distinct(subject_id, .keep_all = TRUE)) + 
+  geom_bar(mapping = aes(x = anchor_age, y = stat(count), fill = anchor_age)) +
+   scale_x_continuous(n.breaks = 24)
+
+```
 
 ## Q6. Lab results
 
 `labevents.csv.gz` (<https://mimic-iv.mit.edu/docs/datasets/hosp/labevents/>) contains all laboratory measurements for patients. 
-```{r}
-mimic_p <- "/usr/203b-data/mimic-iv/"
-
-if(!file.exists("labevents_icustays.csv.gz")){
-  system.time(labevents_tab <- 
-                fread(str_c(mimic_p, "/hosp/labevents.csv.gz"),
-                      select = c("subject_id", "hadm_id", "itemid", 
-                                 "charttime", "valuenum"), 
-                      nThread = 4))
-  labevents_tab %>%
-    semi_join(icustays_tab, by = c("subject_id", "hadm_id")) %>%
-    fwrite("labevents_icustays.csv.gz", nThread = 4)
-}
-
-system.time(labevents_tab <- fread("labevents_icustays.csv.gz"))
-labevents_tab %>%
-  as.tibble() %>%
-  print(width = Inf)
-
-```
 
 We are interested in the lab measurements of creatinine (50912), potassium (50971), sodium (50983), chloride (50902), bicarbonate (50882), hematocrit (51221), white blood cell count (51301), glucose (50931), magnesium (50960), calcium (50893), and lactate (50813). Find the `itemid`s of these lab measurements from `d_labitems.csv.gz` and retrieve a subset of `labevents.csv.gz` only containing these items.
 
 ```{r}
+mimic_p <- "/usr/203b-data/mimic-iv"
+labevents<- if(!file.exists("labevents_icustays.csv.gz")){
+ system.time(labevents_tab <- 
+        fread(str_c(mimic_p, "/hosp/labevents.csv.gz"),
+           select = c("subject_id", "hadm_id", "itemid", 
+                 "charttime", "valuenum"), 
+           nThread = 4))
+ labevents_tab %>%
+  semi_join(icustays_tab, by = c("subject_id", "hadm_id")) %>%
+  fwrite("labevents_icustays.csv.gz", nThread = 4)
+}
+system.time(labevents <- fread("labevents_icustays.csv.gz"))
+labevents %>%
+ as.tibble() %>%
+ print(width = Inf)
 
 ```
 
