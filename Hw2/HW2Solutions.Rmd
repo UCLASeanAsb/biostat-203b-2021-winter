@@ -130,7 +130,6 @@ Note it is possible that one patient (uniquely identified by the `subject_id`) i
 
 ```{r}
 dfadd <- read_csv("/usr/203b-data/mimic-iv/core/admissions.csv.gz")
-dfadd
 head(dfadd)
 year(dfadd$admittime)
 ## Admission year ##
@@ -267,11 +266,9 @@ ggplot(dfp %>%
 We are interested in the lab measurements of creatinine (50912), potassium (50971), sodium (50983), chloride (50902), bicarbonate (50882), hematocrit (51221), white blood cell count (51301), glucose (50931), magnesium (50960), calcium (50893), and lactate (50813). Find the `itemid`s of these lab measurements from `d_labitems.csv.gz` and retrieve a subset of `labevents.csv.gz` only containing these items.
 
 ```{r}
-#first few lines
-#system(str_c("zcat < ", shQuote(str_c(mimic_path,
-#"/hosp/labevents.csv.gz")), " I head"), intern = TRUE)
 
 icustays_tble <- read_csv("/usr/203b-data/mimic-iv/icu/icustays.csv.gz")
+
 if(!file.exists("labevents_icustays.csv.gz")){
  system.time(labevents_tble <- 
         fread(str_c(mimic_path, "/hosp/labevents.csv.gz"),
@@ -282,11 +279,15 @@ if(!file.exists("labevents_icustays.csv.gz")){
   semi_join(icustays_tble, by = c("subject_id", "hadm_id")) %>%
   fwrite("labevents_icustays.csv.gz", nThread = 4)
 }
+
 system.time(labevents_tble <- fread("labevents_icustays.csv.gz", nTheard = 4))
 labevents_tble %>%
  as.tibble() %>%
  print(width = Inf)
 
+
+
+head(labevents_tble)
 ```
 
 Read in the lab item dictionary 
@@ -322,4 +323,15 @@ and columns contain at least following variables
 - first lab measurements during ICU stay  
 - first vitals measurement during ICU stay  
 - an indicator variable whether the patient died within 30 days of hospital admission  
+```{r}
+icustays_tble %>% 
+  group_by(subject_id) %>%
+  slice_min(intime) %>%
+  left_join(dfadd, by = c("subject_id", "hadm_id")) %>%
+  left_join(dfp, by = "subject_id") %>%
+  mutate(age_adm = year(admittime) - anchor_year + anchor_age) %>%
+  filter(age_adm >= 18) %>%
+  print(width = Inf)
+```
+
 
