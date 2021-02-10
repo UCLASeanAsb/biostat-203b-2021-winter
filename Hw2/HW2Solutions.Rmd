@@ -280,17 +280,13 @@ We are interested in the lab measurements of creatinine (50912), potassium (5097
 # }
 
 icustays_tble <- read_csv("/usr/203b-data/mimic-iv/icu/icustays.csv.gz")
-system.time(chartevents_tble <- fread("//usr/203b-data/mimic-iv-derived-data/labevents_filtered_itemid.csv.gz",header = FALSE, col.names = c("subject_id",
-              "hadm_id",
-              "charttime",
-              "itemid",
-              "valuenum"),
-              nThread = 4) %>%
-              as_tibble()%>%
-              mutate_at(c("subject_id", "hadm_id", "itemid"), as.numeric) %>%
-              mutate(charttime = ymd_hms(charttime)) %>%
-              print(width = Inf))
-head(chartevents_tble)
+system.time(labevents_tble <- fread("//usr/203b-data/mimic-iv-derived-data/labevents_filtered_itemid.csv.gz",
+      header = FALSE, col.names = c("subject_id",
+                                    "hadm_id",
+                                    "charttime",
+                                    "itemid",
+                                    "valuenum")))
+head(labevents_tble)
 
 
 

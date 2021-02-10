@@ -8022,50 +8022,22 @@ icustays_tble &lt;- read_csv(&quot;/usr/203b-data/mimic-iv/icu/icustays.csv.gz&q
 ##   outtime = col_datetime(format = &quot;&quot;),
 ##   los = col_double()
 ## )</code></pre>
-<pre class="r"><code>system.time(chartevents_tble &lt;- fread(&quot;//usr/203b-data/mimic-iv-derived-data/labevents_filtered_itemid.csv.gz&quot;,header = FALSE, col.names = c(&quot;subject_id&quot;,
-              &quot;hadm_id&quot;,
-              &quot;charttime&quot;,
-              &quot;itemid&quot;,
-              &quot;valuenum&quot;),
-              nThread = 4) %&gt;%
-              as_tibble()%&gt;%
-              mutate_at(c(&quot;subject_id&quot;, &quot;hadm_id&quot;, &quot;itemid&quot;), as.numeric) %&gt;%
-              mutate(charttime = ymd_hms(charttime)) %&gt;%
-              print(width = Inf))</code></pre>
-<pre><code>## Warning: Problem with `mutate()` input `itemid`.
-## ℹ NAs introduced by coercion
-## ℹ Input `itemid` is `.Primitive(&quot;as.double&quot;)(itemid)`.</code></pre>
-<pre><code>## Warning in mask$eval_all_mutate(dots[[i]]): NAs introduced by coercion</code></pre>
-<pre><code>## Warning: Problem with `mutate()` input `charttime`.
-## ℹ All formats failed to parse. No formats found.
-## ℹ Input `charttime` is `ymd_hms(charttime)`.</code></pre>
-<pre><code>## Warning: All formats failed to parse. No formats found.</code></pre>
-<pre><code>## # A tibble: 30,773,355 x 5
-##    subject_id  hadm_id charttime           itemid valuenum
-##         &lt;dbl&gt;    &lt;dbl&gt; &lt;dttm&gt;               &lt;dbl&gt;    &lt;dbl&gt;
-##  1   12455438 24471620 NA                      NA     16.3
-##  2   12455438 24471620 NA                      NA     23  
-##  3   12455438 24471620 NA                      NA      8.8
-##  4   12455438 24471620 NA                      NA    106  
-##  5   12455438 24471620 NA                      NA      0.7
-##  6   12455438 24471620 NA                      NA      2.4
-##  7   12455438 24471620 NA                      NA     23  
-##  8   12455438 24471620 NA                      NA      8.9
-##  9   12455438 24471620 NA                      NA    106  
-## 10   12455438 24471620 NA                      NA      0.8
-## # … with 30,773,345 more rows</code></pre>
+<pre class="r"><code>system.time(labevents_tble &lt;- fread(&quot;//usr/203b-data/mimic-iv-derived-data/labevents_filtered_itemid.csv.gz&quot;,
+      header = FALSE, col.names = c(&quot;subject_id&quot;,
+                                    &quot;hadm_id&quot;,
+                                    &quot;charttime&quot;,
+                                    &quot;itemid&quot;,
+                                    &quot;valuenum&quot;)))</code></pre>
 <pre><code>##    user  system elapsed 
-##  91.387   9.660  83.809</code></pre>
-<pre class="r"><code>head(chartevents_tble)</code></pre>
-<pre><code>## # A tibble: 6 x 5
-##   subject_id  hadm_id charttime           itemid valuenum
-##        &lt;dbl&gt;    &lt;dbl&gt; &lt;dttm&gt;               &lt;dbl&gt;    &lt;dbl&gt;
-## 1   12455438 24471620 NA                      NA     16.3
-## 2   12455438 24471620 NA                      NA     23  
-## 3   12455438 24471620 NA                      NA      8.8
-## 4   12455438 24471620 NA                      NA    106  
-## 5   12455438 24471620 NA                      NA      0.7
-## 6   12455438 24471620 NA                      NA      2.4</code></pre>
+##  27.957   4.997  24.415</code></pre>
+<pre class="r"><code>head(labevents_tble)</code></pre>
+<pre><code>##    subject_id  hadm_id charttime              itemid valuenum
+## 1:   12455438 24471620     51301 2151-05-06 04:45:00     16.3
+## 2:   12455438 24471620     50882 2151-05-06 04:45:00     23.0
+## 3:   12455438 24471620     50893 2151-05-06 04:45:00      8.8
+## 4:   12455438 24471620     50902 2151-05-06 04:45:00    106.0
+## 5:   12455438 24471620     50912 2151-05-06 04:45:00      0.7
+## 6:   12455438 24471620     50960 2151-05-06 04:45:00      2.4</code></pre>
 <p>Read in the lab item dictionary</p>
 </div>
 <div id="q7.-vitals-from-chartered-events" class="section level2">
