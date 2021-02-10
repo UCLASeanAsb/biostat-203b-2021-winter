@@ -266,7 +266,37 @@ ggplot(dfp %>%
 We are interested in the lab measurements of creatinine (50912), potassium (50971), sodium (50983), chloride (50902), bicarbonate (50882), hematocrit (51221), white blood cell count (51301), glucose (50931), magnesium (50960), calcium (50893), and lactate (50813). Find the `itemid`s of these lab measurements from `d_labitems.csv.gz` and retrieve a subset of `labevents.csv.gz` only containing these items.
 
 ```{r}
-lab_results_tble <- read_csv( "labevents_filtered_itemid.csv.gz")
+#This is what I tried the first time but it keeps crashing. Therefore it doesnt run. I will try and use Dr.Zhou's filtered data.
+# icustays_tble <- read_csv("/usr/203b-data/mimic-iv/icu/icustays.csv.gz")
+# if(!file.exists("labevents_icustays.csv.gz")){
+#  system.time(labevents_tble <- 
+#         fread(str_c(mimic_path, "/hosp/labevents.csv.gz"),
+#            select = c("subject_id", "hadm_id", "itemid", 
+#                  "charttime", "valuenum"), 
+#            nThread = 4))
+#  labevents_tble %>%
+#   semi_join(icustays_tble, by = c("subject_id", "hadm_id")) %>%
+#   fwrite("labevents_icustays.csv.gz", nThread = 4)
+# }
+
+icustays_tble <- read_csv("/usr/203b-data/mimic-iv/icu/icustays.csv.gz")
+system.time(chartevents_tble <- fread("//usr/203b-data/mimic-iv-derived-data/labevents_filtered_itemid.csv.gz",header = FALSE, col.names = c("subject_id",
+              "hadm_id",
+              "charttime",
+              "itemid",
+              "valuenum"),
+              nThread = 4) %>%
+              as_tibble()%>%
+              mutate_at(c("subject_id", "hadm_id", "itemid"), as.numeric) %>%
+              mutate(charttime = ymd_hms(charttime)) %>%
+              print(width = Inf))
+head(chartevents_tble)
+
+
+
+
+
+
 
 ```
 
@@ -285,6 +315,24 @@ We are interested in the vitals for ICU patients: heart rate, mean and systolic 
 `chartevents.csv.gz` (<https://mimic-iv.mit.edu/docs/datasets/icu/chartevents/>) contains all the charted data available for a patient. During their ICU stay, the primary repository of a patient’s information is their electronic chart. The `itemid` variable indicates a single measurement type in the database. The `value` variable is the value measured for `itemid`.
 
 `d_items.csv.gz` (<https://mimic-iv.mit.edu/docs/datasets/icu/d_items/>) is the dictionary for the `itemid` in `chartevents.csv.gz`. 
+```{r}
+
+system.time(chartevents_tble <- fread("/usr/203b-data/mimic-iv-derived-data/chartevents_filtered_itemid.csv.gz",header = FALSE, col.names = c("subject_id",
+              "hadm_id",
+              "stay_id",
+              "charttime",
+              "itemid",
+              "valuenum"),
+              nThread = 4) %>%
+              as_tibble()%>%
+              mutate_at(c("subject_id", "hadm_id", "stay_id", "itemid"), as.numeric) %>%
+              mutate(charttime = ymd_hms(charttime)) %>%
+              print(width = Inf))
+head(chartevents_tble)
+
+```
+
+
 
 ## Q8. Putting things together
 
@@ -310,6 +358,10 @@ and columns contain at least following variables
   #mutate(age_adm = year(admittime) - anchor_year + anchor_age) %>%
   #filter(age_adm >= 18) %>%
   #print(width = Inf)
+
+
+
+
 ```
 
 

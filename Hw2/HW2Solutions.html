@@ -372,7 +372,7 @@ summary {
 
 
 <h1 class="title toc-ignore">Biostat 203B Homework 2</h1>
-<h3 class="subtitle">Due Feb 5 @ 11:59PM</h3>
+<h3 class="subtitle">Due Feb 10 @ 11:59PM</h3>
 
 </div>
 
@@ -498,7 +498,7 @@ if (str_detect(os, &quot;Linux&quot;)) {
 <pre class="r"><code>## read.csv time
 system.time(read.csv(&quot;/usr/203b-data/mimic-iv/core/admissions.csv.gz&quot;))</code></pre>
 <pre><code>##    user  system elapsed 
-##  46.957   0.529  47.664</code></pre>
+##  46.662   1.209  47.993</code></pre>
 <pre class="r"><code># read_csv time
 system.time(read_csv(&quot;/usr/203b-data/mimic-iv/core/admissions.csv.gz&quot;))</code></pre>
 <pre><code>## 
@@ -521,11 +521,11 @@ system.time(read_csv(&quot;/usr/203b-data/mimic-iv/core/admissions.csv.gz&quot;)
 ##   hospital_expire_flag = col_double()
 ## )</code></pre>
 <pre><code>##    user  system elapsed 
-##   4.338   0.506   6.200</code></pre>
+##   4.238   0.391   5.513</code></pre>
 <pre class="r"><code>#Fread Time
 system.time(fread(&quot;/usr/203b-data/mimic-iv/core/admissions.csv.gz&quot;))</code></pre>
 <pre><code>##    user  system elapsed 
-##   2.563   0.195   2.017</code></pre>
+##   2.505   0.219   2.029</code></pre>
 <pre class="r"><code>read_csv(&quot;/usr/203b-data/mimic-iv/core/admissions.csv.gz&quot;)</code></pre>
 <pre><code>## 
 ## ── Column specification ────────────────────────────────────────────────────────
@@ -687,24 +687,6 @@ ggplot(data = df,mapping = aes(x = factor(last_careunit),
 ##   edouttime = col_datetime(format = &quot;&quot;),
 ##   hospital_expire_flag = col_double()
 ## )</code></pre>
-<pre class="r"><code>dfadd</code></pre>
-<pre><code>## # A tibble: 524,520 x 15
-##    subject_id hadm_id admittime           dischtime          
-##         &lt;dbl&gt;   &lt;dbl&gt; &lt;dttm&gt;              &lt;dttm&gt;             
-##  1   12427812  2.16e7 2184-01-06 11:51:00 2184-01-10 11:45:00
-##  2   14029832  2.21e7 2120-01-18 01:28:00 2120-01-20 16:13:00
-##  3   14495017  2.25e7 2175-01-28 15:41:00 2175-01-29 16:00:00
-##  4   13676048  2.39e7 2193-01-19 05:27:00 2193-01-24 18:59:00
-##  5   13831972  2.78e7 2131-01-27 04:03:00 2131-01-27 05:39:00
-##  6   18523038  2.54e7 2142-08-26 17:14:00 2142-08-27 10:00:00
-##  7   16705931  2.06e7 2174-10-24 11:30:00 2174-10-24 18:45:00
-##  8   19963742  2.50e7 2171-07-04 15:58:00 2171-07-05 13:37:00
-##  9   10903424  2.26e7 2181-01-31 13:09:00 2181-01-31 13:42:00
-## 10   15030422  2.20e7 2149-09-21 23:54:00 2149-09-22 03:59:00
-## # … with 524,510 more rows, and 11 more variables: deathtime &lt;dttm&gt;,
-## #   admission_type &lt;chr&gt;, admission_location &lt;chr&gt;, discharge_location &lt;chr&gt;,
-## #   insurance &lt;chr&gt;, language &lt;chr&gt;, marital_status &lt;chr&gt;, ethnicity &lt;chr&gt;,
-## #   edregtime &lt;dttm&gt;, edouttime &lt;dttm&gt;, hospital_expire_flag &lt;dbl&gt;</code></pre>
 <pre class="r"><code>head(dfadd)</code></pre>
 <pre><code>## # A tibble: 6 x 15
 ##   subject_id hadm_id admittime           dischtime           deathtime          
@@ -8014,35 +7996,120 @@ ggplot(dfp %&gt;%
 <h2>Q6. Lab results</h2>
 <p><code>labevents.csv.gz</code> (<a href="https://mimic-iv.mit.edu/docs/datasets/hosp/labevents/" class="uri">https://mimic-iv.mit.edu/docs/datasets/hosp/labevents/</a>) contains all laboratory measurements for patients.</p>
 <p>We are interested in the lab measurements of creatinine (50912), potassium (50971), sodium (50983), chloride (50902), bicarbonate (50882), hematocrit (51221), white blood cell count (51301), glucose (50931), magnesium (50960), calcium (50893), and lactate (50813). Find the <code>itemid</code>s of these lab measurements from <code>d_labitems.csv.gz</code> and retrieve a subset of <code>labevents.csv.gz</code> only containing these items.</p>
-<pre class="r"><code>system(str_c(&quot;zcat &lt; &quot;, shQuote(str_c(mimic_path,
-&quot;/hosp/labevents.csv.gz&quot;)), &quot; I head&quot;), intern = TRUE)</code></pre>
-<pre><code>## Warning in system(str_c(&quot;zcat &lt; &quot;, shQuote(str_c(mimic_path, &quot;/hosp/
-## labevents.csv.gz&quot;)), : running command &#39;zcat &lt; &#39;/usr/203b-data/mimic-iv/hosp/
-## labevents.csv.gz&#39; I head&#39; had status 1</code></pre>
-<pre><code>## character(0)
-## attr(,&quot;status&quot;)
-## [1] 1</code></pre>
-<pre class="r"><code>##mimic_p &lt;- &quot;/usr/203b-data/mimic-iv&quot;
-##labevents&lt;- if(!file.exists(&quot;labevents_icustays.csv.gz&quot;)){
- ##system.time(labevents &lt;- 
- ##       fread(str_c(mimic_p, &quot;/hosp/labevents.csv.gz&quot;),
-   ##        select = c(&quot;subject_id&quot;, &quot;hadm_id&quot;, &quot;itemid&quot;, 
-     ##            &quot;charttime&quot;, &quot;valuenum&quot;), 
-       ##    nThread = 4))
- ##labevents_tab %&gt;%
-  #3semi_join(icustays, by = c(&quot;subject_id&quot;, &quot;hadm_id&quot;)) %&gt;%
-  #fwrite(&quot;labevents_icustays.csv.gz&quot;, nThread = 4)
-#}
-#system.time(labevents &lt;- fread(&quot;labevents_icustays.csv.gz&quot;))
-#labevents %&gt;%
- #as.tibble() %&gt;%
- #print(width = Inf)</code></pre>
+<pre class="r"><code>#This is what I tried the first time but it keeps crashing. Therefore it doesnt run. I will try and use Dr.Zhou&#39;s filtered data.
+# icustays_tble &lt;- read_csv(&quot;/usr/203b-data/mimic-iv/icu/icustays.csv.gz&quot;)
+# if(!file.exists(&quot;labevents_icustays.csv.gz&quot;)){
+#  system.time(labevents_tble &lt;- 
+#         fread(str_c(mimic_path, &quot;/hosp/labevents.csv.gz&quot;),
+#            select = c(&quot;subject_id&quot;, &quot;hadm_id&quot;, &quot;itemid&quot;, 
+#                  &quot;charttime&quot;, &quot;valuenum&quot;), 
+#            nThread = 4))
+#  labevents_tble %&gt;%
+#   semi_join(icustays_tble, by = c(&quot;subject_id&quot;, &quot;hadm_id&quot;)) %&gt;%
+#   fwrite(&quot;labevents_icustays.csv.gz&quot;, nThread = 4)
+# }
+
+icustays_tble &lt;- read_csv(&quot;/usr/203b-data/mimic-iv/icu/icustays.csv.gz&quot;)</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   subject_id = col_double(),
+##   hadm_id = col_double(),
+##   stay_id = col_double(),
+##   first_careunit = col_character(),
+##   last_careunit = col_character(),
+##   intime = col_datetime(format = &quot;&quot;),
+##   outtime = col_datetime(format = &quot;&quot;),
+##   los = col_double()
+## )</code></pre>
+<pre class="r"><code>system.time(chartevents_tble &lt;- fread(&quot;//usr/203b-data/mimic-iv-derived-data/labevents_filtered_itemid.csv.gz&quot;,header = FALSE, col.names = c(&quot;subject_id&quot;,
+              &quot;hadm_id&quot;,
+              &quot;charttime&quot;,
+              &quot;itemid&quot;,
+              &quot;valuenum&quot;),
+              nThread = 4) %&gt;%
+              as_tibble()%&gt;%
+              mutate_at(c(&quot;subject_id&quot;, &quot;hadm_id&quot;, &quot;itemid&quot;), as.numeric) %&gt;%
+              mutate(charttime = ymd_hms(charttime)) %&gt;%
+              print(width = Inf))</code></pre>
+<pre><code>## Warning: Problem with `mutate()` input `itemid`.
+## ℹ NAs introduced by coercion
+## ℹ Input `itemid` is `.Primitive(&quot;as.double&quot;)(itemid)`.</code></pre>
+<pre><code>## Warning in mask$eval_all_mutate(dots[[i]]): NAs introduced by coercion</code></pre>
+<pre><code>## Warning: Problem with `mutate()` input `charttime`.
+## ℹ All formats failed to parse. No formats found.
+## ℹ Input `charttime` is `ymd_hms(charttime)`.</code></pre>
+<pre><code>## Warning: All formats failed to parse. No formats found.</code></pre>
+<pre><code>## # A tibble: 30,773,355 x 5
+##    subject_id  hadm_id charttime           itemid valuenum
+##         &lt;dbl&gt;    &lt;dbl&gt; &lt;dttm&gt;               &lt;dbl&gt;    &lt;dbl&gt;
+##  1   12455438 24471620 NA                      NA     16.3
+##  2   12455438 24471620 NA                      NA     23  
+##  3   12455438 24471620 NA                      NA      8.8
+##  4   12455438 24471620 NA                      NA    106  
+##  5   12455438 24471620 NA                      NA      0.7
+##  6   12455438 24471620 NA                      NA      2.4
+##  7   12455438 24471620 NA                      NA     23  
+##  8   12455438 24471620 NA                      NA      8.9
+##  9   12455438 24471620 NA                      NA    106  
+## 10   12455438 24471620 NA                      NA      0.8
+## # … with 30,773,345 more rows</code></pre>
+<pre><code>##    user  system elapsed 
+##  91.387   9.660  83.809</code></pre>
+<pre class="r"><code>head(chartevents_tble)</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##   subject_id  hadm_id charttime           itemid valuenum
+##        &lt;dbl&gt;    &lt;dbl&gt; &lt;dttm&gt;               &lt;dbl&gt;    &lt;dbl&gt;
+## 1   12455438 24471620 NA                      NA     16.3
+## 2   12455438 24471620 NA                      NA     23  
+## 3   12455438 24471620 NA                      NA      8.8
+## 4   12455438 24471620 NA                      NA    106  
+## 5   12455438 24471620 NA                      NA      0.7
+## 6   12455438 24471620 NA                      NA      2.4</code></pre>
+<p>Read in the lab item dictionary</p>
 </div>
 <div id="q7.-vitals-from-chartered-events" class="section level2">
 <h2>Q7. Vitals from chartered events</h2>
 <p>We are interested in the vitals for ICU patients: heart rate, mean and systolic blood pressure (invasive and noninvasive measurements combined), body temperature, SpO2, and respiratory rate. Find the <code>itemid</code>s of these vitals from <code>d_items.csv.gz</code> and retrieve a subset of <code>chartevents.csv.gz</code> only containing these items.</p>
 <p><code>chartevents.csv.gz</code> (<a href="https://mimic-iv.mit.edu/docs/datasets/icu/chartevents/" class="uri">https://mimic-iv.mit.edu/docs/datasets/icu/chartevents/</a>) contains all the charted data available for a patient. During their ICU stay, the primary repository of a patient’s information is their electronic chart. The <code>itemid</code> variable indicates a single measurement type in the database. The <code>value</code> variable is the value measured for <code>itemid</code>.</p>
 <p><code>d_items.csv.gz</code> (<a href="https://mimic-iv.mit.edu/docs/datasets/icu/d_items/" class="uri">https://mimic-iv.mit.edu/docs/datasets/icu/d_items/</a>) is the dictionary for the <code>itemid</code> in <code>chartevents.csv.gz</code>.</p>
+<pre class="r"><code>system.time(chartevents_tble &lt;- fread(&quot;/usr/203b-data/mimic-iv-derived-data/chartevents_filtered_itemid.csv.gz&quot;,header = FALSE, col.names = c(&quot;subject_id&quot;,
+              &quot;hadm_id&quot;,
+              &quot;stay_id&quot;,
+              &quot;charttime&quot;,
+              &quot;itemid&quot;,
+              &quot;valuenum&quot;),
+              nThread = 4) %&gt;%
+              as_tibble()%&gt;%
+              mutate_at(c(&quot;subject_id&quot;, &quot;hadm_id&quot;, &quot;stay_id&quot;, &quot;itemid&quot;), as.numeric) %&gt;%
+              mutate(charttime = ymd_hms(charttime)) %&gt;%
+              print(width = Inf))</code></pre>
+<pre><code>## # A tibble: 30,095,996 x 6
+##    subject_id  hadm_id  stay_id charttime           itemid valuenum
+##         &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dttm&gt;               &lt;dbl&gt;    &lt;dbl&gt;
+##  1   10003700 28623837 35053963 2165-04-24 05:28:00 220179    152  
+##  2   10003700 28623837 35053963 2165-04-24 05:28:00 220181    110  
+##  3   10003700 28623837 35053963 2165-04-24 05:30:00 220045     65  
+##  4   10003700 28623837 35053963 2165-04-24 05:30:00 220210     14  
+##  5   10003700 28623837 35053963 2165-04-24 05:38:00 223761     97.6
+##  6   10003700 28623837 35053963 2165-04-24 06:00:00 220045     56  
+##  7   10003700 28623837 35053963 2165-04-24 06:00:00 220179    126  
+##  8   10003700 28623837 35053963 2165-04-24 06:00:00 220181     88  
+##  9   10003700 28623837 35053963 2165-04-24 06:00:00 220210     14  
+## 10   10003700 28623837 35053963 2165-04-24 06:09:00 220045     55  
+## # … with 30,095,986 more rows</code></pre>
+<pre><code>##    user  system elapsed 
+##  63.997   7.125  47.904</code></pre>
+<pre class="r"><code>head(chartevents_tble)</code></pre>
+<pre><code>## # A tibble: 6 x 6
+##   subject_id  hadm_id  stay_id charttime           itemid valuenum
+##        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dttm&gt;               &lt;dbl&gt;    &lt;dbl&gt;
+## 1   10003700 28623837 35053963 2165-04-24 05:28:00 220179    152  
+## 2   10003700 28623837 35053963 2165-04-24 05:28:00 220181    110  
+## 3   10003700 28623837 35053963 2165-04-24 05:30:00 220045     65  
+## 4   10003700 28623837 35053963 2165-04-24 05:30:00 220210     14  
+## 5   10003700 28623837 35053963 2165-04-24 05:38:00 223761     97.6
+## 6   10003700 28623837 35053963 2165-04-24 06:00:00 220045     56</code></pre>
 </div>
 <div id="q8.-putting-things-together" class="section level2">
 <h2>Q8. Putting things together</h2>
@@ -8066,6 +8133,14 @@ ggplot(dfp %&gt;%
 </li>
 <li>an indicator variable whether the patient died within 30 days of hospital admission</li>
 </ul>
+<pre class="r"><code>#icustays_tble %&gt;% 
+ # group_by(subject_id) %&gt;%
+  #slice_min(intime) %&gt;%
+  #left_join(dfadd, by = c(&quot;subject_id&quot;, &quot;hadm_id&quot;)) %&gt;%
+  #left_join(dfp, by = &quot;subject_id&quot;) %&gt;%
+  #mutate(age_adm = year(admittime) - anchor_year + anchor_age) %&gt;%
+  #filter(age_adm &gt;= 18) %&gt;%
+  #print(width = Inf)</code></pre>
 </div>
 
 
