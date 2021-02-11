@@ -290,11 +290,8 @@ header = FALSE, col.names = c("subject_id", "hadm_id", "itemid", "charttime",
                                as.numeric) %>%
                                mutate(charttime = ymd_hms(charttime)) %>%
                                print(width = Inf))
-head(labevents_tble)
 
-labitems_tbl <- read_csv(str_c(mimic_path, "/hosp/d_labitems.csv.gz")) %>%
-  print(width = Inf)
-
+#Just a trial look around
 # labitem <- 'Creatinine'
 # creatinine_items <- labitems_tbl %>%
 #   filter(str_detect(label, regex(labitem, ignore_case = T))) %>%
@@ -312,7 +309,7 @@ for (labitem in labitems) {
     filter(str_detect(label, regex(labitem, ignore_case = T))) %>%
     .$itemid
   itemid <- labevents_tble %>%
-    count(itemid %in% itemid_list) %>%
+    filter(itemid %in% itemid_list) %>%
     count(itemid) %>%
     arrange(desc(n)) %>%
     slice(1) %>%
@@ -321,9 +318,6 @@ for (labitem in labitems) {
   i <- i + 1
 }
   
-
-
-
 ```
 
 Read in the lab item dictionary 
@@ -365,7 +359,28 @@ system.time(chartevents_tble <- fread("/usr/203b-data/mimic-iv-derived-data/char
               mutate_at(c("subject_id", "hadm_id", "stay_id", "itemid"), as.numeric) %>%
               mutate(charttime = ymd_hms(charttime)) %>%
               print(width = Inf))
-head(chartevents_tble)
+
+d_itemlbl <- read_csv(str_c(mimic_path, "/icu/d_items.csv.gz")) %>%
+  print(width = Inf)
+d_itemlbl[d_itemlbl$itemid == 223761,]
+d_items <- c("heart rate", "Arterial Blood Pressure systolic", "Arterial Blood Pressure mean", "Non Invasive Blood Pressure systolic", "Non Invasive Blood Pressure mean", "Temperature Fahrenheit", "Respiratory rate")
+itemids <- rep(0, length(d_items))
+i <- 1
+for (item in d_items) {
+  print(str_interp("search for ${item}"))
+  itemid_list <- d_itemlbl %>%
+    filter(str_detect(label, regex(item, ignore_case = T))) %>%
+    .$itemid
+  itemid <- chartevents_tble %>%
+    filter(itemid %in% itemid_list) %>%
+    count(itemid) %>%
+    arrange(desc(n)) %>%
+    slice(1) %>%
+    .$itemid
+  itemids[i] <- itemid
+  i <- i + 1
+}
+item_itemid <- tibble(itemid = itemids, item = d_items) %>% print(width = Width)
 
 ```
 
@@ -406,7 +421,9 @@ group_by(subject_id, itemid) %>%
 arrange(charttime, .by_group = TRUE) %>% slice_head(n=1) %>% 
 select(-charttime, -intime) %>%
 spread(key = itemid, value = valuenum) %>% print(width = Inf) %>% right_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>%
-ungroup() 
+ungroup() %>%
+rename_at(vars(as.character(labitem_itemid$itemid)), ~labitem_itemid$labitem) %>%
+  print(width = Inf)
   
 ## Merge tables lab icu vitals
 Uniqicu_stays <- chartevents_tble %>%
@@ -416,16 +433,13 @@ group_by(subject_id, itemid) %>%
 arrange(charttime, .by_group = TRUE) %>% slice_head(n=1) %>% 
 select(-charttime, -intime) %>%
 spread(key = itemid, value = valuenum) %>% print(width = Inf) %>% right_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>%
-#rename_at(vars(as.character(labitem_imemid$itemid)), ~labitem_itemid$labitem) %>%
+  rename_at(vars(as.character(item_itemid$itemid)), ~item_itemid$item) %>%
   print(width = Inf)
 
 # Add a flag with patient died within 30 days of hospital admission
-head(Uniqicu_stays)
 newdeath_var <- (Uniqicu_stays$deathtime - Uniqicu_stays$admittime)
 Uniqicu_stays$deathin30days <- ifelse(newdeath_var <= 30, "Yes", "NA")
-
-
-
+head(Uniqicu_stays)
 
 ```
 
