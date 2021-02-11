@@ -131,7 +131,6 @@ Note it is possible that one patient (uniquely identified by the `subject_id`) i
 ```{r}
 dfadd <- read_csv("/usr/203b-data/mimic-iv/core/admissions.csv.gz")
 head(dfadd)
-year(dfadd$admittime)
 ## Admission year ##
 ggplot(data = dfadd,mapping = aes(x = year(admittime), y = stat(count))) + 
   geom_freqpoly(stat = "count") + scale_x_continuous(n.breaks = 15) +
@@ -279,16 +278,33 @@ We are interested in the lab measurements of creatinine (50912), potassium (5097
 #   fwrite("labevents_icustays.csv.gz", nThread = 4)
 # }
 
+#Dr zhos method we can use for the future use, using git commands.
+# zcat < /usr/203b-data/mimic-iv/hosp/labevents.csv.gz | awk -F, '{OFS = ","} {if ($5 == 50912 || $5 == 50971 || $5 == 50983 || $5 == 50902 || $5 == 50882 || $5 == 51221 || $5 == 51301 || $5 == 50931 || $5 == 50960 || $5 == 50893 || $5 == 50813) print $2, $3, $5, $6, $9}' | gzip > labevents_filtered_itemid.csv.gz
+
+
+
+
+
+
 icustays_tble <- read_csv("/usr/203b-data/mimic-iv/icu/icustays.csv.gz")
-system.time(labevents_tble <- fread("//usr/203b-data/mimic-iv-derived-data/labevents_filtered_itemid.csv.gz",
+system.time(labevents_tble <- fread("/usr/203b-data/mimic-iv-derived-data/labevents_filtered_itemid.csv.gz",
       header = FALSE, col.names = c("subject_id",
                                     "hadm_id",
-                                    "charttime",
                                     "itemid",
+                                    "charttime",
                                     "valuenum")))
 head(labevents_tble)
 
-
+system.time(labevents_tble <- fread("/usr/203b-data/mimic-iv-derived-data/labevents_filtered_itemid.csv.gz",header = FALSE, col.names = c("subject_id",
+              "hadm_id",
+              "itemid",
+              "charttime",
+              "valuenum"),
+              nThread = 4) %>%
+              as_tibble()%>%
+              mutate_at(c("subject_id", "hadm_id", "itemid"), as.numeric) %>%
+              mutate(charttime = ymd_hms(charttime)) %>%
+              print(width = Inf))
 
 
 
@@ -298,7 +314,7 @@ head(labevents_tble)
 
 Read in the lab item dictionary 
 ```{r}
-
+labitem_itemid <- tibble(itemid = itemids, labitem = labitems) %>% print(width = Width)
 
 ```
 
@@ -312,6 +328,17 @@ We are interested in the vitals for ICU patients: heart rate, mean and systolic 
 
 `d_items.csv.gz` (<https://mimic-iv.mit.edu/docs/datasets/icu/d_items/>) is the dictionary for the `itemid` in `chartevents.csv.gz`. 
 ```{r}
+
+#I couldn't open with this code
+#fread(str_c(mimic_path, "/icu/chartevents.csv.gz"),
+#            select = c("subject_id", "hadm_id", "itemid", 
+#                  "charttime", "valuenum"), 
+#            nThread = 4))
+
+
+#command for th way the prof pulled out the data set we can use for future useage, since nothing else worked
+# zcat < /usr/203b-data/mimic-iv/icu/chartevents.csv.gz | awk -F, '{OFS = ","} {if ($6 == 220045 || $6 == 220050 || $6 == 220052 || $6 == 220179 || $6 == 220181 || $6 == 220210 || $6 == 223761 || $6 == 229862) print $1, $2, $3, $4, $6, $8}' | gzip > chartevents_filtered_itemid.csv.gz
+
 
 system.time(chartevents_tble <- fread("/usr/203b-data/mimic-iv-derived-data/chartevents_filtered_itemid.csv.gz",header = FALSE, col.names = c("subject_id",
               "hadm_id",
@@ -346,17 +373,27 @@ and columns contain at least following variables
 - first vitals measurement during ICU stay  
 - an indicator variable whether the patient died within 30 days of hospital admission  
 ```{r}
-#icustays_tble %>% 
- # group_by(subject_id) %>%
-  #slice_min(intime) %>%
-  #left_join(dfadd, by = c("subject_id", "hadm_id")) %>%
-  #left_join(dfp, by = "subject_id") %>%
-  #mutate(age_adm = year(admittime) - anchor_year + anchor_age) %>%
-  #filter(age_adm >= 18) %>%
-  #print(width = Inf)
+ Uniqicu_stays <- icustays_tble %>% 
+  group_by(subject_id) %>%
+  filter(rank(intime)== 1) %>%
+  ungroup() %>%
+  left_join(dfadd, by = c("subject_id", "hadm_id")) %>%
+  left_join(dfp, by = "subject_id") %>%
+  mutate(age_adm = year(admittime) - anchor_year + anchor_age) %>%
+  filter(age_adm > 18) %>%
+  print(width = Inf)
 
+## Merge tables
 
-
+labevents_tble %>%
+semi_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>% 
+  left_join(select(Uniqicu_stays, subject_id, hadm_id, intime), by = c("subject_id", "hadm_id")) %>% filter(charttime >= intime) %>%
+group_by(subject_id, itemid) %>%
+arrange(charttime, .by_group = TRUE) %>% slice_head(n=1) %>% 
+select(-charttime, -intime) %>%
+spread(key = itemid, value = valuenum) %>% print(width = Inf) %>% right_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>%
+  ungroup() %>% 
+  rename_at(vars(as.character(labitem_imemid$itemid)), ~labitem_itemid$labitem) %>% print(width = Inf)
 
 ```
 
