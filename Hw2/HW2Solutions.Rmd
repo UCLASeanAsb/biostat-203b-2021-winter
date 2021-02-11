@@ -266,7 +266,7 @@ We are interested in the lab measurements of creatinine (50912), potassium (5097
 
 ```{r}
 #This is what I tried the first time but it keeps crashing. Therefore it doesnt run. I will try and use Dr.Zhou's filtered data.
-# icustays_tble <- read_csv("/usr/203b-data/mimic-iv/icu/icustays.csv.gz")
+icustays_tble <- read_csv("/usr/203b-data/mimic-iv/icu/icustays.csv.gz")
 # if(!file.exists("labevents_icustays.csv.gz")){
 #  system.time(labevents_tble <- 
 #         fread(str_c(mimic_path, "/hosp/labevents.csv.gz"),
@@ -281,32 +281,46 @@ We are interested in the lab measurements of creatinine (50912), potassium (5097
 #Dr zhos method we can use for the future use, using git commands.
 # zcat < /usr/203b-data/mimic-iv/hosp/labevents.csv.gz | awk -F, '{OFS = ","} {if ($5 == 50912 || $5 == 50971 || $5 == 50983 || $5 == 50902 || $5 == 50882 || $5 == 51221 || $5 == 51301 || $5 == 50931 || $5 == 50960 || $5 == 50893 || $5 == 50813) print $2, $3, $5, $6, $9}' | gzip > labevents_filtered_itemid.csv.gz
 
-
-
-
-
-
-icustays_tble <- read_csv("/usr/203b-data/mimic-iv/icu/icustays.csv.gz")
-system.time(labevents_tble <- fread("/usr/203b-data/mimic-iv-derived-data/labevents_filtered_itemid.csv.gz",
-      header = FALSE, col.names = c("subject_id",
-                                    "hadm_id",
-                                    "itemid",
-                                    "charttime",
-                                    "valuenum")))
+system.time(labevents_tble <- fread("/usr/203b-data/mimic-iv-derived-data/labevents_filtered_itemid.csv.gz", 
+header = FALSE, col.names = c("subject_id", "hadm_id", "itemid", "charttime", 
+                              "valuenum"),
+                               nThread = 4) %>%
+                               as_tibble()%>%
+                               mutate_at(c("subject_id", "hadm_id", "itemid"),
+                               as.numeric) %>%
+                               mutate(charttime = ymd_hms(charttime)) %>%
+                               print(width = Inf))
 head(labevents_tble)
 
-system.time(labevents_tble <- fread("/usr/203b-data/mimic-iv-derived-data/labevents_filtered_itemid.csv.gz",header = FALSE, col.names = c("subject_id",
-              "hadm_id",
-              "itemid",
-              "charttime",
-              "valuenum"),
-              nThread = 4) %>%
-              as_tibble()%>%
-              mutate_at(c("subject_id", "hadm_id", "itemid"), as.numeric) %>%
-              mutate(charttime = ymd_hms(charttime)) %>%
-              print(width = Inf))
+labitems_tbl <- read_csv(str_c(mimic_path, "/hosp/d_labitems.csv.gz")) %>%
+  print(width = Inf)
 
+# labitem <- 'Creatinine'
+# creatinine_items <- labitems_tbl %>%
+#   filter(str_detect(label, regex(labitem, ignore_case = T))) %>%
+#   print(width = Inf)
 
+labitems_tbl <- read_csv(str_c(mimic_path, "/hosp/d_labitems.csv.gz")) %>%
+  print(width = Inf)
+
+labitems <- c("creatinine", "potassium", "sodium", "chloride", "bicarbonate", "hematocrit", "white blood cell", "glucose", "magnesium", "calcium", "lactate")
+itemids <- rep(0, length(labitems))
+i <- 1
+for (labitem in labitems) {
+  print(str_interp("search for ${labitem}"))
+  itemid_list <- labitems_tbl %>%
+    filter(str_detect(label, regex(labitem, ignore_case = T))) %>%
+    .$itemid
+  itemid <- labevents_tble %>%
+    count(itemid %in% itemid_list) %>%
+    count(itemid) %>%
+    arrange(desc(n)) %>%
+    slice(1) %>%
+    .$itemid
+  itemids[i] <- itemid
+  i <- i + 1
+}
+  
 
 
 
@@ -383,8 +397,8 @@ and columns contain at least following variables
   filter(age_adm > 18) %>%
   print(width = Inf)
 
-## Merge tables
-
+## Merge tables lab icu measurements 
+Uniqicu_stays <-
 labevents_tble %>%
 semi_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>% 
   left_join(select(Uniqicu_stays, subject_id, hadm_id, intime), by = c("subject_id", "hadm_id")) %>% filter(charttime >= intime) %>%
@@ -392,8 +406,26 @@ group_by(subject_id, itemid) %>%
 arrange(charttime, .by_group = TRUE) %>% slice_head(n=1) %>% 
 select(-charttime, -intime) %>%
 spread(key = itemid, value = valuenum) %>% print(width = Inf) %>% right_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>%
-  ungroup() %>% 
-  rename_at(vars(as.character(labitem_imemid$itemid)), ~labitem_itemid$labitem) %>% print(width = Inf)
+ungroup() 
+  
+## Merge tables lab icu vitals
+Uniqicu_stays <- chartevents_tble %>%
+semi_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>%
+  left_join(select(Uniqicu_stays, subject_id, hadm_id, intime), by = c("subject_id", "hadm_id")) %>% filter(charttime >= intime) %>%
+group_by(subject_id, itemid) %>%
+arrange(charttime, .by_group = TRUE) %>% slice_head(n=1) %>% 
+select(-charttime, -intime) %>%
+spread(key = itemid, value = valuenum) %>% print(width = Inf) %>% right_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>%
+#rename_at(vars(as.character(labitem_imemid$itemid)), ~labitem_itemid$labitem) %>%
+  print(width = Inf)
+
+# Add a flag with patient died within 30 days of hospital admission
+head(Uniqicu_stays)
+newdeath_var <- (Uniqicu_stays$deathtime - Uniqicu_stays$admittime)
+Uniqicu_stays$deathin30days <- ifelse(newdeath_var <= 30, "Yes", "NA")
+
+
+
 
 ```
 
