@@ -265,8 +265,8 @@ ggplot(dfp %>%
 We are interested in the lab measurements of creatinine (50912), potassium (50971), sodium (50983), chloride (50902), bicarbonate (50882), hematocrit (51221), white blood cell count (51301), glucose (50931), magnesium (50960), calcium (50893), and lactate (50813). Find the `itemid`s of these lab measurements from `d_labitems.csv.gz` and retrieve a subset of `labevents.csv.gz` only containing these items.
 
 ```{r}
-#This is what I tried the first time but it keeps crashing. Therefore it doesnt run. I will try and use Dr.Zhou's filtered data.
-icustays_tble <- read_csv("/usr/203b-data/mimic-iv/icu/icustays.csv.gz")
+#This is what I tried the first time but it keeps crashing. 
+#Therefore it doesnt run. I will try and use Dr.Zhou's filtered data.
 # if(!file.exists("labevents_icustays.csv.gz")){
 #  system.time(labevents_tble <- 
 #         fread(str_c(mimic_path, "/hosp/labevents.csv.gz"),
@@ -279,8 +279,12 @@ icustays_tble <- read_csv("/usr/203b-data/mimic-iv/icu/icustays.csv.gz")
 # }
 
 #Dr zhos method we can use for the future use, using git commands.
-# zcat < /usr/203b-data/mimic-iv/hosp/labevents.csv.gz | awk -F, '{OFS = ","} {if ($5 == 50912 || $5 == 50971 || $5 == 50983 || $5 == 50902 || $5 == 50882 || $5 == 51221 || $5 == 51301 || $5 == 50931 || $5 == 50960 || $5 == 50893 || $5 == 50813) print $2, $3, $5, $6, $9}' | gzip > labevents_filtered_itemid.csv.gz
+# zcat < /usr/203b-data/mimic-iv/hosp/labevents.csv.gz |
+#awk -F, '{OFS = ","} {if ($5 == 50912 || $5 == 50971 || $5 == 50983 ||
+#$5 == 50902 || $5 == 50882 || $5 == 51221 || $5 == 51301 || $5 == 50931 ||
+#$5 == 50960 || $5 == 50893 || $5 == 50813) print $2, $3, $5, $6, $9}' | gzip > #labevents_filtered_itemid.csv.gz
 
+icustays_tble <- read_csv("/usr/203b-data/mimic-iv/icu/icustays.csv.gz")
 system.time(labevents_tble <- fread("/usr/203b-data/mimic-iv-derived-data/labevents_filtered_itemid.csv.gz", 
 header = FALSE, col.names = c("subject_id", "hadm_id", "itemid", "charttime", 
                               "valuenum"),
@@ -300,7 +304,9 @@ header = FALSE, col.names = c("subject_id", "hadm_id", "itemid", "charttime",
 labitems_tbl <- read_csv(str_c(mimic_path, "/hosp/d_labitems.csv.gz")) %>%
   print(width = Inf)
 
-labitems <- c("creatinine", "potassium", "sodium", "chloride", "bicarbonate", "hematocrit", "white blood cell", "glucose", "magnesium", "calcium", "lactate")
+labitems <- c("creatinine", "potassium", "sodium", "chloride", "bicarbonate", 
+              "hematocrit", "white blood cell", "glucose", "magnesium", 
+              "calcium", "lactate")
 itemids <- rep(0, length(labitems))
 i <- 1
 for (labitem in labitems) {
@@ -344,28 +350,42 @@ We are interested in the vitals for ICU patients: heart rate, mean and systolic 
 #            nThread = 4))
 
 
-#command for th way the prof pulled out the data set we can use for future useage, since nothing else worked
-# zcat < /usr/203b-data/mimic-iv/icu/chartevents.csv.gz | awk -F, '{OFS = ","} {if ($6 == 220045 || $6 == 220050 || $6 == 220052 || $6 == 220179 || $6 == 220181 || $6 == 220210 || $6 == 223761 || $6 == 229862) print $1, $2, $3, $4, $6, $8}' | gzip > chartevents_filtered_itemid.csv.gz
+#command for th way the prof pulled out the data set we can use for future 
+#useage, since nothing else worked
+# zcat < /usr/203b-data/mimic-iv/icu/chartevents.csv.gz |
+#awk -F, '{OFS = ","} {if ($6 == 220045 || $6 == 220050 
+#|| $6 == 220052 || $6 == 220179 || $6 == 220181 || $6 == 220210 
+#|| $6 == 223761 || $6 == 229862) print $1, $2, $3, $4, $6, $8}' | gzip > chartevents_filtered_itemid.csv.gz
 
 
-system.time(chartevents_tble <- fread("/usr/203b-data/mimic-iv-derived-data/chartevents_filtered_itemid.csv.gz",header = FALSE, col.names = c("subject_id",
-              "hadm_id",
-              "stay_id",
-              "charttime",
-              "itemid",
-              "valuenum"),
-              nThread = 4) %>%
-              as_tibble()%>%
-              mutate_at(c("subject_id", "hadm_id", "stay_id", "itemid"), as.numeric) %>%
-              mutate(charttime = ymd_hms(charttime)) %>%
-              print(width = Inf))
+system.time(chartevents_tble <- fread("/usr/203b-data/mimic-iv-derived-data/chartevents_filtered_itemid.csv.gz", 
+       header = FALSE, 
+       col.names = c("subject_id",
+                     "hadm_id",
+                     "stay_id",
+                     "charttime",
+                     "itemid",
+                     "valuenum"),
+       nThread = 4) %>%
+       as_tibble()%>%
+       mutate_at(c("subject_id", "hadm_id", "stay_id", "itemid"), as.numeric) %>%
+       mutate(charttime = ymd_hms(charttime)) %>%
+       print(width = Inf))
+
+#Find the ids in the data file, didnt notice spo2 data
 unique(chartevents_tble$itemid)
 
 d_itemlbl <- read_csv(str_c(mimic_path, "/icu/d_items.csv.gz")) %>%
   print(width = Inf)
-#from his data set I dont get anything with spo2 data, I only get 7 unique variables and it seems like there should be 8 but its not pulling the 8th.
+#from his data set I dont get anything with spo2 data, 
+#I only get 7 unique variables and it seems like there should be 8 but 
+#its not pulling the 8th.
 d_itemlbl[d_itemlbl$itemid == 223761,]
-d_items <- c("heart rate", "Arterial Blood Pressure systolic", "Arterial Blood Pressure mean", "Non Invasive Blood Pressure systolic", "Non Invasive Blood Pressure mean", "Temperature Fahrenheit", "Respiratory rate")
+d_items <- c("heart rate", "Arterial Blood Pressure systolic", 
+             "Arterial Blood Pressure mean", 
+             "Non Invasive Blood Pressure systolic", 
+             "Non Invasive Blood Pressure mean", "Temperature Fahrenheit", 
+             "Respiratory rate")
 itemids <- rep(0, length(d_items))
 i <- 1
 for (item in d_items) {
@@ -418,23 +438,28 @@ and columns contain at least following variables
 Uniqicu_stays <-
 labevents_tble %>%
 semi_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>% 
-  left_join(select(Uniqicu_stays, subject_id, hadm_id, intime), by = c("subject_id", "hadm_id")) %>% filter(charttime >= intime) %>%
+  left_join(select(Uniqicu_stays, subject_id, hadm_id, intime), 
+            by = c("subject_id", "hadm_id")) %>% filter(charttime >= intime) %>%
 group_by(subject_id, itemid) %>%
 arrange(charttime, .by_group = TRUE) %>% slice_head(n=1) %>% 
 select(-charttime, -intime) %>%
-spread(key = itemid, value = valuenum) %>% print(width = Inf) %>% right_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>%
+spread(key = itemid, value = valuenum) %>% print(width = Inf) %>% 
+  right_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>%
 ungroup() %>%
-rename_at(vars(as.character(labitem_itemid$itemid)), ~labitem_itemid$labitem) %>%
-  print(width = Inf)
+rename_at(vars(as.character(labitem_itemid$itemid)), 
+          ~labitem_itemid$labitem) %>%
+print(width = Inf)
   
 ## Merge tables lab icu vitals
 Uniqicu_stays <- chartevents_tble %>%
 semi_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>%
-  left_join(select(Uniqicu_stays, subject_id, hadm_id, intime), by = c("subject_id", "hadm_id")) %>% filter(charttime >= intime) %>%
+  left_join(select(Uniqicu_stays, subject_id, hadm_id, intime), 
+            by = c("subject_id", "hadm_id")) %>% filter(charttime >= intime) %>%
 group_by(subject_id, itemid) %>%
 arrange(charttime, .by_group = TRUE) %>% slice_head(n=1) %>% 
 select(-charttime, -intime) %>%
-spread(key = itemid, value = valuenum) %>% print(width = Inf) %>% right_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>%
+spread(key = itemid, value = valuenum) %>% print(width = Inf) %>% 
+  right_join(Uniqicu_stays, by = c("subject_id", "hadm_id")) %>%
   rename_at(vars(as.character(item_itemid$itemid)), ~item_itemid$item) %>%
   print(width = Inf)
 
