@@ -322,7 +322,7 @@ for (labitem in labitems) {
 
 Read in the lab item dictionary 
 ```{r}
-labitem_itemid <- tibble(itemid = itemids, labitem = labitems) %>% print(width = Width)
+labitem_itemid <- tibble(itemid = itemids, labitem = labitems) %>% print(width = Inf)
 
 ```
 
@@ -359,9 +359,11 @@ system.time(chartevents_tble <- fread("/usr/203b-data/mimic-iv-derived-data/char
               mutate_at(c("subject_id", "hadm_id", "stay_id", "itemid"), as.numeric) %>%
               mutate(charttime = ymd_hms(charttime)) %>%
               print(width = Inf))
+unique(chartevents_tble$itemid)
 
 d_itemlbl <- read_csv(str_c(mimic_path, "/icu/d_items.csv.gz")) %>%
   print(width = Inf)
+#from his data set I dont get anything with spo2 data, I only get 7 unique variables and it seems like there should be 8 but its not pulling the 8th.
 d_itemlbl[d_itemlbl$itemid == 223761,]
 d_items <- c("heart rate", "Arterial Blood Pressure systolic", "Arterial Blood Pressure mean", "Non Invasive Blood Pressure systolic", "Non Invasive Blood Pressure mean", "Temperature Fahrenheit", "Respiratory rate")
 itemids <- rep(0, length(d_items))
@@ -380,7 +382,7 @@ for (item in d_items) {
   itemids[i] <- itemid
   i <- i + 1
 }
-item_itemid <- tibble(itemid = itemids, item = d_items) %>% print(width = Width)
+item_itemid <- tibble(itemid = itemids, item = d_items) %>% print(width = Inf)
 
 ```
 
