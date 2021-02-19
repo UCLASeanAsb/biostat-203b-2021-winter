@@ -120,23 +120,23 @@ zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | wc -l
 zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |sort| awk -F,
   '{ print $1 }' |uniq| wc -l
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $6}'|
-  sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $6}'\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $7 }'
- |sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $7 }'\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $9 }'
-| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $9 }'\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $10 }'
-| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $10 }'\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $11 }'
-| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $11 }'\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $12 }'
-| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $12 }'\
+|sort| uniq -c
 
 ```
 
