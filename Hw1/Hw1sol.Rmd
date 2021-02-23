@@ -120,18 +120,23 @@ zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | wc -l
 zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |sort| awk -F,
   '{ print $1 }' |uniq| wc -l
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $6}'|
-  sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $6}'\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $7 }'| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $7 }'\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $9 }'| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $9 }'\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $10 }'| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $10 }'\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $11 }'| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $11 }'\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $12 }'| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $12 }'\
+|sort| uniq -c
 
 ```
 
@@ -143,7 +148,8 @@ zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, '{ print $12 }'| so
 
 1. You and your friend just have finished reading *Pride and Prejudice* by Jane Austen. Among the four main characters in the book, Elizabeth, Jane, Lydia, and Darcy, your friend thinks that Darcy was the most mentioned. You, however, are certain it was Elizabeth. Obtain the full text of the novel from <http://www.gutenberg.org/cache/epub/42671/pg42671.txt> and save to your local folder. 
     ```{bash, eval=FALSE}
-    curl http://www.gutenberg.org/cache/epub/42671/pg42671.txt > pride_and_prejudice.txt
+curl http://www.gutenberg.org/cache/epub/42671/pg42671.txt >
+    pride_and_prejudice.txt
     ```
 Do **not** put this text file `pride_and_prejudice.txt` in Git. Using a `for` loop, how would you tabulate the number of times each of the four characters is mentioned?
 

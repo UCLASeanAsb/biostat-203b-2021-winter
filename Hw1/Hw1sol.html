@@ -496,25 +496,68 @@ zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | head -n 3
 
 zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz | wc -l
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |sort| awk -F, &#39;{ print $1 }&#39; |uniq| wc -l
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |sort| awk -F,
+  &#39;{ print $1 }&#39; |uniq| wc -l
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $6}&#39;| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $6}&#39;\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $7 }&#39;| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $7 }&#39;\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $9 }&#39;| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $9 }&#39;\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $10 }&#39;| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $10 }&#39;\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $11 }&#39;| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $11 }&#39;\
+|sort| uniq -c
 
-zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $12 }&#39;| sort| uniq -c
+zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $12 }&#39;\
+|sort| uniq -c
 </code></pre>
 <pre><code>## subject_id,hadm_id,admittime,dischtime,deathtime,admission_type,admission_location,discharge_location,insurance,language,marital_status,ethnicity,edregtime,edouttime,hospital_expire_flag
 ## 12427812,21593330,2184-01-06 11:51:00,2184-01-10 11:45:00,,URGENT,PHYSICIAN REFERRAL,HOME,Other,ENGLISH,,UNKNOWN,,,0
 ## 14029832,22059088,2120-01-18 01:28:00,2120-01-20 16:13:00,,URGENT,TRANSFER FROM HOSPITAL,HOME,Other,ENGLISH,,OTHER,,,0
 ## 524521
-## 257367
+## Usage: awk [POSIX or GNU style options] -f progfile [--] file ...
+## Usage: awk [POSIX or GNU style options] [--] &#39;program&#39; file ...
+## POSIX options:       GNU long options: (standard)
+##  -f progfile     --file=progfile
+##  -F fs           --field-separator=fs
+##  -v var=val      --assign=var=val
+## Short options:       GNU long options: (extensions)
+##  -b          --characters-as-bytes
+##  -c          --traditional
+##  -C          --copyright
+##  -d[file]        --dump-variables[=file]
+##  -e &#39;program-text&#39;   --source=&#39;program-text&#39;
+##  -E file         --exec=file
+##  -g          --gen-pot
+##  -h          --help
+##  -L [fatal]      --lint[=fatal]
+##  -n          --non-decimal-data
+##  -N          --use-lc-numeric
+##  -O          --optimize
+##  -p[file]        --profile[=file]
+##  -P          --posix
+##  -r          --re-interval
+##  -S          --sandbox
+##  -t          --lint-old
+##  -V          --version
+## 
+## To report bugs, see node `Bugs&#39; in `gawk.info&#39;, which is
+## section `Reporting Problems and Bugs&#39; in the printed version.
+## 
+## gawk is a pattern scanning and processing language.
+## By default it reads standard input and writes standard output.
+## 
+## Examples:
+##  gawk &#39;{ sum += $1 }; END { print sum }&#39; file
+##  gawk -F: &#39;{ print $1 }&#39; /etc/passwd
+## bash: line 6: { print $1 }: command not found
+## 0
 ##       1 admission_type
 ##    7259 AMBULATORY OBSERVATION
 ##   21595 DIRECT EMER.
@@ -565,7 +608,8 @@ zcat /usr/203b-data/mimic-iv/core/admissions.csv.gz |awk -F, &#39;{ print $12 }&
 <h2>Q3. Who’s popular in Price and Prejudice</h2>
 <ol style="list-style-type: decimal">
 <li><p>You and your friend just have finished reading <em>Pride and Prejudice</em> by Jane Austen. Among the four main characters in the book, Elizabeth, Jane, Lydia, and Darcy, your friend thinks that Darcy was the most mentioned. You, however, are certain it was Elizabeth. Obtain the full text of the novel from <a href="http://www.gutenberg.org/cache/epub/42671/pg42671.txt" class="uri">http://www.gutenberg.org/cache/epub/42671/pg42671.txt</a> and save to your local folder.</p>
-<pre class="bash"><code>curl http://www.gutenberg.org/cache/epub/42671/pg42671.txt &gt; pride_and_prejudice.txt</code></pre>
+<pre class="bash"><code>curl http://www.gutenberg.org/cache/epub/42671/pg42671.txt &gt;
+pride_and_prejudice.txt</code></pre>
 <p>Do <strong>not</strong> put this text file <code>pride_and_prejudice.txt</code> in Git. Using a <code>for</code> loop, how would you tabulate the number of times each of the four characters is mentioned?</p></li>
 </ol>
 <p><strong>Solution</strong>: Jane 294, Darcy 417, Elizabeth 634, Lydia 170</p>
@@ -612,14 +656,13 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <p>Try these commands in Bash and interpret the results: <code>cal</code>, <code>cal 2021</code>, <code>cal 9 1752</code> (anything unusual?), <code>date</code>, <code>hostname</code>, <code>arch</code>, <code>uname -a</code>, <code>uptime</code>, <code>who am i</code>, <code>who</code>, <code>w</code>, <code>id</code>, <code>last | head</code>, <code>echo {con,pre}{sent,fer}{s,ed}</code>, <code>time sleep 5</code>, <code>history | tail</code>.</p>
 <p><strong>Solution</strong> <code>cal</code> displays the calender of current month</p>
 <pre class="bash"><code>cal</code></pre>
-<pre><code>##     January 2021    
+<pre><code>##     February 2021   
 ## Su Mo Tu We Th Fr Sa
-##                 1  2
-##  3  4  5  6  7  8  9
-## 10 11 12 13 14 15 16
-## 17 18 19 20 21 22 23
-## 24 25 26 27 28 29 30
-## 31</code></pre>
+##     1  2  3  4  5  6
+##  7  8  9 10 11 12 13
+## 14 15 16 17 18 19 20
+## 21 22 23 24 25 26 27
+## 28</code></pre>
 <p><strong>Solution</strong> <code>cal 2021</code> displays the calender of year 2021</p>
 <pre class="bash"><code>cal 2021</code></pre>
 <pre><code>##                                2021                               
@@ -665,7 +708,11 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## 24 25 26 27 28 29 30</code></pre>
 <p><strong>Solution</strong> <code>date</code> displays current date and time</p>
 <pre class="bash"><code>date</code></pre>
+<<<<<<< HEAD
 <pre><code>## Fri Jan 22 00:33:12 UTC 2021</code></pre>
+=======
+<pre><code>## Fri Feb 19 18:09:40 UTC 2021</code></pre>
+>>>>>>> develop
 <p><strong>Solution</strong> <code>hostname</code> displays the name of the host</p>
 <pre class="bash"><code>hostname</code></pre>
 <pre><code>## ucla-biostat-203b</code></pre>
@@ -677,7 +724,11 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 <pre><code>## Linux ucla-biostat-203b 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</code></pre>
 <p><strong>Solution</strong> <code>uptime</code> displays current time, system running, total time system has been running, user count, system load averages</p>
 <pre class="bash"><code>uptime</code></pre>
+<<<<<<< HEAD
 <pre><code>##  00:33:12 up 18 days,  2:44,  6 users,  load average: 2.83, 2.25, 1.53</code></pre>
+=======
+<pre><code>##  18:09:40 up 46 days, 20:20,  1 user,  load average: 0.34, 0.16, 0.14</code></pre>
+>>>>>>> develop
 <p><strong>Solution</strong><code>who am i</code> displays username for some reason mine doesnt display</p>
 <pre class="bash"><code>who am i</code></pre>
 <p><strong>Solution</strong><code>who</code> displays information in user on system</p>
@@ -690,6 +741,7 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## elviscuihan pts/16       2021-01-22 00:28 (115.206.116.237)</code></pre>
 <p><strong>Solution</strong><code>w</code> displays information in user on system and current processes</p>
 <pre class="bash"><code>w</code></pre>
+<<<<<<< HEAD
 <pre><code>##  00:33:12 up 18 days,  2:44,  6 users,  load average: 2.83, 2.25, 1.53
 ## USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
 ## jyixzhou pts/0    cpe84948c862443- 00:13   17:52   0.04s  0.04s -bash
@@ -698,11 +750,17 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## hunanzho pts/11   47.145.202.194   23:28    8.00s  0.13s  0.13s -bash
 ## spendlov pts/13   cpe-172-117-248- 23:35   57:04   0.04s  0.00s gzip -dc -- /usr/203b-data/mimic-iv/core/admissions.csv.gz
 ## elviscui pts/16   115.206.116.237  00:28    4:32   0.01s  0.01s -bash</code></pre>
+=======
+<pre><code>##  18:09:40 up 46 days, 20:20,  1 user,  load average: 0.34, 0.16, 0.14
+## USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+## filipovi pts/7    110.3.236.35.bc. 21Jan21 29days  0.06s  0.06s -bash</code></pre>
+>>>>>>> develop
 <p><strong>Solution</strong><code>id</code> displays numeric ids and the effective/real of a given user</p>
 <pre class="bash"><code>id</code></pre>
 <pre><code>## uid=1002(asburysean) gid=1004(asburysean) groups=1004(asburysean) context=system_u:system_r:initrc_t:s0</code></pre>
 <p><strong>Solution</strong><code>last | head</code> displays who was on the server last</p>
 <pre class="bash"><code>last | head</code></pre>
+<<<<<<< HEAD
 <pre><code>## elviscui pts/16       115.206.116.237  Fri Jan 22 00:28   still logged in   
 ## kmishimo pts/16       ip174-67-246-239 Fri Jan 22 00:22 - 00:25  (00:03)    
 ## jyixzhou pts/0        cpe84948c862443- Fri Jan 22 00:13   still logged in   
@@ -713,15 +771,27 @@ head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></pre>
 ## huazhou  pts/8        108-64-58-205.li Thu Jan 21 22:19 - 22:19  (00:00)    
 ## dshehtan pts/0        cpe-75-82-17-105 Thu Jan 21 20:47 - 20:50  (00:02)    
 ## asburyse pts/0        c-73-25-154-169. Thu Jan 21 19:25 - 20:12  (00:47)</code></pre>
+=======
+<pre><code>## huazhou  pts/1        108-64-58-205.li Fri Feb 19 18:00 - 18:03  (00:03)    
+## huazhou  pts/8        108-64-58-205.li Fri Feb 19 08:08 - 17:42  (09:34)    
+## huazhou  pts/1        108-64-58-205.li Fri Feb 19 07:53 - 17:43  (09:49)    
+## huazhou  pts/8        108-64-58-205.li Fri Feb 19 05:55 - 08:02  (02:07)    
+## huazhou  pts/1        108-64-58-205.li Fri Feb 19 04:49 - 07:28  (02:38)    
+## linyuzho pts/1        s-149-142-75-21. Thu Feb 18 23:09 - 00:28  (01:19)    
+## valentin pts/1        47.156.178.126   Thu Feb 18 20:04 - 20:07  (00:02)    
+## huazhou  pts/0        108-64-58-205.li Thu Feb 18 18:11 - 22:47  (04:36)    
+## elviscui pts/0        125.119.78.221   Thu Feb 18 08:35 - 09:02  (00:27)    
+## wzdbruin pts/8        112.32.14.210    Wed Feb 17 02:17 - 02:28  (00:11)</code></pre>
+>>>>>>> develop
 <p><strong>Solution</strong> <code>echo {con,pre}{sent,fer}{s,ed}</code> dipslays combinations of the prefix from the first {} with combos of the other two {}</p>
 <pre class="bash"><code>echo {con,pre}{sent,fer}{s,ed}</code></pre>
 <pre><code>## consents consented confers confered presents presented prefers prefered</code></pre>
 <p><strong>Solution</strong> <code>time sleep 5</code> pauses the script for a time of 5 seconds</p>
 <pre class="bash"><code>time sleep 5</code></pre>
 <pre><code>## 
-## real 0m5.002s
-## user 0m0.001s
-## sys  0m0.001s</code></pre>
+## real 0m5.007s
+## user 0m0.000s
+## sys  0m0.005s</code></pre>
 <p><strong>Solution</strong> <code>history | tail</code> displays the latest history</p>
 <pre class="bash"><code>set -o history
 history | tail</code></pre>
