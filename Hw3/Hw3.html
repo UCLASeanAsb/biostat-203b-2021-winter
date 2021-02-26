@@ -697,58 +697,58 @@ admissions_tble &lt;- tbl(con, Id(schema = &quot;mimic_core&quot;, table = &quot
 ## # Database: postgres 10.0.16 [postgres@/var/run/postgresql:5432/mimiciv]
 ##    subject_id  hadm_id admittime           dischtime          
 ##         &lt;int&gt;    &lt;int&gt; &lt;dttm&gt;              &lt;dttm&gt;             
-##  1   16970325 25774996 2178-10-21 12:17:00 2178-10-24 12:40:00
-##  2   11564354 25786879 2158-04-28 21:58:00 2158-05-01 14:39:00
-##  3   10468858 24005409 2158-12-21 18:12:00 2158-12-24 16:52:00
-##  4   10071281 28083333 2158-05-12 02:01:00 2158-05-19 15:17:00
-##  5   13961598 29516864 2196-06-25 23:40:00 2196-06-26 16:20:00
-##  6   16189893 22563506 2111-09-29 21:09:00 2111-10-07 18:44:00
-##  7   19265652 26803889 2167-05-05 04:35:00 2167-05-12 17:50:00
-##  8   12465457 20570275 2155-02-03 08:55:00 2155-02-10 17:23:00
-##  9   12979467 29610327 2140-12-18 23:56:00 2141-01-04 10:28:00
-## 10   17159286 25036190 2149-02-24 16:39:00 2149-03-05 15:37:00
-##    deathtime           admission_type    admission_location                    
-##    &lt;dttm&gt;              &lt;chr&gt;             &lt;chr&gt;                                 
-##  1 NA                  EW EMER.          EMERGENCY ROOM                        
-##  2 NA                  EW EMER.          EMERGENCY ROOM                        
-##  3 NA                  OBSERVATION ADMIT WALK-IN/SELF REFERRAL                 
-##  4 2158-05-19 15:17:00 EW EMER.          EMERGENCY ROOM                        
-##  5 NA                  EW EMER.          EMERGENCY ROOM                        
-##  6 NA                  URGENT            TRANSFER FROM HOSPITAL                
-##  7 NA                  EW EMER.          PHYSICIAN REFERRAL                    
-##  8 NA                  OBSERVATION ADMIT TRANSFER FROM HOSPITAL                
-##  9 NA                  EW EMER.          EMERGENCY ROOM                        
-## 10 NA                  URGENT            TRANSFER FROM SKILLED NURSING FACILITY
-##    discharge_location           insurance language marital_status
-##    &lt;chr&gt;                        &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;         
-##  1 HOME                         Medicare  ENGLISH  MARRIED       
-##  2 HOME                         Medicare  ?        MARRIED       
-##  3 HOME                         Medicare  ENGLISH  MARRIED       
-##  4 DIED                         Other     ENGLISH  WIDOWED       
-##  5 HOME                         Medicare  ENGLISH  SINGLE        
-##  6 CHRONIC/LONG TERM ACUTE CARE Medicaid  ?        DIVORCED      
-##  7 AGAINST ADVICE               Medicare  ENGLISH  SINGLE        
-##  8 HOME                         Medicare  ENGLISH  SINGLE        
-##  9 REHAB                        Other     ENGLISH  MARRIED       
-## 10 SKILLED NURSING FACILITY     Medicare  ENGLISH  MARRIED       
+##  1   12288622 28069467 2157-07-07 20:59:00 2157-07-11 16:35:00
+##  2   19072607 21565087 2120-05-16 18:35:00 2120-05-17 15:18:00
+##  3   16977304 27629802 2162-05-09 13:11:00 2162-05-11 14:45:00
+##  4   13870935 27674793 2180-12-13 22:38:00 2180-12-18 17:00:00
+##  5   15650043 20330412 2110-09-29 15:35:00 2110-10-02 17:20:00
+##  6   17032538 20108059 2138-03-17 07:15:00 2138-03-20 12:00:00
+##  7   16944511 26672056 2131-10-12 15:14:00 2131-10-17 14:19:00
+##  8   13651383 20307303 2172-09-22 01:50:00 2172-09-24 14:59:00
+##  9   14829515 28660873 2138-04-08 08:17:00 2138-05-06 15:30:00
+## 10   13936303 22838230 2127-09-21 23:23:00 2127-09-25 13:27:00
+##    deathtime           admission_type              admission_location
+##    &lt;dttm&gt;              &lt;chr&gt;                       &lt;chr&gt;             
+##  1 NA                  OBSERVATION ADMIT           EMERGENCY ROOM    
+##  2 NA                  EW EMER.                    EMERGENCY ROOM    
+##  3 NA                  ELECTIVE                    PHYSICIAN REFERRAL
+##  4 NA                  EW EMER.                    EMERGENCY ROOM    
+##  5 NA                  DIRECT EMER.                PHYSICIAN REFERRAL
+##  6 NA                  SURGICAL SAME DAY ADMISSION PHYSICIAN REFERRAL
+##  7 NA                  OBSERVATION ADMIT           PHYSICIAN REFERRAL
+##  8 NA                  EW EMER.                    EMERGENCY ROOM    
+##  9 NA                  OBSERVATION ADMIT           EMERGENCY ROOM    
+## 10 NA                  EW EMER.                    EMERGENCY ROOM    
+##    discharge_location       insurance language marital_status
+##    &lt;chr&gt;                    &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;         
+##  1 SKILLED NURSING FACILITY Medicare  ENGLISH  SINGLE        
+##  2 HOME                     Medicaid  ENGLISH  SINGLE        
+##  3 HOME                     Medicare  ENGLISH  MARRIED       
+##  4 HOME HEALTH CARE         Other     ENGLISH  MARRIED       
+##  5 HOME HEALTH CARE         Medicare  ENGLISH  MARRIED       
+##  6 HOME                     Medicare  ENGLISH  MARRIED       
+##  7 HOME                     Medicare  ENGLISH  MARRIED       
+##  8 HOME                     Other     ENGLISH  MARRIED       
+##  9 SKILLED NURSING FACILITY Other     ENGLISH  WIDOWED       
+## 10 ASSISTED LIVING          Medicare  ENGLISH  SINGLE        
 ##    ethnicity              edregtime           edouttime          
 ##    &lt;chr&gt;                  &lt;dttm&gt;              &lt;dttm&gt;             
-##  1 WHITE                  2178-10-21 04:31:00 2178-10-21 14:12:00
-##  2 HISPANIC/LATINO        2158-04-28 20:07:00 2158-04-29 01:12:00
-##  3 WHITE                  2158-12-21 10:21:00 2158-12-21 19:00:00
-##  4 WHITE                  2158-05-11 22:14:00 2158-05-12 06:56:00
-##  5 BLACK/AFRICAN AMERICAN 2196-06-25 18:50:00 2196-06-26 00:28:00
-##  6 WHITE                  NA                  NA                 
-##  7 BLACK/AFRICAN AMERICAN 2167-05-05 03:20:00 2167-05-05 06:21:00
-##  8 WHITE                  2155-02-03 06:54:00 2155-02-03 10:29:00
-##  9 WHITE                  2140-12-18 23:03:00 2140-12-19 00:40:00
-## 10 WHITE                  2149-02-24 10:23:00 2149-02-25 15:09:00
+##  1 WHITE                  2157-07-07 14:28:00 2157-07-07 22:42:00
+##  2 BLACK/AFRICAN AMERICAN 2120-05-16 16:16:00 2120-05-16 19:25:00
+##  3 WHITE                  NA                  NA                 
+##  4 WHITE                  2180-12-13 19:36:00 2180-12-14 00:05:00
+##  5 WHITE                  NA                  NA                 
+##  6 BLACK/AFRICAN AMERICAN NA                  NA                 
+##  7 WHITE                  NA                  NA                 
+##  8 WHITE                  2172-09-21 19:08:00 2172-09-22 02:38:00
+##  9 WHITE                  NA                  NA                 
+## 10 WHITE                  2127-09-21 18:56:00 2127-09-22 00:41:00
 ##    hospital_expire_flag
 ##                   &lt;int&gt;
 ##  1                    0
 ##  2                    0
 ##  3                    0
-##  4                    1
+##  4                    0
 ##  5                    0
 ##  6                    0
 ##  7                    0
@@ -854,7 +854,7 @@ icustays_tble %&gt;% group_by(subject_id) %&gt;%
   show_query() %&gt;%
   collect() %&gt;%
   mutate(deathin30 = ifelse(deathtime - admittime &lt;= 43200, &quot;Yes&quot;, &quot;No&quot;)) %&gt;%
-saveRDS(str_c(&quot;./mimiciv_shiny/icu_cohort.rd&quot;))</code></pre>
+saveRDS(str_c(&quot;./mimiciv_shiny/icu_cohort.rds&quot;))</code></pre>
 <pre><code>## &lt;SQL&gt;
 ## SELECT &quot;LHS&quot;.&quot;subject_id&quot; AS &quot;subject_id&quot;, &quot;LHS&quot;.&quot;hadm_id&quot; AS &quot;hadm_id&quot;, &quot;LHS&quot;.&quot;stay_id&quot; AS &quot;stay_id&quot;, &quot;first_careunit&quot;, &quot;last_careunit&quot;, &quot;intime&quot;, &quot;outtime&quot;, &quot;los&quot;, &quot;admittime&quot;, &quot;dischtime&quot;, &quot;deathtime&quot;, &quot;admission_type&quot;, &quot;admission_location&quot;, &quot;discharge_location&quot;, &quot;insurance&quot;, &quot;language&quot;, &quot;marital_status&quot;, &quot;ethnicity&quot;, &quot;edregtime&quot;, &quot;edouttime&quot;, &quot;hospital_expire_flag&quot;, &quot;gender&quot;, &quot;anchor_age&quot;, &quot;anchor_year&quot;, &quot;anchor_year_group&quot;, &quot;dod&quot;, &quot;bicarbonate&quot;, &quot;calcium&quot;, &quot;chloride&quot;, &quot;creatinine&quot;, &quot;glucose&quot;, &quot;magnesium&quot;, &quot;potassium&quot;, &quot;sodium&quot;, &quot;hematocrit&quot;, &quot;wbc&quot;, &quot;lactate&quot;, &quot;age_adm&quot;, &quot;heart_rate&quot;, &quot;non_invasive_blood_pressure_systolic&quot;, &quot;non_invasive_blood_pressure_mean&quot;, &quot;respiratory_rate&quot;, &quot;temperature_fahrenheit&quot;, &quot;arterial_blood_pressure_systolic&quot;, &quot;arterial_blood_pressure_mean&quot;
 ## FROM (SELECT *
