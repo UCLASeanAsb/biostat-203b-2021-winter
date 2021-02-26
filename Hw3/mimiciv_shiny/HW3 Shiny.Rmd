@@ -1,0 +1,35 @@
+---
+title: "HW 3 Shiny"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Inputs and outputs 
+
+
+```{r}
+library(tidyverse)
+library(shiny)
+icu_coh <- readRDS("/home/asburysean/biostat-203b-2021-winter/Hw3/mimiciv_shiny/icu_cohort.rds")
+``` 
+
+
+```{r}
+library(shiny)
+ui <- fluidPage()
+server <- function(input, output) {}
+shinyApp(ui = ui, server = server)
+   
+ 
+```
+
+
+
+
+
+
+
