@@ -90,6 +90,9 @@ icur <- subset(icu_coh, ethnicity==input$eth_var)
             theme(axis.text.x = element_text(angle = 90, hjust = 1))
 })
     output$histoplot <- renderPlot({
+        observeEvent()
+        
+        
         ggplot(data = icu_coh,mapping = aes_string(x = factor(input$y_var))) 
         + geom_bar(stat = "count") + 
             geom_text(stat = 'count', aes(label=..count..), vjust=0) + 
