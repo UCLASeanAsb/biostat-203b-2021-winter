@@ -90,7 +90,29 @@ icur <- subset(icu_coh, ethnicity==input$eth_var)
             theme(axis.text.x = element_text(angle = 90, hjust = 1))
 })
     output$histoplot <- renderPlot({
-        observeEvent()
+        observeEvent(input$x_Var, {
+        if (input$x_var=="Admission") {updateSelectizeInput(session,
+                                                            input = "y_var",
+       choices = c(("first_careunit", "last_careunit",
+                    "age_adm", "intime", 
+                    "outtime", "los",
+                    "admittime", "dischtime", 
+                    "deathtime", "admission_type",
+                    "admission_location", 
+                    "discharge_location",
+                    "edregtime", "edouttime")
+                                                
+ } 
+else if (input$var_cat=="Demographics")
+    {updateSelectizeInput(session, input = "y_var",
+choices = c(("insurance", "language",
+             "marital_status", "ethnicity", "gender",
+             "anchor_age", "anchor_year")
+                         } 
+            else(input$var_cat=="Lab Data") {
+                
+                         }
+                     })
         
         
         ggplot(data = icu_coh,mapping = aes_string(x = factor(input$y_var))) 
