@@ -26,9 +26,9 @@ ui <- fluidPage(
                                     "ASIAN", "OTHER",                        
                                     "UNABLE TO OBTAIN",
                                     "AMERICAN INDIAN/ALASKA NATIVE"),
-                        selected = NULL),
+                        selected = "WHITE"),
             # Y var
-            checkboxGroupInput("lab_var",
+            selectInput("lab_var",
                                label = "Lab Value",
                                choices = c("chloride", "creatinine",
                                            "glucose", "magnesium",
@@ -41,7 +41,7 @@ ui <- fluidPage(
                                            "temperature_fahrenheit",
                                            "arterial_blood_pressure_systolic",
                                            "arterial_blood_pressure_mean"),
-                               selected = NULL)
+                               selected = "wbc")
             
         ),
 
@@ -51,14 +51,15 @@ ui <- fluidPage(
     ))
 
 
-# Define server logic required to draw a histogram
+# Define server logic required to draw a boxplot
 server <- function(input, output) {
 
     output$labPlot <- renderPlot({
-       subset(icu_coh, ethnicity==input$eth_var)
-        ggplot(icu_coh, aes(x=input$eth_var, y=input$lab_var, color=ethnicity)) +
-            geom_boxplot()
-        # generate bins based on input$bins from ui.R
+icur <- subset(icu_coh, ethnicity==input$eth_var)
+        ggplot(icur, aes(x=ethnicity, color=ethnicity)) +
+            geom_boxplot(aes_string(y=input$lab_var)) + 
+            theme(axis.text.x = element_text(angle = 90, hjust = 1))
+       
 
     })
 }
