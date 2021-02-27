@@ -697,64 +697,52 @@ admissions_tble &lt;- tbl(con, Id(schema = &quot;mimic_core&quot;, table = &quot
 ## # Database: postgres 10.0.16 [postgres@/var/run/postgresql:5432/mimiciv]
 ##    subject_id  hadm_id admittime           dischtime          
 ##         &lt;int&gt;    &lt;int&gt; &lt;dttm&gt;              &lt;dttm&gt;             
-##  1   12288622 28069467 2157-07-07 20:59:00 2157-07-11 16:35:00
-##  2   19072607 21565087 2120-05-16 18:35:00 2120-05-17 15:18:00
-##  3   16977304 27629802 2162-05-09 13:11:00 2162-05-11 14:45:00
-##  4   13870935 27674793 2180-12-13 22:38:00 2180-12-18 17:00:00
-##  5   15650043 20330412 2110-09-29 15:35:00 2110-10-02 17:20:00
-##  6   17032538 20108059 2138-03-17 07:15:00 2138-03-20 12:00:00
-##  7   16944511 26672056 2131-10-12 15:14:00 2131-10-17 14:19:00
-##  8   13651383 20307303 2172-09-22 01:50:00 2172-09-24 14:59:00
-##  9   14829515 28660873 2138-04-08 08:17:00 2138-05-06 15:30:00
-## 10   13936303 22838230 2127-09-21 23:23:00 2127-09-25 13:27:00
-##    deathtime           admission_type              admission_location
-##    &lt;dttm&gt;              &lt;chr&gt;                       &lt;chr&gt;             
-##  1 NA                  OBSERVATION ADMIT           EMERGENCY ROOM    
-##  2 NA                  EW EMER.                    EMERGENCY ROOM    
-##  3 NA                  ELECTIVE                    PHYSICIAN REFERRAL
-##  4 NA                  EW EMER.                    EMERGENCY ROOM    
-##  5 NA                  DIRECT EMER.                PHYSICIAN REFERRAL
-##  6 NA                  SURGICAL SAME DAY ADMISSION PHYSICIAN REFERRAL
-##  7 NA                  OBSERVATION ADMIT           PHYSICIAN REFERRAL
-##  8 NA                  EW EMER.                    EMERGENCY ROOM    
-##  9 NA                  OBSERVATION ADMIT           EMERGENCY ROOM    
-## 10 NA                  EW EMER.                    EMERGENCY ROOM    
-##    discharge_location       insurance language marital_status
-##    &lt;chr&gt;                    &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;         
-##  1 SKILLED NURSING FACILITY Medicare  ENGLISH  SINGLE        
-##  2 HOME                     Medicaid  ENGLISH  SINGLE        
-##  3 HOME                     Medicare  ENGLISH  MARRIED       
-##  4 HOME HEALTH CARE         Other     ENGLISH  MARRIED       
-##  5 HOME HEALTH CARE         Medicare  ENGLISH  MARRIED       
-##  6 HOME                     Medicare  ENGLISH  MARRIED       
-##  7 HOME                     Medicare  ENGLISH  MARRIED       
-##  8 HOME                     Other     ENGLISH  MARRIED       
-##  9 SKILLED NURSING FACILITY Other     ENGLISH  WIDOWED       
-## 10 ASSISTED LIVING          Medicare  ENGLISH  SINGLE        
-##    ethnicity              edregtime           edouttime          
-##    &lt;chr&gt;                  &lt;dttm&gt;              &lt;dttm&gt;             
-##  1 WHITE                  2157-07-07 14:28:00 2157-07-07 22:42:00
-##  2 BLACK/AFRICAN AMERICAN 2120-05-16 16:16:00 2120-05-16 19:25:00
-##  3 WHITE                  NA                  NA                 
-##  4 WHITE                  2180-12-13 19:36:00 2180-12-14 00:05:00
-##  5 WHITE                  NA                  NA                 
-##  6 BLACK/AFRICAN AMERICAN NA                  NA                 
-##  7 WHITE                  NA                  NA                 
-##  8 WHITE                  2172-09-21 19:08:00 2172-09-22 02:38:00
-##  9 WHITE                  NA                  NA                 
-## 10 WHITE                  2127-09-21 18:56:00 2127-09-22 00:41:00
-##    hospital_expire_flag
-##                   &lt;int&gt;
-##  1                    0
-##  2                    0
-##  3                    0
-##  4                    0
-##  5                    0
-##  6                    0
-##  7                    0
-##  8                    0
-##  9                    0
-## 10                    0
+##  1   12427812 21593330 2184-01-06 11:51:00 2184-01-10 11:45:00
+##  2   14029832 22059088 2120-01-18 01:28:00 2120-01-20 16:13:00
+##  3   14495017 22484010 2175-01-28 15:41:00 2175-01-29 16:00:00
+##  4   13676048 23865469 2193-01-19 05:27:00 2193-01-24 18:59:00
+##  5   13831972 27763544 2131-01-27 04:03:00 2131-01-27 05:39:00
+##  6   18523038 25414328 2142-08-26 17:14:00 2142-08-27 10:00:00
+##  7   16705931 20580522 2174-10-24 11:30:00 2174-10-24 18:45:00
+##  8   19963742 24951506 2171-07-04 15:58:00 2171-07-05 13:37:00
+##  9   10903424 22568585 2181-01-31 13:09:00 2181-01-31 13:42:00
+## 10   15030422 21975876 2149-09-21 23:54:00 2149-09-22 03:59:00
+##    deathtime           admission_type         admission_location    
+##    &lt;dttm&gt;              &lt;chr&gt;                  &lt;chr&gt;                 
+##  1 NA                  URGENT                 PHYSICIAN REFERRAL    
+##  2 NA                  URGENT                 TRANSFER FROM HOSPITAL
+##  3 NA                  DIRECT EMER.           PHYSICIAN REFERRAL    
+##  4 NA                  URGENT                 PHYSICIAN REFERRAL    
+##  5 NA                  EU OBSERVATION         EMERGENCY ROOM        
+##  6 NA                  DIRECT OBSERVATION     PROCEDURE SITE        
+##  7 NA                  DIRECT OBSERVATION     PHYSICIAN REFERRAL    
+##  8 NA                  AMBULATORY OBSERVATION PACU                  
+##  9 NA                  EU OBSERVATION         EMERGENCY ROOM        
+## 10 NA                  EU OBSERVATION         EMERGENCY ROOM        
+##    discharge_location insurance language marital_status ethnicity
+##    &lt;chr&gt;              &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;          &lt;chr&gt;    
+##  1 HOME               Other     ENGLISH  &lt;NA&gt;           UNKNOWN  
+##  2 HOME               Other     ENGLISH  &lt;NA&gt;           OTHER    
+##  3 HOME               Other     ?        &lt;NA&gt;           WHITE    
+##  4 HOME               Other     ?        MARRIED        WHITE    
+##  5 &lt;NA&gt;               Medicaid  ENGLISH  SINGLE         WHITE    
+##  6 &lt;NA&gt;               Other     ENGLISH  SINGLE         WHITE    
+##  7 &lt;NA&gt;               Other     ENGLISH  MARRIED        WHITE    
+##  8 &lt;NA&gt;               Other     ENGLISH  SINGLE         UNKNOWN  
+##  9 &lt;NA&gt;               Other     ENGLISH  SINGLE         WHITE    
+## 10 &lt;NA&gt;               Other     ENGLISH  SINGLE         WHITE    
+##    edregtime           edouttime           hospital_expire_flag
+##    &lt;dttm&gt;              &lt;dttm&gt;                             &lt;int&gt;
+##  1 NA                  NA                                     0
+##  2 NA                  NA                                     0
+##  3 NA                  NA                                     0
+##  4 NA                  NA                                     0
+##  5 2131-01-26 22:19:00 2131-01-27 05:39:00                    0
+##  6 NA                  NA                                     0
+##  7 NA                  NA                                     0
+##  8 NA                  NA                                     0
+##  9 NA                  NA                                     0
+## 10 NA                  NA                                     0
 ## # … with more rows</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Connect to the <code>mimic_labevents_icu</code> table.</li>

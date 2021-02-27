@@ -10,10 +10,10 @@
 library(shiny)
 icu_coh <- readRDS("/home/asburysean/biostat-203b-2021-winter/Hw3/mimiciv_shiny/icu_cohort.rds")
 # Define UI for application that draws a scatterplot
-ui <- fluidPage(
-
+ui <- fluidPage(tabsetPanel(
+    tabPanel("Race & Lab Values",
     # Application title
-    titlePanel("ICU Cohort Data"),
+    #titlePanel("ICU Cohort Data"),
 
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
@@ -30,7 +30,7 @@ ui <- fluidPage(
             # Y var
             selectInput("lab_var",
                                label = "Lab Value",
-                               choices = c("chloride", "creatinine",
+                               choices = c( "bicarbonate", "chloride", "creatinine",
                                            "glucose", "magnesium",
                                            "potassium", "sodium",
                                            "hematocrit", "wbc",
@@ -41,13 +41,42 @@ ui <- fluidPage(
                                            "temperature_fahrenheit",
                                            "arterial_blood_pressure_systolic",
                                            "arterial_blood_pressure_mean"),
-                               selected = "wbc")
-            
-        ),
-
-        # Show a scatterplot
-        mainPanel(plotOutput("labPlot")
-        )
+                               selected = "wbc")),
+        # Histogram of all variables
+        mainPanel(plotOutput("labPlot")))
+    ),
+    
+    tabPanel("All data points",
+            # X variable
+           selectInput("x_var",
+                       label = "Data Categories", 
+                       choices = c("Admission", "Demographics", 
+                                   "Lab Data"),
+                       selected = "Admission"),
+           selectInput("y_var",
+                       label = "Data point of interst",
+                       choices = c("first_careunit", "last_careunit",
+                                   "age_adm", "intime", "outtime", "los",
+                                   "admittime", "dischtime", "deathtime",
+                                   "admission_type", "admission_location",
+                                   "discharge_location","edregtime", 
+                                   "edouttime", "insurance", "language",
+                                   "marital_status", "ethnicity", "gender",
+                                   "anchor_age", "anchor_year", "bicarbonate",
+                                   "anchor_year_group", "dod",
+                                   "chloride", "creatinine",
+                                   "glucose", "magnesium",
+                                   "potassium", "sodium",
+                                   "hematocrit", "wbc",
+                                   "lactate", "heart_rate",
+                                   "non_invasive_blood_pressure_systolic",
+                                   "non_invasive_blood_pressure_mean",
+                                   "respiratory_rate",
+                                   "temperature_fahrenheit",
+                                   "arterial_blood_pressure_systolic",
+                                   "arterial_blood_pressure_mean"),
+                       selected = "first_careunit"),
+           mainPanel(plotOutput("histoplot")))
     ))
 
 
@@ -59,10 +88,14 @@ icur <- subset(icu_coh, ethnicity==input$eth_var)
         ggplot(icur, aes(x=ethnicity, color=ethnicity)) +
             geom_boxplot(aes_string(y=input$lab_var)) + 
             theme(axis.text.x = element_text(angle = 90, hjust = 1))
-       
-
-    })
-}
+})
+    output$histoplot <- renderPlot({
+        ggplot(data = icu_coh,mapping = aes_string(x = factor(input$y_var))) 
+        + geom_bar(stat = "count") + 
+            geom_text(stat = 'count', aes(label=..count..), vjust=0) + 
+            theme(axis.text.x = element_text(angle = 45, hjust = 1))
+})
+        }
 
 # Run the application 
 shinyApp(ui = ui, server = server)

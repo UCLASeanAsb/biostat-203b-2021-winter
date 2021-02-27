@@ -148,6 +148,7 @@ icustays_tble %>% group_by(subject_id) %>%
   collect() %>%
   mutate(deathin30 = ifelse(deathtime - admittime <= 43200, "Yes", "No")) %>%
 saveRDS(str_c("./mimiciv_shiny/icu_cohort.rds"))
+print(icu_cohort)
  
   
 
