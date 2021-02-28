@@ -16,15 +16,15 @@ ui <- fluidPage(tabsetPanel(
     tabPanel("Race & Lab Values",
              # Application title
              #titlePanel("ICU Cohort Data"),
-             # Sidebar with a slider input for number of bins 
+             # Sidebar with a slider input for number of bins
              sidebarLayout(
                  sidebarPanel(
                      # X var
                      checkboxGroupInput("eth_var",
                                         label =  "Ethnicty",
-                                        choices = c("BLACK/AFRICAN AMERICAN", "UNKNOWN",                      
-                                                    "WHITE", "HISPANIC/LATINO",              
-                                                    "ASIAN", "OTHER",                        
+                                        choices = c("BLACK/AFRICAN AMERICAN", "UNKNOWN",
+                                                    "WHITE", "HISPANIC/LATINO",
+                                                    "ASIAN", "OTHER",
                                                     "UNABLE TO OBTAIN",
                                                     "AMERICAN INDIAN/ALASKA NATIVE"),
                                         selected = "WHITE"),
@@ -49,8 +49,8 @@ ui <- fluidPage(tabsetPanel(
     tabPanel("All data points",
              # X variable
              selectInput("x_var",
-                         label = "Data Categories", 
-                         choices = c("Admission", "Demographics", 
+                         label = "Data Categories",
+                         choices = c("Admission", "Demographics",
                                      "Lab Data"),
                          selected = "Admission"),
              selectInput("y_var",
@@ -59,7 +59,7 @@ ui <- fluidPage(tabsetPanel(
                                      "age_adm", "intime", "outtime", "los",
                                      "admittime", "dischtime", "deathtime",
                                      "admission_type", "admission_location",
-                                     "discharge_location","edregtime", 
+                                     "discharge_location","edregtime",
                                      "edouttime", "insurance", "language",
                                      "marital_status", "ethnicity", "gender",
                                      "anchor_age", "anchor_year", "bicarbonate",
@@ -80,80 +80,78 @@ ui <- fluidPage(tabsetPanel(
 ))
 # Define server logic required to draw a boxplot
 server <- function(input, output, session) {
+    observeEvent(input$x_var, {
+        if (input$x_var=="Admission") {
+            updateSelectizeInput(session, input = "y_var",
+                                 choices = c("first_careunit", "last_careunit",
+                                             "age_adm", "intime",
+                                             "outtime", "los",
+                                             "admittime", "dischtime",
+                                             "deathtime", "admission_type",
+                                             "admission_location",
+                                             "discharge_location",
+                                             "edregtime", "edouttime"))
+        }
+        else if (input$x_var=="Demographics")
+        {updateSelectizeInput(session, input = "y_var",
+                              choices = c("insurance", "language",
+                                          "marital_status", "ethnicity", "gender",
+                                          "anchor_age", "anchor_year"))
+        }
+        else if (input$x_var=="Lab Data") {
+            updateSelectizeInput(session, input = "y_var",
+                                 choices = c("bicarbonate",
+                                             "anchor_year_group", "dod",
+                                             "chloride", "creatinine",
+                                             "glucose", "magnesium",
+                                             "potassium", "sodium",
+                                             "hematocrit", "wbc",
+                                             "lactate", "heart_rate",
+                                             "non_invasive_blood_pressure_systolic",
+                                             "non_invasive_blood_pressure_mean",
+                                             "respiratory_rate",
+                                             "temperature_fahrenheit",
+                                             "arterial_blood_pressure_systolic",
+                                             "arterial_blood_pressure_mean"))
+        }
+    })
     output$labPlot <- renderPlot({
         icur <- subset(icu_coh, ethnicity==input$eth_var)
         ggplot(icur, aes(x=ethnicity, color=ethnicity)) +
-            geom_boxplot(aes_string(y=input$lab_var)) + 
+            geom_boxplot(aes_string(y=input$lab_var)) +
             theme(axis.text.x = element_text(angle = 90, hjust = 1))
     })
     output$histoplot <- renderPlot({
-        observeEvent(input$x_var, {
-            if (input$x_var=="Admission") {
-                updateSelectizeInput(session, input = "y_var",
-                                    choices = c("first_careunit", "last_careunit",
-                                                "age_adm", "intime", 
-                                                "outtime", "los",
-                                                "admittime", "dischtime", 
-                                                "deathtime", "admission_type",
-                                                "admission_location", 
-                                                "discharge_location",
-                                                "edregtime", "edouttime"))
-            } 
-            else if (input$var_cat=="Demographics")
-            {updateSelectizeInput(session, input = "y_var",
-                                  choices = c("insurance", "language",
-                                              "marital_status", "ethnicity", "gender",
-                                              "anchor_age", "anchor_year"))
-            } 
-            else if (input$var_cat=="Lab Data") {
-                updateSelectizeInput(session, input = "y_var",
-                                     choices = c("bicarbonate",
-                                                 "anchor_year_group", "dod",
-                                                 "chloride", "creatinine",
-                                                 "glucose", "magnesium",
-                                                 "potassium", "sodium",
-                                                 "hematocrit", "wbc",
-                                                 "lactate", "heart_rate",
-                                                 "non_invasive_blood_pressure_systolic",
-                                                 "non_invasive_blood_pressure_mean",
-                                                 "respiratory_rate",
-                                                 "temperature_fahrenheit",
-                                                 "arterial_blood_pressure_systolic",
-                                                 "arterial_blood_pressure_mean"))
-            }
-        })
-        if(input$add_var == c("first_careunit", "last_careunit","insurance", "language",
-                              "marital_status", "ethnicity", "gender", "admission_type",
-                              "admission_location", "discharge_location")){
-           ggplot(data = icu_coh,mapping = aes_string(x = factor(input$y_var))) + 
-            geom_bar(stat = "count") + 
-            geom_text(stat = 'count', aes(label=..count..), vjust=0) + 
-            theme(axis.text.x = element_text(angle = 45, hjust = 1))
+        if(input$y_var %in%  c("first_careunit", "last_careunit","insurance", "language",
+                               "marital_status", "ethnicity", "gender", "admission_type",
+                               "admission_location", "discharge_location")){
+            ggplot(data = icu_coh,mapping = aes_string(x = input$y_var)) +
+                geom_bar(stat = "count") +
+                geom_text(stat = 'count', aes(label=..count..), vjust=0) +
+                theme(axis.text.x = element_text(angle = 45, hjust = 1))
         }
-        else if(input$add_var == c("bicarbonate",
-                                  "anchor_year_group", "dod",
-                                  "age_adm", "intime", 
-                                  "outtime", "los",
-                                  "admittime", "dischtime", 
-                                  "deathtime", "edregtime", "edouttime",
-                                  "chloride", "creatinine",
-                                  "glucose", "magnesium",
-                                  "potassium", "sodium",
-                                  "hematocrit", "wbc",
-                                  "lactate", "heart_rate",
-                                  "non_invasive_blood_pressure_systolic",
-                                  "non_invasive_blood_pressure_mean",
-                                  "respiratory_rate",
-                                  "temperature_fahrenheit",
-                                  "arterial_blood_pressure_systolic",
-                                  "arterial_blood_pressure_mean",
-                                  "anchor_age", "anchor_year")){
-            ggplot(data = icu_coh,mapping = aes_string(x = input$x_var)) + 
-                geom_boxplot(aes_string(y=input$lab_var)) + 
+        else if(input$y_var %in% c("bicarbonate",
+                                   "anchor_year_group", "dod",
+                                   "age_adm", "intime",
+                                   "outtime", "los",
+                                   "edregtime", "edouttime",
+                                   "chloride", "creatinine",
+                                   "glucose", "magnesium",
+                                   "potassium", "sodium",
+                                   "hematocrit", "wbc",
+                                   "lactate", "heart_rate",
+                                   "non_invasive_blood_pressure_systolic",
+                                   "non_invasive_blood_pressure_mean",
+                                   "respiratory_rate",
+                                   "temperature_fahrenheit",
+                                   "arterial_blood_pressure_systolic",
+                                   "arterial_blood_pressure_mean",
+                                   "anchor_age", "anchor_year")){
+            ggplot(data = icu_coh,mapping = aes_string(x = input$y_var)) +
+                geom_boxplot(aes_string(y=input$y_var)) +
                 theme(axis.text.x = element_text(angle = 90, hjust = 1))
         }
-       
     })
 }
-# Run the application 
+# Run the application
 shinyApp(ui = ui, server = server)
