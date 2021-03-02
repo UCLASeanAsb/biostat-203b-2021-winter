@@ -121,7 +121,8 @@ labevents_tble <- tbl(con, Id(schema = "public",
 7. Connect to `mimic_chartevents_icu` table.
 ```{r}
 # TODO
-chartevents_tble <- tbl(con, Id(schema = "public", table = "mimic_chartevents_icu")) %>% 
+chartevents_tble <- tbl(con, Id(schema = "public", 
+                                table = "mimic_chartevents_icu")) %>% 
   print(width = Inf) 
 ```
 
