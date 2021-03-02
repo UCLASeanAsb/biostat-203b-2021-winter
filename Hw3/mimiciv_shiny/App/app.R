@@ -44,7 +44,9 @@ ui <- fluidPage(tabsetPanel(
                                               "arterial_blood_pressure_mean"),
                                  selected = "wbc")),
                  # Histogram of all variables
-                 mainPanel(plotOutput("labPlot")))
+                 mainPanel(plotOutput("labPlot"),
+                           verbatimTextOutput("summary"))
+                 )
     ),
     tabPanel("All data points",
              # X variable
@@ -76,10 +78,25 @@ ui <- fluidPage(tabsetPanel(
                                      "arterial_blood_pressure_systolic",
                                      "arterial_blood_pressure_mean"),
                          selected = "first_careunit"),
-             mainPanel(plotOutput("histoplot")))
+             mainPanel(plotOutput("histoplot"),
+                       verbatimTextOutput("summary2")))
 ))
 # Define server logic required to draw a boxplot
 server <- function(input, output, session) {
+    output$summary <- renderPrint({
+        dataset <- icu_cohort
+        summary(dataset)
+        
+        
+    })
+    
+output$summary2 <- renderPrint({
+        dataset <- icu_cohort
+        summary(dataset)
+        
+        
+    })    
+    
     observeEvent(input$x_var, {
         if (input$x_var=="Admission") {
             updateSelectizeInput(session, input = "y_var",
