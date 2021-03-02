@@ -748,7 +748,8 @@ admissions_tble &lt;- tbl(con, Id(schema = &quot;mimic_core&quot;, table = &quot
 <li>Connect to the <code>mimic_labevents_icu</code> table.</li>
 </ol>
 <pre class="r"><code># TODO
-labevents_tble &lt;- tbl(con, Id(schema = &quot;public&quot;, table = &quot;mimic_labevents_icu&quot;)) %&gt;%
+labevents_tble &lt;- tbl(con, Id(schema = &quot;public&quot;, 
+                              table = &quot;mimic_labevents_icu&quot;)) %&gt;% 
   print(width = Inf) </code></pre>
 <pre><code>## # Source:   table&lt;&quot;public&quot;.&quot;mimic_labevents_icu&quot;&gt; [?? x 13]
 ## # Database: postgres 10.0.16 [postgres@/var/run/postgresql:5432/mimiciv]

@@ -113,7 +113,8 @@ admissions_tble <- tbl(con, Id(schema = "mimic_core", table = "admissions")) %>%
 6. Connect to the `mimic_labevents_icu` table.
 ```{r}
 # TODO
-labevents_tble <- tbl(con, Id(schema = "public", table = "mimic_labevents_icu")) %>%
+labevents_tble <- tbl(con, Id(schema = "public", 
+                              table = "mimic_labevents_icu")) %>% 
   print(width = Inf) 
 ```
 

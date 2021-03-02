@@ -9,7 +9,7 @@
 library(shiny)
 library(ggplot2)
 library(tidyverse)
-icu_coh <- readRDS("/home/asburysean/biostat-203b-2021-winter/Hw3/mimiciv_shiny/icu_cohort.rds")
+icu_coh <-readRDS("/home/asburysean/biostat-203b-2021-winter/Hw3/mimiciv_shiny/icu_cohort.rds")
 # Define UI for application that draws a scatterplot
 # Define UI for application that draws a scatterplot
 ui <- fluidPage(tabsetPanel(
