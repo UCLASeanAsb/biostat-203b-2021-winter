@@ -148,11 +148,11 @@ icustays_tble %>% group_by(subject_id) %>%
    left_join(chartevents_tble, by = c("subject_id", "hadm_id", "stay_id")) %>%
   show_query() %>%
   collect() %>%
-  mutate(deathin30 = ifelse(deathtime - admittime <= 43200, "Yes", "No")) %>%
-saveRDS(str_c("./mimiciv_shiny/icu_cohort.rds"))
+mutate(days_death = as.numeric((ymd_hms(deathtime)-ymd_hms(admittime)),
+         units="days")) %>%
+  mutate(died_30days = ifelse((days_death<=30 & !is.na(deathtime)), 1, 0)) %>%
+saveRDS(str_c("/home/asburysean/biostat-203b-2021-winter/Hw3/mimiciv_shiny/icu_cohort.rds"))
 
- 
-  
 
 ```
 
