@@ -9,13 +9,13 @@
 library(shiny)
 library(ggplot2)
 library(tidyverse)
-icu_coh <-readRDS("/home/asburysean/biostat-203b-2021-winter/Hw3/mimiciv_shiny/icu_cohort.rds")
+icu_coh <-readRDS(str_c("/home/asburysean/biostat-203b-2021-winter/"
+                        ,"Hw3/mimiciv_shiny/icu_cohort.rds"))
 # Define UI for application that draws a scatterplot
 # Define UI for application that draws a scatterplot
 ui <- fluidPage(tabsetPanel(
     tabPanel("Race & Lab Values",
              # Application title
-             #titlePanel("ICU Cohort Data"),
              # Sidebar with a slider input for number of bins
              sidebarLayout(
                  sidebarPanel(
@@ -75,9 +75,7 @@ ui <- fluidPage(tabsetPanel(
                                      "non_invasive_blood_pressure_systolic",
                                      "non_invasive_blood_pressure_mean",
                                      "respiratory_rate",
-                                     "temperature_fahrenheit",
-                                     "arterial_blood_pressure_systolic",
-                                     "arterial_blood_pressure_mean"),
+                                     "temperature_fahrenheit"),
                          selected = "first_careunit"),
              mainPanel(plotOutput("histoplot"),
                        verbatimTextOutput("summary2")))
@@ -85,14 +83,21 @@ ui <- fluidPage(tabsetPanel(
 # Define server logic required to draw a boxplot
 server <- function(input, output, session) {
     output$summary <- renderPrint({
-        dataset <- icu_cohort
-        summary(dataset)
+        summary(icu_cohort[[input$lab_var]])
  })
     
-output$summary2 <- renderPrint({
-        dataset <- icu_cohort
-        summary(dataset)
- })    
+    output$summary2 <- renderPrint({
+      if(input$y_var %in% c("first_careunit", "last_careunit",
+                            "insurance", "language", "marital_status",
+                            "ethnicity", "gender",
+                            "admission_type", "admission_location",
+                            "discharge_location")){
+        table(icu_cohort[[input$y_var]])
+      } else {
+        summary(icu_cohort[[input$y_var]])
+      }
+    })
+    
     
 observeEvent(input$x_var, {
     if (input$x_var=="Admission") {
@@ -125,9 +130,7 @@ observeEvent(input$x_var, {
                                         "non_invasive_blood_pressure_systolic",
                                         "non_invasive_blood_pressure_mean",
                                         "respiratory_rate",
-                                        "temperature_fahrenheit",
-                                        "arterial_blood_pressure_systolic",
-                                        "arterial_blood_pressure_mean"))
+                                        "temperature_fahrenheit"))
         }
     })
 output$labPlot <- renderPlot({
@@ -161,8 +164,6 @@ output$histoplot <- renderPlot({
                                 "non_invasive_blood_pressure_mean",
                                 "respiratory_rate",
                                 "temperature_fahrenheit",
-                                "arterial_blood_pressure_systolic",
-                                "arterial_blood_pressure_mean",
                                 "anchor_age", "anchor_year"))
     {
       ggplot(data = icu_coh,mapping = aes_string(x = input$y_var)) +
