@@ -60,7 +60,7 @@ ui <- fluidPage(tabsetPanel(
                          label = "Data point of interst",
                          choices = c("first_careunit", "last_careunit",
                                      "age_adm", "intime", "outtime", "los",
-                                     "admittime", "dischtime", "deathtime",
+                                     "admittime", "dischtime",
                                      "admission_type", "admission_location",
                                      "discharge_location","edregtime",
                                      "edouttime", "insurance", "language",
@@ -106,7 +106,7 @@ observeEvent(input$x_var, {
                                              "age_adm", "intime",
                                              "outtime", "los",
                                              "admittime", "dischtime",
-                                             "deathtime", "admission_type",
+                                              "admission_type",
                                              "admission_location",
                                              "discharge_location",
                                              "edregtime", "edouttime"))
@@ -153,7 +153,8 @@ output$histoplot <- renderPlot({
     else if(input$y_var %in% c("bicarbonate",
                                 "anchor_year_group", "dod",
                                 "age_adm", "intime",
-                                "outtime", "los",
+                                "outtime", "los", 
+                                "admittime", "dischtime",
                                 "edregtime", "edouttime",
                                 "chloride", "creatinine",
                                 "glucose", "magnesium",
@@ -162,7 +163,7 @@ output$histoplot <- renderPlot({
                                 "lactate", "heart_rate",
                                 "non_invasive_blood_pressure_systolic",
                                 "non_invasive_blood_pressure_mean",
-                                "respiratory_rate",
+                                "respiratory_rate", 
                                 "temperature_fahrenheit",
                                 "anchor_age", "anchor_year"))
     {
