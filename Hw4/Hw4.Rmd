@@ -1,0 +1,171 @@
+---
+title: "Biostat 203B Homework 4 (Draft)"
+subtitle: Due Mar 12 @ 11:59PM
+output:
+  # ioslides_presentation: default
+  html_document:
+    toc: true
+    toc_depth: 4
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+Display machine information:
+```{r}
+sessionInfo()
+```
+Load database libraries and the tidyverse frontend:
+```{r}
+library(tidyverse)
+library(lubridate)
+library(miceRanger)
+```
+
+## Q1. Missing data
+
+Through the Shiny app developed in HW3, we observe abundant missing values in the MIMIC-IV ICU cohort we created. In this question, we use multiple imputation to obtain a data set without missing values.
+
+0. Read following tutorials on the R package miceRanger for imputation: <https://github.com/farrellday/miceRanger>, <https://cran.r-project.org/web/packages/miceRanger/vignettes/miceAlgorithm.html>.
+
+A more thorough book treatment of the practical imputation strategies is the book [*_Flexible Imputation of Missing Data_*](https://stefvanbuuren.name/fimd/) by Stef van Buuren. 
+
+1. Explain the jargon MCAR, MAR, and MNAR.
+
+2. Explain in a couple of sentences how the Multiple Imputation by Chained Equations (MICE) work.
+
+3. Perform a data quality check of the ICU stays data. Discard variables with substantial missingness, say >5000 `NA`s. Replace apparent data entry errors by `NA`s.
+```{r}
+icu_coh <-readRDS(str_c("/home/asburysean/biostat-203b-2021-winter/"
+                        ,"Hw3/mimiciv_shiny/icu_cohort.rds"))
+table(icu_coh$non_invasive_blood_pressure_mean)
+na_count <-sapply(icu_coh, function(y) sum(length(which(is.na(y)))))
+na_count <- data.frame(na_count)
+na_count
+drops <- c("first_careunit","last_careunit", "intime", "outtime", "los", 
+           "admittime", "dischtime", "deathtime", "admission_type", 
+           "admission_location", "discharge_location", "insurance", "language",
+           "days_death", "arterial_blood_pressure_mean",
+           "arterial_blood_pressure_systolic", "lactate", "dod", 
+           "anchor_year_group", "anchor_year", "anchor_age", 
+           "hospital_expire_flag", "edouttime", "edregtime", "hadm_id", 
+           "stay_id")
+icu_coh_tble <- icu_coh[ , !(names(icu_coh) %in% drops)]
+print(icu_coh_tble)
+colnames(icu_coh_tble)
+library(rstatix)
+icu_coh_tble$bicarbonate <- replace(icu_coh_tble$bicarbonate, 
+                            is_extreme(icu_coh_tble$bicarbonate) == TRUE, NA)
+icu_coh_tble$calcium <- replace(icu_coh_tble$calcium, 
+                            is_extreme(icu_coh_tble$calcium) == TRUE, NA)
+icu_coh_tble$chloride <- replace(icu_coh_tble$chloride, 
+                            is_extreme(icu_coh_tble$chloride) == TRUE, NA)
+icu_coh_tble$creatinine <- replace(icu_coh_tble$creatinine, 
+                            is_extreme(icu_coh_tble$creatinine) == TRUE, NA)
+icu_coh_tble$glucose <- replace(icu_coh_tble$glucose, 
+                            is_extreme(icu_coh_tble$glucose) == TRUE, NA)
+icu_coh_tble$magnesium <- replace(icu_coh_tble$magnesium, 
+                            is_extreme(icu_coh_tble$magnesium) == TRUE, NA)
+icu_coh_tble$potassium <- replace(icu_coh_tble$potassium, 
+                            is_extreme(icu_coh_tble$potassium) == TRUE, NA)
+icu_coh_tble$sodium <- replace(icu_coh_tble$sodium, 
+                            is_extreme(icu_coh_tble$sodium) == TRUE, NA)
+icu_coh_tble$hematocrit <- replace(icu_coh_tble$hematocrit, 
+                            is_extreme(icu_coh_tble$hematocrit) == TRUE, NA)
+icu_coh_tble$wbc <- replace(icu_coh_tble$wbc, 
+                            is_extreme(icu_coh_tble$wbc) == TRUE, NA)
+icu_coh_tble$heart_rate <- replace(icu_coh_tble$heart_rate, 
+                            is_extreme(icu_coh_tble$heart_rate) == TRUE, NA)
+icu_coh_tble$non_invasive_blood_pressure_systolic <- 
+  replace(icu_coh_tble$non_invasive_blood_pressure_systolic, 
+                            is_extreme(
+                              icu_coh_tble$non_invasive_blood_pressure_systolic)
+                           == TRUE, NA)
+icu_coh_tble$non_invasive_blood_pressure_mean <- replace(icu_coh_tble$non_invasive_blood_pressure_mean, 
+                            is_extreme(
+                              icu_coh_tble$non_invasive_blood_pressure_mean)
+                            == TRUE, NA)
+icu_coh_tble$respiratory_rate <- replace(icu_coh_tble$respiratory_rate, 
+                            is_extreme(icu_coh_tble$respiratory_rate)
+                            == TRUE, NA)
+icu_coh_tble$temperature_fahrenheit <- replace(
+  icu_coh_tble$temperature_fahrenheit, 
+  is_extreme(icu_coh_tble$temperature_fahrenheit) == TRUE, NA)
+
+table(icu_coh_tble$marital_status)
+table(icu_coh_tble$ethnicity)
+table(icu_coh_tble$gender)
+table(icu_coh_tble$age_adm)
+table(icu_coh_tble$died_30days)
+print(icu_coh_tble$non_invasive_blood_pressure_mean)
+table(icu_coh_tble$non_invasive_blood_pressure_mean)
+
+```
+
+
+
+4. Impute missing values by `miceRanger` (request $m=3$ datasets). This step is very computational intensive. Make sure to save the imputation results as a file.
+```{r}
+seqTime <- system.time(
+  miceObj <- miceRanger(
+    icu_coh_tble
+    , m=3
+    , max.depth=10
+    , returnModels = TRUE
+    , verbose=FALSE
+  )
+)
+miceObj
+icucoh_new <- completeData(miceObj)
+icucoh_new
+
+```
+
+
+
+5. Make imputation diagnostic plots and explain what they mean.
+```{r}
+plotDistributions(miceObj,vars='allNumeric')
+plotCorrelations(miceObj,vars='allNumeric')
+plotVarConvergence(miceObj,vars='allNumeric')
+```
+
+
+6. Obtain a complete data set by averaging the 3 imputed data sets.
+```{r}
+df1 <- icucoh_new$Dataset_1
+df2 <- icucoh_new$Dataset_2
+df3 <- icucoh_new$Dataset_3
+
+
+
+
+
+avgicu_coh <- bind_rows(df1, df2, df3) %>%
+          group_by(subject_id) %>%   
+          summarise_each(funs(mean))
+```
+
+
+
+## Q2. Predicting 30-day mortality
+
+Develop at least two analytic approaches for predicting the 30-day mortality of patients admitted to ICU using demographic information (gender, age, marital status, ethnicity), first lab measurements during ICU stay, and first vital measurements during ICU stay. For example, you can use (1) logistic regression (`glm()` function), (2) logistic regression with lasso penalty (glmnet package), (3) random forest (randomForest package), or (4) neural network.
+
+1. Partition data into 80% training set and 20% test set. Stratify partitioning according the 30-day mortality status.
+```{r}
+
+```
+
+
+2. Train the models using the training set.
+```{r}
+
+```
+
+3. Compare model prediction performance on the test set.
+```{r}
+
+```
+
