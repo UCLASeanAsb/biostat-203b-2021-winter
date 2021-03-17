@@ -223,7 +223,7 @@ lasso.model <- glmnet(x, y, alpha = 1, family = "binomial",
 x.test <- model.matrix(died_30days ~., icuTest)[,-1]
 probabilities <- lasso.model %>% predict(newx = x.test)
 predicted.classes <- ifelse(probabilities > 0.5, 1, 0)
-table(observed.classes)
+
 # Model accuracy
 observed.classes <- icuTest$died_30days
 mean(predicted.classes == observed.classes)
@@ -239,9 +239,7 @@ mean(predicted.classes == observed.classes)
 pred = predict(rf, newdata=icuTest[])
 confusionMatrix(pred, icuTest$died_30days)
 
-# Model accuracy logistic regression
-observed.classes <- icuTest$died_30days
-mean(predicted.classes == observed.classes)
+
 
 ```
 
